@@ -44,7 +44,7 @@ const Header = () => {
               <a href="#" className="block py-2 text-lg hover:text-blue-600" onClick={() => setIsOpen(false)}>Home</a>
             </li>
             <li>
-            <button onClick={() => { onOpenModal(); setIsOpen(false); }} className="block py-2 text-lg hover:text-blue-600">
+            <button className="block py-2 text-lg hover:text-blue-600">
             Log In</button>
             </li>
             <li>

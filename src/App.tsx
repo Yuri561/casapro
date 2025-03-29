@@ -13,7 +13,7 @@ function App() {
   return (
     <>
       <div>
-        <Header onOpenModal={()=> setIsModalOpen(true)}/>
+        <Header/>
          <Hero/>
          <WhyChooseCasaPro/>
          <HowItWorks/>

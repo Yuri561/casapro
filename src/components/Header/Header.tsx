@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { User, Menu, X } from 'lucide-react';
+import { useState } from 'react';
+import { Menu, X } from 'lucide-react';
 
-const Header = ({ onOpenModal }: { onOpenModal: () => void }) => {
+const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -17,7 +17,7 @@ const Header = ({ onOpenModal }: { onOpenModal: () => void }) => {
           <a href="#">Home</a>
         </li>
         <li className="relative after:content-[''] after:block after:h-[2px] after:bg-white after:w-0 hover:after:w-full after:transition-all after:duration-300">
-        <button onClick={onOpenModal} className='cursor-pointer'>
+        <button className='cursor-pointer'>
             Log in 
             </button>
         </li>

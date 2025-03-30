@@ -5,7 +5,7 @@ import { AgChartOptions } from "ag-charts-community";
 import { getCategoryData } from "./Data";
 
 const CategoryDist:React.FC = () => {
-    const [options, setOptions] = useState<AgChartOptions>({
+    const [options] = useState<AgChartOptions>({
         data: getCategoryData(),
         title: {
             text: "Category Distribution",

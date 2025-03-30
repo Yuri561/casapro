@@ -4,7 +4,7 @@ import { AgRadialGaugeOptions } from "ag-charts-enterprise";
 import "ag-charts-enterprise";
 
 const InventoryGauge: React.FC = () => {
-  const [options, setOptions] = useState<AgRadialGaugeOptions>({
+  const [options] = useState<AgRadialGaugeOptions>({
     type: "radial-gauge",
     value: 75, // Update this dynamically if needed
     scale: {

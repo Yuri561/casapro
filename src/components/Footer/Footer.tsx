@@ -1,12 +1,18 @@
 import React from "react";
 import { Facebook, Twitter, Instagram } from "lucide-react";
+import HomeIcon from "/homeicon.png"
 
 const Footer: React.FC = () => {
   return (
     <footer className="bg-gradient-to-r from-teal-100 via-cyan-100 to-blue-100 text-white py-12">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col items-center justify-between space-y-8 md:flex-row md:space-y-0">
-          <div className="text-center md:text-left">
+          <div className=" flex space-x-2 text-center md:text-left">
+          <img
+          src={HomeIcon}
+          alt="Home Icon"
+          className="w-6 h-6 sm:w-7 sm:h-7 p-1 mr-2"
+            />
             <h2 className="text-2xl font-bold font-pj text-gray-900">Casa Pro</h2>
             <p className="mt-2 text-gray-600">
               Your home inventory, simplified.

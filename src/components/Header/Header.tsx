@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
-
+import { Link } from "react-router-dom";
+import HomeIcon from "/homeicon.png"
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -8,21 +9,24 @@ const Header = () => {
     <nav className="relative sticky w-full bg-teal-400 text-gray-900 p-4 flex justify-between items-center fixed top-0 left-0 right-0 shadow-md px-8 z-50">
       {/* Logo */}
       <div className="flex items-center space-x-2">
+        <img
+          src={HomeIcon}
+          alt="Home Icon"
+          className="w-6 h-6 sm:w-7 sm:h-7 p-1 mr-2"
+        />
         <span className="text-slate-200 text-2xl font-bold">Casa Pro</span>
       </div>
 
       {/* Desktop Navigation */}
       <ul className="hidden md:flex space-x-8 font-medium text-white">
         <li className="relative after:content-[''] after:block after:h-[2px] after:bg-white after:w-0 hover:after:w-full after:transition-all after:duration-300">
-          <a href="#">Home</a>
+          <Link to="/">Home</Link>
         </li>
         <li className="relative after:content-[''] after:block after:h-[2px] after:bg-white after:w-0 hover:after:w-full after:transition-all after:duration-300">
-        <button className='cursor-pointer'>
-            Log in 
-            </button>
+          <Link to="/login">Login</Link>
         </li>
         <li className="relative after:content-[''] after:block after:h-[2px] after:bg-white after:w-0 hover:after:w-full after:transition-all after:duration-300 bg-transparent border rounded px-3">
-          <a href="#">Create free account</a>
+          <Link to="/create-account">Create an account</Link>
         </li>
         <li className="relative after:content-[''] after:block after:h-[2px] after:bg-white after:w-0 hover:after:w-full after:transition-all after:duration-300">
           <a href="#">Contact</a>
@@ -44,8 +48,8 @@ const Header = () => {
               <a href="#" className="block py-2 text-lg hover:text-blue-600" onClick={() => setIsOpen(false)}>Home</a>
             </li>
             <li>
-            <button className="block py-2 text-lg hover:text-blue-600">
-            Log In</button>
+              <button className="block py-2 text-lg hover:text-blue-600">
+                Log In</button>
             </li>
             <li>
               <a href="#" className="block py-2 text-lg hover:text-blue-600" onClick={() => setIsOpen(false)}>Create free account</a>
@@ -57,7 +61,7 @@ const Header = () => {
         </div>
       )}
 
-      
+
     </nav>
   );
 };

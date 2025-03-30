@@ -1,27 +1,39 @@
-
-import './App.css'
-import Header from './components/Header/Header'
-import Hero from './components/Hero/Hero'
-import WhyChooseCasaPro from './components/WhyCasaPro/WhyChooseCasaPro'
-import HowItWorks from './components/HowItWorks/HowItWorks'
-import Newsletter from './components/Newsletter/Newsletter'
-import Footer from './components/Footer/Footer'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./components/Home/Home";
+import Login from "./components/LogIn/Login";
+import CreateAccount from "./components/CreateAccount/CreateAccount";
+import Layout from "./components/Layout/Layout";
 
 function App() {
-
-
   return (
-    <>
-      <div>
-        <Header/>
-         <Hero/>
-         <WhyChooseCasaPro/>
-         <HowItWorks/>
-         <Newsletter/>
-         <Footer/>
-       </div>
-    </>
-  )
+    <BrowserRouter>
+      <Routes>
+        {/* Wrap routes with Layout */}
+        <Route
+          path="/"
+          element={
+              <Home />
+          }
+        />
+        <Route
+          path="/login"
+          element={
+            <Layout>
+              <Login />
+            </Layout>
+          }
+        />
+        <Route
+          path="/create-account"
+          element={
+            <Layout>
+              <CreateAccount />
+            </Layout>
+          }
+        />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;

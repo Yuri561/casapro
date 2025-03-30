@@ -6,12 +6,12 @@ import "ag-charts-enterprise";
 const InventoryGauge: React.FC = () => {
   const [options] = useState<AgRadialGaugeOptions>({
     type: "radial-gauge",
-    value: 75, // Update this dynamically if needed
+    value: 75, 
     scale: {
       min: 0,
       max: 100,
       label: {
-        enabled: false, // Hide unnecessary labels
+        enabled: false, 
       },
     },
     label: {

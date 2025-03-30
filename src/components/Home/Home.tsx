@@ -6,6 +6,7 @@ import HowItWorks from '../HowItWorks/HowItWorks'
 import Newsletter from '../Newsletter/Newsletter'
 import Footer from '../Footer/Footer'
 // import Dashboard from '../Pages/Dashboard'
+// import Table from '../Pages/Table'
 
 
 const Home:React.FC = () => {
@@ -16,7 +17,8 @@ const Home:React.FC = () => {
          <WhyChooseCasaPro/>
          <HowItWorks/>
          <Newsletter/>
-         {/* <Dashboard/> */}
+         {/* <Dashboard/>
+         <Table/> */}
          <Footer/>
     </div>
   )

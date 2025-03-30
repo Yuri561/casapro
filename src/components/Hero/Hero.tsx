@@ -76,7 +76,7 @@ const Hero: React.FC = () => {
                     role="button"
                   >
                     <ArrowDown className="w-5 h-5 mr-2" />
-                    Download iOS App
+                    Download Desktop App
                   </a>
                 </div>
               </div>

@@ -2,8 +2,8 @@ import React from "react";
 
 const CreateAccount: React.FC = () => {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <h2 className="text-3xl font-bold text-gray-900 mb-6">
+    <div className="flex flex-col items-center justify-center sm:text-center min-h-screen bg-gray-100">
+      <h2 className="text-3xl text-center font-bold text-gray-900 mb-6">
         Create Your Casa Pro Account
       </h2>
       <form className="w-96 bg-white p-6 rounded-lg shadow-lg">

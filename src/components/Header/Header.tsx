@@ -45,14 +45,14 @@ const Header = () => {
         <div className="absolute top-16 left-0 w-full bg-white shadow-md md:hidden transition-all duration-300">
           <ul className="flex flex-col space-y-4 p-6">
             <li>
-              <a href="#" className="block py-2 text-lg hover:text-blue-600" onClick={() => setIsOpen(false)}>Home</a>
+              <Link to="/" className="block py-2 text-lg hover:text-blue-600" onClick={() => setIsOpen(false)}>Home</Link>
             </li>
             <li>
-              <button className="block py-2 text-lg hover:text-blue-600">
-                Log In</button>
+              <Link to='/login' className="block py-2 text-lg hover:text-blue-600" onClick={() => setIsOpen(false)}>
+                Log In</Link>
             </li>
             <li>
-              <a href="#" className="block py-2 text-lg hover:text-blue-600" onClick={() => setIsOpen(false)}>Create free account</a>
+            <Link to="/create-account" className=" sm:text-center block py-2 text-lg hover:text-blue-600" onClick={() => setIsOpen(false)}>Create an account</Link>
             </li>
             <li>
               <a href="#" className="block py-2 text-lg hover:text-blue-600" onClick={() => setIsOpen(false)}>Contact</a>

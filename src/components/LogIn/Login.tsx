@@ -36,7 +36,7 @@ const Login: React.FC = () => {
                 <div className="text-red-500 mb-4 bg-red-100 px-4 py-2 rounded-lg">
                     {error}
                 </div>
-            )}A
+            )}
             <form
                 onSubmit={handleSubmit}
                 className="w-96 bg-white p-6 rounded-lg shadow-lg"

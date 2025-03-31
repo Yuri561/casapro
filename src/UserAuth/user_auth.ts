@@ -1,21 +1,23 @@
-import axios from 'axios';
+import axios from "axios";
+
+const API_URL: string = "https://casapro-backend-o0k1.onrender.com";
 
 
-const API_URL: any = "https://casapro-backend-o0k1.onrender.com";
+export const userRegister = async (userData: any) => {
+  return axios.post(`${API_URL}/register`, userData, {
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+    },
+  });
+};
 
-export const userRegister = async (userData: any) =>{
-    return axios.post(`${API_URL}/register`, userData {
-        headers: {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*",
-          },
-    })
-}
+
 export const userLogin = async (formData: any) => {
-    return await axios.post(`${API_URL}/login`, formData, {
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-    });
-  };
+  return await axios.post(`${API_URL}/login`, formData, {
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+    },
+  });
+};

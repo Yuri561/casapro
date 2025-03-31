@@ -34,6 +34,7 @@ const CreateAccount: React.FC = () => {
                 Create Your Casa Pro Account
             </h2>
             <form
+                id="login"
                 onSubmit={handleSubmit}
                 className="w-96 bg-white p-6 rounded-lg shadow-lg">
 
@@ -55,7 +56,7 @@ const CreateAccount: React.FC = () => {
                     placeholder="Password"
                     className="w-full mb-4 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:outline-none"
                 />
-                <button className="w-full bg-teal-500 text-white px-4 py-3 rounded-lg hover:bg-teal-600 transition">
+                <button className="w-full cursor-pointer bg-teal-500 text-white px-4 py-3 rounded-lg hover:bg-teal-600 transition">
                     Create Account
                 </button>
             </form>

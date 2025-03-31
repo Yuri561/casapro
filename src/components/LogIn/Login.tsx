@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { userLogin } from "../../UserAuth/user_auth";
+import LoadingAnimation from "../LoadingAnimation/LoadingAnimation";
 
 const Login: React.FC = () => {
     // ✅ State for form data and error handling
     const [formData, setFormData] = useState({ username: "", password: "" });
+    const [loading, setLoading] = useState<boolean>(false)
     const [error, setError] = useState<string>("");
     const navigate = useNavigate();
 
@@ -13,45 +15,48 @@ const Login: React.FC = () => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    // ✅ Submit form and handle login request
+  
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        setError(""); // Clear previous errors
+        setError(""); 
+        setLoading(true);
         try {
-            // ✅ Send login data to Flask API
+     
             const response = await userLogin(formData);
-
-            // ✅ Check if login is successful
             if (response.status === 200) {
-                // ✅ Store user data in local storage
+    
                 localStorage.setItem("user", JSON.stringify(response.data));
                 navigate("/dashboard"); 
             }
         } catch (error: any) {
-            // ✅ Handle errors correctly
+      
             if (error.response && error.response.data) {
-                // If Flask returns an error message
+        
                 setError(error.response.data.error || "Login error. Please try again.");
             } else {
-                // Generic error message
+     
                 setError("Login failed. Please check your credentials.");
             }
             console.error("Error during login:", error);
+        }
+        finally{
+            setLoading(false);
         }
     };
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+            {loading && <LoadingAnimation />}
             <h2 className="text-3xl font-bold text-gray-900 mb-6">Login to Casa Pro</h2>
 
-            {/* ✅ Show error message if there's an error */}
+  
             {error && (
                 <div className="text-red-500 mb-4 bg-red-100 px-4 py-2 rounded-lg">
                     {error}
                 </div>
             )}
 
-            {/* ✅ Login form */}
+   
             <form
                 onSubmit={handleSubmit}
                 className="w-96 bg-white p-6 rounded-lg shadow-lg"

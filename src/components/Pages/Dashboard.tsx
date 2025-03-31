@@ -3,7 +3,6 @@ import InventoryGauge from '../Gauges/InventoryGauge'
 import CategoryDist from '../Gauges/CategoryDist'
 import InventoryReports from '../Gauges/InventoryReports'
 import MoneySpent from '../Gauges/MoneySpent'
-import InventoryTable from './InventoryTable'
 const Dashboard: React.FC = () => {
     return (
         <>

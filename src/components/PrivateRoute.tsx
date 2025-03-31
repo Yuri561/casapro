@@ -1,5 +1,5 @@
 // PrivateRoute.tsx
-import React from "react";
+import React, { JSX } from "react";
 import { Navigate } from "react-router-dom";
 
 const PrivateRoute: React.FC<{ children: JSX.Element }> = ({ children }) => {

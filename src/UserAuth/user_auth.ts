@@ -1,4 +1,5 @@
-import axios 
+import axios from 'axios';
+
 
 const API_URL: any = "https://casapro-backend-o0k1.onrender.com";
 

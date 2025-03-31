@@ -14,7 +14,7 @@ export type Product = {
 };
 
 const InventoryTable: React.FC = () => {
-  const [selectedRange, setSelectedRange] = useState<string>("Last 30 days");
+  const [selectedRange] = useState<string>("Last 30 days");
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [editRowId, setEditRowId] = useState<number | null>(null);
   const [editedProduct, setEditedProduct] = useState<Product | null>(null);

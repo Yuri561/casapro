@@ -4,45 +4,22 @@ import Login from "./components/LogIn/Login";
 import CreateAccount from "./components/CreateAccount/CreateAccount";
 import Layout from "./components/Layout/Layout";
 import UserDashboard from "./components/Pages/userDashboard";
+import { AuthProvider } from "./context/AuthContext"; // ✅ Use AuthProvider
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-
-        <Route
-          path="/"
-          element={
-            <Home />
-          }
-        />
-        <Route
-          path="/login"
-          element={
-            <Layout>
-              <Login />
-            </Layout>
-          }
-        />
-        <Route
-          path="/create-account"
-          element={
-            <Layout>
-              <CreateAccount />
-            </Layout>
-          }
-        />
-
-        <Route
-          path="/dashboard"
-          element={
-            <Layout>
-              <UserDashboard />
-            </Layout>
-          }
-        />
-      </Routes>
-    </BrowserRouter>
+    <AuthProvider>
+      <BrowserRouter>
+        <Layout>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/create-account" element={<CreateAccount />} />
+            <Route path="/dashboard" element={<UserDashboard />} />
+          </Routes>
+        </Layout>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 

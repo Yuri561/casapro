@@ -25,7 +25,7 @@ const Login: React.FC = () => {
             if (response.status === 200) {
                 // ✅ Store user data in local storage
                 localStorage.setItem("user", JSON.stringify(response.data));
-                navigate("/userDashboard"); // ✅ Correct path
+                navigate("/dashboard"); 
             }
         } catch (error: any) {
             // ✅ Handle errors correctly

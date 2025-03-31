@@ -6,7 +6,7 @@ import Table from './Table'
 
 const UserDashboard: React.FC = () => {
     return (
-      <div className="flex flex-col space-y-6 p-4">
+      <div>
         <Dashboard />
         <Table />
       </div>

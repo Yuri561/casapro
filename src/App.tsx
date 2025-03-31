@@ -3,16 +3,17 @@ import Home from "./components/Home/Home";
 import Login from "./components/LogIn/Login";
 import CreateAccount from "./components/CreateAccount/CreateAccount";
 import Layout from "./components/Layout/Layout";
+import UserDashboard from "./components/Pages/userDashboard";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Wrap routes with Layout */}
+
         <Route
           path="/"
           element={
-              <Home />
+            <Home />
           }
         />
         <Route
@@ -28,6 +29,15 @@ function App() {
           element={
             <Layout>
               <CreateAccount />
+            </Layout>
+          }
+        />
+
+        <Route
+          path="/dashboard"
+          element={
+            <Layout>
+              <UserDashboard />
             </Layout>
           }
         />

@@ -1,6 +1,5 @@
-"use client"
 
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import {
   Table,
   TableBody,
@@ -26,7 +25,8 @@ import {
   DialogTrigger,
 } from "../ui/dialog"
 import { Plus, Search, Pencil, Save } from "lucide-react"
-import productData from "../../db/InventoryProdDb"
+import { userInventory } from "../../UserAuth/user_auth"
+
 
 export type Product = {
   id: number
@@ -39,12 +39,32 @@ export type Product = {
 }
 
 const InventoryTable: React.FC = () => {
+  const [inventoryData, setInventoryData] = useState<Product[]>([])
   const [search, setSearch] = useState("")
   const [editId, setEditId] = useState<number | null>(null)
   const [edited, setEdited] = useState<Partial<Product>>({})
   const [activeTab, setActiveTab] = useState("all")
+  
+  useEffect(()=>{
+    const fetchInventory = async () => {
+        const user_id = localStorage.getItem("user_id");
+        if(!user_id) return 
+        try{
+            const response = await userInventory(user_id)
+            if (response.status === 200){
+                setInventoryData(response.data.user_inventory)
+            }
+        }
+        catch(error) {
+            console.error("Error fetching inventory:", error)
+        }
 
-  const filtered = productData.filter((prod) => {
+
+    }
+    fetchInventory()
+  },[])
+
+  const filtered = inventoryData.filter((prod) => {
     const matchesSearch = prod.name.toLowerCase().includes(search.toLowerCase())
     const matchesTab = activeTab === "all" || prod.category.toLowerCase() === activeTab
     return matchesSearch && matchesTab
@@ -63,7 +83,7 @@ const InventoryTable: React.FC = () => {
   }
 
   const handleSave = (id: number) => {
-    const updated = productData.map((prod) =>
+    const updated = inventoryData.map((prod) =>
       prod.id === id ? { ...prod, ...edited } : prod
     )
     console.log("Updated:", updated)

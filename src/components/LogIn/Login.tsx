@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { userLogin } from "../../UserAuth/user_auth";
+import { userLogin} from "../../UserAuth/user_auth";
 import LoadingAnimation from "../LoadingAnimation/LoadingAnimation";
 import { useAuth } from "../../context/AuthContext";
 
@@ -23,8 +23,9 @@ const Login: React.FC = () => {
     try {
         const response = await userLogin(formData);
         if (response.status === 200) {
-        const username = response.data.user.username;
+        const {username, user_id} = response.data.user;
         localStorage.setItem("username", username);
+        localStorage.setItem("user_id", user_id)
         localStorage.setItem("isAuthenticated", "true");
           setIsAuthenticated(true);
           navigate("/dashboard");

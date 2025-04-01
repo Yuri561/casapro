@@ -19,3 +19,13 @@ export const userLogin = async (formData: any) => {
     },
   });
 };
+
+
+// inventory request
+export const userInventory = async (user_id: string) => {
+    return await axios.post(`${API_URL}/inventory`, {user_id}, {
+        headers: {
+            "Content-Type": "application/json"
+        },
+    });
+};

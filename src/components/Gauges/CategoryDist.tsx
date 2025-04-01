@@ -1,118 +1,95 @@
-import React, { useCallback, useState } from "react";
-import { PieChart, Pie, Sector } from "recharts";
+"use client"
 
-// 🎯 New data with more categories
-const data = [
-  { name: "Groceries", value: 600 },
-  { name: "Tools", value: 450 },
-  { name: "Toiletries", value: 300 },
-  { name: "Electronics", value: 400 },
-  { name: "Clothing", value: 350 },
-  { name: "Furniture", value: 500 },
-  { name: "Subscriptions", value: 200 },
-];
+import React from "react"
+import {
+  BarChart,
+  Bar,
+  CartesianGrid,
+  XAxis,
+  YAxis,
+  Tooltip,
+  LabelList,
+  ResponsiveContainer,
+  Cell,
+} from "recharts"
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+} from "../ui/card"
 
-// ✅ Calculate the average value dynamically per category
-const calculateCategoryAverage = (value: number) => {
-  return (value / 12).toFixed(2); // Divide by 12 for monthly average
-};
+const chartData = [
+  { category: "Pantry", count: 230 },
+  { category: "Tools", count: 175 },
+  { category: "Toiletries", count: 145 },
+  { category: "Electronics", count: 90 },
+  { category: "Furniture", count: 130 },
+  { category: "Clothing", count: 110 },
+]
 
-// 🎨 Custom rendering for active Pie section
-const renderActiveShape = (props: any) => {
-  const {
-    cx,
-    cy,
-    innerRadius,
-    outerRadius,
-    startAngle,
-    endAngle,
-    fill,
-    payload,
-    value,
-  } = props;
+const COLORS = ["#3b82f6", "#10b981", "#f59e0b", "#ec4899", "#6366f1", "#14b8a6"]
 
-  return (
-    <g>
-      {/* ✅ Center Label for Active Shape */}
-      <text
-        x={cx}
-        y={cy - 10}
-        dy={8}
-        textAnchor="middle"
-        fill={fill}
-        fontSize="14px"
-        fontWeight="bold"
-      >
-        {payload.name}
-      </text>
-      <text
-        x={cx}
-        y={cy + 10}
-        dy={8}
-        textAnchor="middle"
-        fill="#333"
-        fontSize="12px"
-      >
-        {`Avg: ${calculateCategoryAverage(value)}`} {/* ✅ Show per-category avg */}
-      </text>
-
-      {/* ✅ Main Sector for Active Shape */}
-      <Sector
-        cx={cx}
-        cy={cy}
-        innerRadius={innerRadius}
-        outerRadius={outerRadius}
-        startAngle={startAngle}
-        endAngle={endAngle}
-        fill={fill}
-      />
-      <Sector
-        cx={cx}
-        cy={cy}
-        startAngle={startAngle}
-        endAngle={endAngle}
-        innerRadius={outerRadius + 6}
-        outerRadius={outerRadius + 10}
-        fill={fill}
-      />
-    </g>
-  );
-};
+const CustomTooltip = ({ active, payload }: any) => {
+  if (active && payload?.length) {
+    const item = payload[0].payload
+    return (
+      <div className="bg-white text-xs rounded border border-gray-200 shadow p-2">
+        <p className="text-gray-600">{item.category}</p>
+        <p className="font-bold">{item.count} items</p>
+      </div>
+    )
+  }
+  return null
+}
 
 const CategoryDist: React.FC = () => {
-  const [activeIndex, setActiveIndex] = useState(0);
-
-  // ✅ Handle Pie Hover to update the active section
-  const onPieEnter = useCallback((_, index: number) => {
-    setActiveIndex(index);
-  }, []);
-
   return (
-    <div className="w-80 h-80 bg-white rounded-xl overflow-hidden shadow-lg p-2">
-      {/* ✅ Title added above the PieChart */}
+    <Card className="w-80 h-80 border-none rounded-xl bg-white shadow-sm flex flex-col">
+      <CardHeader className="p-3 pb-0">
+        <CardTitle className="text-center text-sm text-muted-foreground">
+          Inventory Breakdown
+        </CardTitle>
+      </CardHeader>
 
-      {/* ✅ Center Pie Chart properly */}
-      <div className="flex flex-col items-center justify-center mx-auto">
-      <h5 className="font-bold text-gray-500  sm:text-1xl mb-2 text-center">
-        Breakdown
-      </h5>
-        <PieChart width={350} height={350} className="">
-          <Pie
-            activeIndex={activeIndex}
-            activeShape={renderActiveShape}
-            data={data}
-            cx="50%"
-            cy="50%"
-            innerRadius={80}
-            outerRadius={100}
-            fill="#8884d8"
-            dataKey="value"
-            onMouseEnter={onPieEnter}
-          />
-        </PieChart>
-      </div>
-    </div>
-  );
-};
+      <CardContent className="flex-1 px-2 pt-1">
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart
+            data={chartData}
+            layout="vertical"
+            margin={{ top: 10, right: 10, left: 10, bottom: 0 }}
+          >
+            <CartesianGrid strokeDasharray="3 3" horizontal={false} />
+            <XAxis type="number" hide />
+            <YAxis
+              dataKey="category"
+              type="category"
+              tickLine={false}
+              axisLine={false}
+              width={80}
+              tick={{ fontSize: 12, fill: "#666" }}
+            />
+            <Tooltip content={<CustomTooltip />} />
+            <Bar
+              dataKey="count"
+              barSize={14}
+              radius={[0, 6, 6, 0]}
+            >
+              {chartData.map((_, index) => (
+                <Cell key={index} fill={COLORS[index % COLORS.length]} />
+              ))}
+              <LabelList
+                dataKey="count"
+                position="right"
+                offset={10}
+                className="fill-gray-800 text-xs"
+              />
+            </Bar>
+          </BarChart>
+        </ResponsiveContainer>
+      </CardContent>
+    </Card>
+  )
+}
 
-export default CategoryDist;
+export default CategoryDist

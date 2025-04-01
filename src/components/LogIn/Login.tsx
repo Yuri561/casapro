@@ -25,6 +25,7 @@ const Login: React.FC = () => {
         if (response.status === 200) {
         const username = response.data.user.username;
         localStorage.setItem("username", username);
+        localStorage.setItem("isAuthenticated", "true");
           setIsAuthenticated(true);
           navigate("/dashboard");
         }

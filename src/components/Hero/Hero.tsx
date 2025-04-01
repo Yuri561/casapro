@@ -1,7 +1,8 @@
 import React from "react";
 import { ArrowDown } from "lucide-react"; // Optional for better icons
-
+import useAddToHomeScreen from "../../Hooks/AddToHome";
 const Hero: React.FC = () => {
+  const { canInstall, promptInstall } = useAddToHomeScreen()
   return (
     <div>
       <section id='home' className="relative py-12 sm:py-16 lg:pt-20 lg:pb-36 bg-gradient-to-b from-cyan-50 to-blue-50">
@@ -38,24 +39,24 @@ const Hero: React.FC = () => {
                       alt="User 3"
                     />
                     <img
-                        className="inline-block rounded-full w-14 h-14 ring-2 ring-white"
-                        src="https://randomuser.me/api/portraits/men/28.jpg"
-                        alt="User 6"
+                      className="inline-block rounded-full w-14 h-14 ring-2 ring-white"
+                      src="https://randomuser.me/api/portraits/men/28.jpg"
+                      alt="User 6"
                     />
                     <img
-                        className="inline-block rounded-full w-14 h-14 ring-2 ring-white"
-                        src="https://randomuser.me/api/portraits/women/90.jpg"
-                        alt="User 6"
+                      className="inline-block rounded-full w-14 h-14 ring-2 ring-white"
+                      src="https://randomuser.me/api/portraits/women/90.jpg"
+                      alt="User 6"
                     />
                     <img
-                        className="inline-block rounded-full w-14 h-14 ring-2 ring-white"
-                        src="https://randomuser.me/api/portraits/men/81.jpg"
-                        alt="User 6"
+                      className="inline-block rounded-full w-14 h-14 ring-2 ring-white"
+                      src="https://randomuser.me/api/portraits/men/81.jpg"
+                      alt="User 6"
                     />
                     <img
-                        className="inline-block rounded-full w-14 h-14 ring-2 ring-white"
-                        src="https://randomuser.me/api/portraits/women/61.jpg"
-                        alt="User 6"
+                      className="inline-block rounded-full w-14 h-14 ring-2 ring-white"
+                      src="https://randomuser.me/api/portraits/women/61.jpg"
+                      alt="User 6"
                     />
 
                   </div>
@@ -70,14 +71,15 @@ const Hero: React.FC = () => {
                     Learn more
                   </a>
 
-                  <a
-                    href="#"
-                    className="inline-flex items-center px-4 py-4 mt-4 text-lg font-bold transition-all duration-300 bg-transparent border border-gray-300 sm:mt-0 font-pj justify-center rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 hover:bg-gray-200 shadow-sm"
-                    role="button"
-                  >
-                    <ArrowDown className="w-5 h-5 mr-2" />
-                    Download Desktop App
-                  </a>
+                  {canInstall && (
+                    <button
+                      onClick={promptInstall}
+                      className="inline-flex items-center px-4 py-4 mt-4 text-lg font-bold transition-all duration-300 bg-transparent border border-gray-300 sm:mt-0 font-pj justify-center rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 hover:bg-gray-200 shadow-sm"
+                    >
+                      <ArrowDown className="w-5 h-5 mr-2" />
+                      Add to Home Screen
+                    </button>
+                  )}
                 </div>
               </div>
             </div>

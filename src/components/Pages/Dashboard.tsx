@@ -6,15 +6,13 @@ import MoneySpent from '../Gauges/MoneySpent'
 
 
 const Dashboard: React.FC = () => {
-    const [username, setUsername] = useState<string>("")
+    const [username, setUsername] = useState("")
 
     useEffect(() => {
-        const storedUser = localStorage.getItem("username")
-        if (storedUser) {
-            setUsername(storedUser)
-        }
-    }, [])
-
+        const storedUsername = localStorage.getItem("username")
+        if (storedUsername) setUsername(storedUsername)
+      }, [])
+      
     return (
         <>
             <section className='py-16 bg-gradient-to-r from-teal-100 via-cyan-100 to-blue-100 sm:py-20 lg:py-24'>

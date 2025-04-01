@@ -21,12 +21,13 @@ const Login: React.FC = () => {
     setError(""); 
     setLoading(true); 
     try {
-      const response = await userLogin(formData);
-      if (response.status === 200) {
-        localStorage.setItem("user", JSON.stringify(response.data));
-        setIsAuthenticated(true); 
-        navigate("/dashboard"); 
-      }
+        const response = await userLogin(formData);
+        if (response.status === 200) {
+        const username = response.data.user.username;
+        localStorage.setItem("username", username);
+          setIsAuthenticated(true);
+          navigate("/dashboard");
+        }
     } catch (error: any) {
       if (error.response && error.response.data) {
         setError(error.response.data.error || "Login error. Please try again.");

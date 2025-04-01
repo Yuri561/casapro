@@ -29,7 +29,7 @@ const InventoryGauge: React.FC = () => {
   });
 
   return (
-    <div className="w-74 h-74 bg-white rounded-xl overflow-hidden shadow-lg ">
+    <div className="w-80 h-80 bg-white rounded-xl overflow-hidden shadow-lg ">
       <AgGauge options={options as any} />
     </div>
   );

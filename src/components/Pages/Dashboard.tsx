@@ -14,21 +14,22 @@ const Dashboard: React.FC = () => {
                     </p>
                 </div>
                 <div className='mt-4 flex flex-wrap gap-8 items-center justify-center mx-auto'>
-                    <div className='w-74 h-74 bg-white  shadow-md rounded-xl'>
+                    <div className='w-80 h-80 bg-white  shadow-md rounded-xl'>
                         <InventoryGauge />
                     </div>
-                    <div className='w-74 h-74 bg-white shadow-md rounded-xl'>
+                    <div className="w-80 h-80 bg-white shadow-md rounded-xl flex items-center justify-center">
                         <CategoryDist />
                     </div>
-                    <div className='w-74 h-74 bg-white rounded-xl shadow-md'>
+
+                    <div className='w-80 h-80 bg-white rounded-xl shadow-md'>
                         <InventoryReports />
                     </div>
-                    <div className='w-74 h-74 bg-white rounded-xl shadow-md'>
+                    <div className='w-80 h-80 bg-white rounded-xl shadow-md'>
                         <MoneySpent />
                     </div>
                 </div>
             </section>
-            
+
         </>
     )
 }

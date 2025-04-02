@@ -1,6 +1,7 @@
 import axios from "axios";
+import Header from "../components/Header/Header";
 
-const API_URL: string = "https://casapro-backend-o0k1.onrender.com";
+export const API_URL: string = "https://casapro-backend-o0k1.onrender.com";
 
 
 export const userRegister = async (userData: any) => {
@@ -29,3 +30,12 @@ export const userInventory = async (user_id: string) => {
         },
     });
 };
+
+export const updateInventory = async (_id: string, updateData: any) => {
+    return await axios.put(`${API_URL}/inventory/${_id}`, updateData, {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
+  };
+  

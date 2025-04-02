@@ -17,7 +17,7 @@ import AddItemBtn from "../AddItemModal/AddItemBtn";
 import InventoryEditModal from "../EditItemModal/EditItemModal";
 
 export type Product = {
-  _id: string; // assuming _id is a string
+  _id: string; 
   name: string;
   category: string;
   location: string;
@@ -144,12 +144,20 @@ const InventoryTable: React.FC = () => {
             console.log("Updated Product:", updatedProduct);
             try {
               if (updatedProduct._id) {
-                // Using the updateInventory function from user_auth
-                const response = await updateInventory(updatedProduct._id, updatedProduct);
+                // Send only the fields you want to update
+                const updateData = {
+                  name: updatedProduct.name,
+                  category: updatedProduct.category,
+                  location: updatedProduct.location,
+                  quantity: updatedProduct.quantity,
+                  price: updatedProduct.price,
+                };
+                const response = await updateInventory(updatedProduct._id, updateData);
+                console.log("Payload to be sent:", JSON.stringify(updateData));
                 if (response.status === 200) {
                   setInventoryData(
                     inventoryData.map((prod) =>
-                      prod._id === updatedProduct._id ? updatedProduct : prod
+                      prod._id === updatedProduct._id ? { ...prod, ...updateData } : prod
                     )
                   );
                 } else {

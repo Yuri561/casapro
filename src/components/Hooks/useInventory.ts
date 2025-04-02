@@ -1,6 +1,16 @@
 import { useEffect, useState } from "react"
 import { userInventory } from "../../UserAuth/user_auth"
-import { Product } from "../Pages/InventoryTable"
+
+
+export type Product = {
+    id: number;
+    name: string;
+    category: string;
+    location: string;
+    quantity: number;
+    price: number;
+    color: string;
+  };
 
 export default function useInventory() {
   const [inventoryData, setInventoryData] = useState<Product[]>([])

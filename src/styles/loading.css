@@ -8,48 +8,49 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: rgba(45, 212, 191, 0.85); /* Teal with opacity */
-    z-index: 1000; /* Ensure it's above other elements */
+    background: linear-gradient(135deg, rgba(15, 119, 105, 0.9) 0%, rgba(15, 119, 105, 0.7) 100%);
+    backdrop-filter: blur(8px);
+    z-index: 1000;
   }
   
   .bounce {
-    width: 50px;
-    height: 50px;
-    background-color: #f0fdfa; /* Light teal to match hover and background */
+    width: 60px;
+    height: 60px;
+    background-color: #f0fdfa;
     border-radius: 50%;
-    -webkit-animation: bounce 2s infinite;
-    animation: bounce 2s infinite;
+    animation: enhancedBounce 1.5s ease-in-out infinite;
+    box-shadow: 0 0 15px rgba(240, 253, 250, 0.6);
   }
   
   .loading-text {
     margin-top: 20px;
-    font-size: 1.5rem;
-    color: #f0fdfa; /* Light teal text */
+    font-size: 1.75rem;
+    color: #f0fdfa;
     text-align: center;
+    letter-spacing: 1px;
+    animation: fadeInText 3s ease-in-out infinite alternate;
   }
   
-  /* Bounce Animation */
-  @-webkit-keyframes bounce {
+  /* Enhanced Bounce Animation */
+  @keyframes enhancedBounce {
     0%, 20%, 50%, 80%, 100% {
-      transform: translateY(0);
+      transform: translateY(0) scale(1);
     }
     40% {
-      transform: translateY(-150px);
+      transform: translateY(-100px) scale(1.1);
     }
     60% {
-      transform: translateY(-75px);
+      transform: translateY(-50px) scale(0.95);
     }
   }
   
-  @keyframes bounce {
-    0%, 20%, 50%, 80%, 100% {
-      transform: translateY(0);
+  /* Fade In and Out Text Animation */
+  @keyframes fadeInText {
+    0% {
+      opacity: 0.5;
     }
-    40% {
-      transform: translateY(-150px);
-    }
-    60% {
-      transform: translateY(-75px);
+    100% {
+      opacity: 1;
     }
   }
   

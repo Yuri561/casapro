@@ -48,9 +48,9 @@ const Header: React.FC = () => {
         </div>
 
         {/* Desktop Navigation */}
-        <ul className="hidden md:flex space-x-8 font-medium text-white">
+        <ul className="hidden md:flex space-x-8 font-medium ">
           <li
-            className="relative cursor-pointer after:content-[''] after:block after:h-[2px] after:bg-white after:w-0 hover:after:w-full after:transition-all after:duration-300"
+            className="relative text-white cursor-pointer after:content-[''] after:block after:h-[2px] after:bg-white after:w-0 hover:after:w-full after:transition-all after:duration-300"
             onClick={() => handleNavigation("/")}
           >
             Home
@@ -59,19 +59,19 @@ const Header: React.FC = () => {
           {isAuthenticated ? (
             <>
               <li
-                className="relative cursor-pointer after:content-[''] after:block after:h-[2px] after:bg-white after:w-0 hover:after:w-full after:transition-all after:duration-300"
+                className="relative text-white cursor-pointer after:content-[''] after:block after:h-[2px] after:bg-white after:w-0 hover:after:w-full after:transition-all after:duration-300"
                 onClick={() => handleNavigation("/dashboard")}
               >
                 Dashboard
               </li>
               <li
-                className="relative cursor-pointer after:content-[''] after:block after:h-[2px] after:bg-white after:w-0 hover:after:w-full after:transition-all after:duration-300"
+                className="relative text-white cursor-pointer after:content-[''] after:block after:h-[2px] after:bg-white after:w-0 hover:after:w-full after:transition-all after:duration-300"
                 onClick={() => handleNavigation("/profile")}
               >
                 My Profile
               </li>
               <li
-                className="relative cursor-pointer after:content-[''] after:block after:h-[2px] after:bg-white after:w-0 hover:after:w-full after:transition-all after:duration-300"
+                className="relative text-red-500 cursor-pointer after:content-[''] after:block after:h-[2px] after:bg-white after:w-0 hover:after:w-full after:transition-all after:duration-300"
                 onClick={handleLogout}
               >
                 Logout
@@ -80,13 +80,13 @@ const Header: React.FC = () => {
           ) : (
             <>
               <li
-                className="relative cursor-pointer after:content-[''] after:block after:h-[2px] after:bg-white after:w-0 hover:after:w-full after:transition-all after:duration-300"
+                className="relative text-white cursor-pointer after:content-[''] after:block after:h-[2px] after:bg-white after:w-0 hover:after:w-full after:transition-all after:duration-300"
                 onClick={() => handleNavigation("/login")}
               >
                 Login
               </li>
               <li
-                className="relative cursor-pointer after:content-[''] after:block after:h-[2px] after:bg-white after:w-0 hover:after:w-full after:transition-all after:duration-300 bg-transparent border rounded px-3"
+                className="relative text-white cursor-pointer after:content-[''] after:block after:h-[2px] after:bg-white after:w-0 hover:after:w-full after:transition-all after:duration-300 bg-transparent border rounded px-3"
                 onClick={() => handleNavigation("/create-account")}
               >
                 Create an account
@@ -94,7 +94,7 @@ const Header: React.FC = () => {
             </>
           )}
           <li
-            className="relative cursor-pointer after:content-[''] after:block after:h-[2px] after:bg-white after:w-0 hover:after:w-full after:transition-all after:duration-300"
+            className="relative text-white cursor-pointer after:content-[''] after:block after:h-[2px] after:bg-white after:w-0 hover:after:w-full after:transition-all after:duration-300"
             onClick={() => handleNavigation("/contact")}
           >
             Contact

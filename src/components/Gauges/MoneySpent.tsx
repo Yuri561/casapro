@@ -12,7 +12,8 @@ import {
   CardTitle,
   CardContent,
 } from "../ui/card";
-import { getMoneySpentData } from "./GetMoneySpent";
+
+import useInventory from "../Hooks/useInventory";
 
 const COLORS = [
   "#60a5fa",
@@ -23,34 +24,33 @@ const COLORS = [
   "#f97316",
 ];
 
-const data = getMoneySpentData();
-
-// Compute total amount from your data
-const totalAmount = data.reduce((acc, curr) => acc + curr.amount, 0);
-
 // Custom Tooltip Component
 const CustomTooltip: React.FC<any> = ({ active, payload }) => {
+    
     if (active && payload && payload.length) {
-      const { category, amount } = payload[0].payload;
-      return (
-        <div
-          className="bg-white p-2 rounded shadow text-xs border border-gray-200"
-          style={{
-            marginLeft: '30px',    // move it away from the center
-            marginTop: '-10px',
-            pointerEvents: 'none', // keeps it from flickering
-            position: 'relative',
-          }}
-        >
+        const { category, price } = payload[0].payload;
+        return (
+            <div
+            className="bg-white p-2 rounded shadow text-xs border border-gray-200"
+            style={{
+                marginLeft: '30px',   
+                marginTop: '-10px',
+                pointerEvents: 'none', 
+                position: 'relative',
+            }}
+            >
           <div className="font-bold">{category}</div>
-          <div>${amount.toLocaleString()}</div>
+          <div>${price.toLocaleString()}</div>
         </div>
       );
     }
     return null;
-  };
+};
 
 const MoneySpent: React.FC = () => {
+    const data = useInventory();
+    
+    const totalAmount = data.reduce((acc, curr) => acc + curr.price, 0);
   return (
     <Card className="w-80 h-80 bg-white border-none shadow-sm rounded-xl flex flex-col">
       <CardHeader className="p-3 pb-0 text-center">
@@ -70,7 +70,7 @@ const MoneySpent: React.FC = () => {
                 innerRadius={40}
                 outerRadius={60}
                 paddingAngle={3}
-                dataKey="amount"
+                dataKey="price"
               >
                 {data.map((_, index) => (
                   <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
@@ -80,7 +80,7 @@ const MoneySpent: React.FC = () => {
             </PieChart>
           </ResponsiveContainer>
 
-          {/* Center Label for Total Amount */}
+          {/*Label for Total Amount */}
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
             <p className="text-[10px] text-gray-500">Total</p>
             <p className="text-lg font-bold text-emerald-600">

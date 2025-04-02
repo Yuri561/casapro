@@ -7,15 +7,30 @@ import {
   Label,
 } from "recharts";
 
-// Sample data: you could later replace this with actual item totals
-const chartData = [
-  { category: "inventory", count: 1260, fill: "hsl(200, 100%, 70%)" },
-];
+import useInventory from "../Hooks/useInventory";
+
 
 const InventoryGauge: React.FC = () => {
+  const inventoryData = useInventory();
+
+  const totalItems = inventoryData.reduce(
+    (sum, item) => sum + (item.quantity || 0),
+    0
+  );
+
+  const maxItems = totalItems;
+  const percentage = Math.min(totalItems / maxItems) *  100;
+  const chartData = [
+    {
+      name: "Inventory",
+      value: percentage,
+      fill: "#3B82F6", 
+    },
+  ];
+
   return (
     <div className="bg-white rounded-lg shadow-md p-2 flex flex-col w-80 h-80 max-w-md">
-      {/* Header */}
+
       <div className="text-center mb-4">
         <h2 className="text-xl font-semibold text-gray-800">Total Inventory</h2>
         <p className="text-sm text-gray-500">Tracked with Casa Pro</p>
@@ -26,14 +41,16 @@ const InventoryGauge: React.FC = () => {
         <RadialBarChart
           width={250}
           height={250}
+        
           innerRadius={80}
           outerRadius={140}
           startAngle={90}
-          endAngle={400}
+
+          endAngle={maxItems}
           data={chartData}
         >
           <PolarGrid radialLines={false} stroke="none" />
-          <RadialBar dataKey="count" background />
+          <RadialBar dataKey="value" background cornerRadius={10} endAngle={450}/>
 
           <PolarRadiusAxis tick={false} tickLine={false} axisLine={false}>
             <Label
@@ -51,7 +68,7 @@ const InventoryGauge: React.FC = () => {
                         y={viewBox.cy}
                         className="fill-black text-3xl font-bold"
                       >
-                        {chartData[0].count.toLocaleString()}
+                        {totalItems.toLocaleString()}
                       </tspan>
                       <tspan
                         x={viewBox.cx}
@@ -69,9 +86,9 @@ const InventoryGauge: React.FC = () => {
           </PolarRadiusAxis>
         </RadialBarChart>
       </div>
-
     </div>
   );
 };
+
 
 export default InventoryGauge;

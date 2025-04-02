@@ -16,13 +16,7 @@ import {
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Tabs, TabsList, TabsTrigger } from "../ui/tabs";
-import {
-    Dialog,
-    DialogContent,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from "../ui/dialog";
+
 import { Search, Pencil, Save } from "lucide-react";
 import { userInventory } from "../../UserAuth/user_auth";
 import AddItemBtn from "../AddItemModal/AddItemBtn";

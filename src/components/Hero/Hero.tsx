@@ -1,49 +1,47 @@
 import React from "react"
 import AddToHomeButton from "../Hooks/AddToHome"
+import LearnMoreBtn from "./LearnMoreBtn"
+import CountUp from "react-countup"
+
 
 const Hero: React.FC = () => {
   return (
-    <section className="relative py-12 sm:py-16 lg:pt-20 lg:pb-36 bg-gradient-to-b from-cyan-50 to-blue-50">
-      <div className="px-4 mx-auto sm:px-6 lg:px-8 w-full">
-        <div className="grid grid-cols-1 gap-y-12 lg:items-center lg:grid-cols-2 xl:grid-cols-5">
+    <section
+      className="relative bg-cover bg-center bg-no-repeat h-screen flex items-center justify-center"
+      style={{ backgroundImage: "url('/house2.jpg')" }}
+    >
 
-          {/* Left Section */}
-          <div className="text-center xl:col-span-2 lg:text-left md:px-16 lg:px-0">
-            <div className="max-w-sm mx-auto sm:max-w-md md:max-w-full">
-              <h1 className="text-4xl font-bold text-gray-900 sm:text-5xl lg:text-6xl font-pj animate-fade-in-up">
-                A Smarter Way to Manage Your Home.
-              </h1>
+      <div className="absolute inset-0 bg-black/60 z-0" />
 
-              <p className="mt-4 text-lg text-gray-700 font-pj animate-fade-in-up delay-200">
-                Simplify home inventory with{" "}
-                <span className="font-bold text-teal-500">100+ Families</span>{" "}
-                using Casa Pro.
-              </p>
 
-              <div className="mt-8 sm:flex sm:space-x-5 lg:mt-12 animate-fade-in-up delay-500">
-                <a
-                  href="#how-it-works"
-                  className="inline-flex items-center px-8 py-4 text-lg font-bold text-white transition-all duration-300 bg-teal-500 border border-transparent rounded-xl hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-400 shadow-md"
-                  role="button"
-                >
-                  Learn more
-                </a>
+      <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-3xl text-white">
+        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight font-pj">
+          Find the best home inventory solution in one tap
+        </h1>
 
-                {/* This is your Add button now */}
-                <AddToHomeButton />
-              </div>
-            </div>
+        <p className="mt-4 text-lg sm:text-xl text-gray-200">
+          Keep track of what matters. Casa Pro simplifies how you manage your home.
+        </p>
+
+        <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <LearnMoreBtn />
+          <AddToHomeButton />
+        </div>
+
+
+        <div className="mt-10 flex flex-col sm:flex-row justify-center items-center gap-8 text-white text-center text-lg font-semibold">
+          <div className="flex flex-col items-center justify-center space-y-2">
+          
+            <CountUp start={0} end={1500} duration={10} className="text-4xl font-bold" />
+            <p className="text-sm text-gray-300">Items Managed</p>
           </div>
 
-          {/* Right Image */}
-          <div className="relative xl:col-span-3 mx-2">
-            <div className="relative w-full mx-auto lg:max-w-2xl xl:max-w-full">
-              <img
-                className="w-full rounded-lg shadow-lg transform scale-105"
-                src="/house2.jpg"
-                alt="Smart home management"
-              />
-            </div>
+          <div className="flex flex-col items-center justify-center space-y-2">
+          <div className="flex flex-col items-center justify-center space-y-2">
+          
+          <CountUp start={0} end={540} duration={10} className="text-4xl font-bold" />
+          <p className="text-sm text-gray-300">Happy Users</p>
+        </div>
           </div>
         </div>
       </div>

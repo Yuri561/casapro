@@ -36,7 +36,7 @@ const Header: React.FC = () => {
       {/* ✅ Show Loading Animation */}
       {loading && <LoadingAnimation />}
 
-      <nav className="relative sticky w-full bg-teal-400 text-gray-900 p-4 flex justify-between items-center fixed top-0 left-0 right-0 shadow-md px-8 z-50">
+      <nav className="relative sticky w-full bg-teal-800 text-gray-900 p-4 flex justify-between items-center fixed top-0 left-0 right-0 shadow-md px-8 z-50">
         {/* Logo */}
         <div className="flex items-center space-x-2">
           <img

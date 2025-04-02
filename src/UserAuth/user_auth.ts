@@ -1,5 +1,4 @@
 import axios from "axios";
-import Header from "../components/Header/Header";
 
 export const API_URL: string = "https://casapro-backend-o0k1.onrender.com";
 

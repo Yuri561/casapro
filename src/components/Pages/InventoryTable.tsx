@@ -12,7 +12,7 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Tabs, TabsList, TabsTrigger } from "../ui/tabs";
 import { Search, Pencil } from "lucide-react";
-import { userInventory, updateInventory, API_URL } from "../../UserAuth/user_auth";
+import { userInventory, updateInventory} from "../../UserAuth/user_auth";
 import AddItemBtn from "../AddItemModal/AddItemBtn";
 import InventoryEditModal from "../EditItemModal/EditItemModal";
 

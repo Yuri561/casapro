@@ -3,25 +3,26 @@ import { useNavigate } from "react-router-dom";
 import { userLogin} from "../../UserAuth/user_auth";
 import LoadingAnimation from "../LoadingAnimation/LoadingAnimation";
 import { useAuth } from "../../context/AuthContext";
+import { useForm } from "react-hook-form";
+
+  interface FormData {
+    username: string;
+    password: string;
+  }
 
 const Login: React.FC = () => {
-  const [formData, setFormData] = useState({ username: "", password: "" });
+  const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
+
   const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false); 
   const navigate = useNavigate();
   const { setIsAuthenticated } = useAuth();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const onSubmit = async (data: FormData) => {
     setError(""); 
     setLoading(true); 
     try {
-        const response = await userLogin(formData);
+        const response = await userLogin(data);
         if (response.status === 200) {
         const {username, user_id} = response.data.user;
         localStorage.setItem("username", username);
@@ -57,27 +58,36 @@ const Login: React.FC = () => {
       )}
 
       <form
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmit(onSubmit)}
         className="w-96 bg-white p-6 rounded-lg shadow-lg"
       >
         <input
           type="text"
-          name="username"
-          onChange={handleChange}
-          value={formData.username}
+          
           placeholder="Username"
+          {...register("username", {
+            required: "Username is required",
+            pattern: {
+              value: /^[a-z]+$/,
+              message: "Username must contain only lowercase letters",
+            },
+          })}
           className="w-full mb-4 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:outline-none"
           required
         />
+        {errors.username && (
+          <p className="text-red-500 text-sm mb-2">{errors.username.message}</p>
+        )}
         <input
           type="password"
-          name="password"
-          onChange={handleChange}
-          value={formData.password}
+          {...register("password", { required: "Password is required" })}
           placeholder="Password"
           className="w-full mb-4 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:outline-none"
           required
         />
+         {errors.password && (
+          <p className="text-red-500 text-sm mb-2">{errors.password.message}</p>
+        )}
         <button
           type="submit"
           className="w-full bg-teal-500 cursor-pointer text-white px-4 py-3 rounded-lg hover:bg-teal-600 transition"

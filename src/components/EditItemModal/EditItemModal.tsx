@@ -13,6 +13,7 @@ import {
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Product } from "../Hooks/useInventory";
+import LoadingAnimation from "../LoadingAnimation/LoadingAnimation";
 
 interface InventoryEditModalProps {
     item: Product;
@@ -23,19 +24,28 @@ interface InventoryEditModalProps {
 
 const InventoryEditModal = ({ item, open, onClose, onSave }: InventoryEditModalProps) => {
   const [edited, setEdited] = useState<Product>(item);
+    const [loading, setLoading] = useState<boolean>(false);
 
   // Update local state if the incoming item changes
   useEffect(() => {
     setEdited(item);
   }, [item]);
 
-  const handleSave = () => {
-    onSave(edited);
-    onClose();
+  const handleSave = async () => {
+    try {
+      setLoading(true);
+      await onSave(edited);
+    } catch (error) {
+      console.error("unable to save edits", error);
+    } finally {
+      onClose();
+      setLoading(false);
+    }
   };
 
   return (
     <Dialog open={open} onOpenChange={(openState) => { if (!openState) onClose(); }}>
+      {loading && <LoadingAnimation />}
       <DialogContent className="sm:max-w-[425px] bg-white p-6 rounded-md shadow-lg">
         <DialogHeader>
           <DialogTitle>Edit Inventory Item</DialogTitle>
@@ -60,7 +70,7 @@ const InventoryEditModal = ({ item, open, onClose, onSave }: InventoryEditModalP
             <Input
               id="category"
               value={edited.category}
-              onChange={(e) => setEdited({ ...edited, category: e.target.value })}
+              onChange={(e) => setEdited({ ...edited, category: e.target.value.toLowerCase() })}
               className="col-span-3"
             />
           </div>
@@ -94,7 +104,7 @@ const InventoryEditModal = ({ item, open, onClose, onSave }: InventoryEditModalP
         </div>
         <DialogFooter>
           <Button type="button" onClick={handleSave} className="bg-green-500 hover:bg-green-700 cursor-pointer">
-            Save changes
+            {loading ? "Saving item...":"Save changes"}
           </Button>
         </DialogFooter>
       </DialogContent>

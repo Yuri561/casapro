@@ -95,7 +95,7 @@ const MoneySpent: React.FC = () => {
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
             <p className="text-[10px] text-gray-500">Total</p>
             <p className=" text-sm text-lg font-bold text-emerald-600">
-              ${totalAmount.toLocaleString()}
+              ${totalAmount.toLocaleString(undefined, {maximumFractionDigits: 0})}
             </p>
           </div>
         </div>

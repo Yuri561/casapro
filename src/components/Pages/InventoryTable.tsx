@@ -19,7 +19,6 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-// import { Tabs, TabsList, TabsTrigger } from "../ui/tabs";
 import { Search, Pencil } from "lucide-react";
 import { userInventory, updateInventory } from "../../UserAuth/user_auth";
 import AddItemBtn from "../AddItemModal/AddItemBtn";
@@ -32,7 +31,7 @@ const InventoryTable: React.FC = () => {
   const [categoryItem, setCategoryItem] = useState<string>("all");
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
-  // const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+
 
   const categories = ["all", "electronics", "pantry", "tools",
     "toiletries", "groceries", "general"
@@ -118,22 +117,6 @@ const InventoryTable: React.FC = () => {
             </SelectGroup>
           </SelectContent>
         </Select>
-        {/* <Tabs defaultValue="all" onValueChange={setActiveTab} className="w-full mb-4">
-          <div className="w-full">
-
-          <TabsList className="w-full grid grid-cols-5 gap-2 ">
-            {["all", "pantry", "tools", "electronics", "general"].map((tab) => (
-              <TabsTrigger
-                key={tab}
-                value={tab}
-                className="bg-gray-200 cursor-pointer hover:bg-gray-300 text-gray-800 data-[state=active]:bg-green-500 data-[state=active]:text-white"
-              >
-                {tab.charAt(0).toUpperCase() + tab.slice(1)}
-              </TabsTrigger>
-            ))}
-          </TabsList>
-          </div>
-        </Tabs> */}
 
         <Table>
           <TableHeader>

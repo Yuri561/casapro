@@ -33,7 +33,7 @@ const InventoryTable: React.FC = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
 
 
-  const categories = ["all", "electronics", "pantry", "tools",
+  const categories: string[] = ["all", "electronics", "pantry", "tools",
     "toiletries", "groceries", "general"
   ]
 
@@ -168,6 +168,10 @@ const InventoryTable: React.FC = () => {
         <InventoryEditModal
           item={selectedProduct}
           open={isEditModalOpen}
+          onDelete={(deletedItem: Product) => {
+            setInventoryData(inventoryData.filter(prod => prod._id !== deletedItem._id));
+            setIsEditModalOpen(false)
+          }}
           onClose={() => setIsEditModalOpen(false)}
           onSave={async (updatedProduct: Product) => {
             try {

@@ -1,5 +1,6 @@
 import axios from "axios";
 
+
 export const API_URL: string = "https://casapro-backend-o0k1.onrender.com";
 
 
@@ -44,4 +45,22 @@ export const addInventory = async(user_id : string, addedData: any) => {
       "Content-Type": "application/json"
     }
   })
+}
+
+export const updatedQuantities = async(item_id: string, 
+ 
+  decrement: number) => {
+  return await axios.patch(`${API_URL}/inventory/delete/${item_id}/${decrement}`, {
+    headers: { "Content-Type": "application/json" }
+  })
+  
+}
+export const deleteInventory = async(item_id: string, 
+  deletedData: any,
+ ) => {
+  return await axios.delete(`${API_URL}/inventory/delete/${item_id}`, {
+    data: deletedData,
+    headers: { "Content-Type": "application/json" }
+  })
+  
 }

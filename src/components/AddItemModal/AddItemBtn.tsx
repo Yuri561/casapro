@@ -34,7 +34,7 @@ const AddItemBtn: React.FC<AddItemBtnProps> = ({ onSave }) => {
   const [formData, setFormData] = useState<Partial<Product>>({});
   const [loading, setLoading] = useState<boolean>(false);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value.toLowerCase() });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {

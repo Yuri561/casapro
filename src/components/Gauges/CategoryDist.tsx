@@ -49,13 +49,14 @@ const CategoryDist: React.FC = () => {
  
   const inventoryData = useInventory();
 
-  // Group items by category and sum their quantities
+
   const chartData = inventoryData.reduce<ChartDataItem[]>((acc, item) => {
     const existingCategory = acc.find(data => data.category === item.category);
     if (existingCategory) {
-      existingCategory.count += item.quantity;
+      existingCategory.count += Number(item.quantity);
+
     } else {
-      acc.push({ category: item.category, count: item.quantity });
+      acc.push({ category: item.category, count: Number(item.quantity) });
     }
     return acc;
   }, []);

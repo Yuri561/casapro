@@ -7,31 +7,37 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { Tabs, TabsList, TabsTrigger } from "../ui/tabs";
+// import { Tabs, TabsList, TabsTrigger } from "../ui/tabs";
 import { Search, Pencil } from "lucide-react";
-import { userInventory, updateInventory} from "../../UserAuth/user_auth";
+import { userInventory, updateInventory } from "../../UserAuth/user_auth";
 import AddItemBtn from "../AddItemModal/AddItemBtn";
 import InventoryEditModal from "../EditItemModal/EditItemModal";
-
-export type Product = {
-  _id: string; 
-  name: string;
-  category: string;
-  location: string;
-  quantity: number;
-  price: number;
-  color: string;
-};
+import { Product } from "../Hooks/useInventory";
 
 const InventoryTable: React.FC = () => {
   const [inventoryData, setInventoryData] = useState<Product[]>([]);
   const [search, setSearch] = useState("");
-  const [activeTab, setActiveTab] = useState("all");
+  const [categoryItem, setCategoryItem] = useState<string>("all");
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
+  // const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+
+  const categories = ["all", "electronics", "pantry", "tools",
+    "toiletries", "groceries", "general"
+  ]
+
 
   useEffect(() => {
     const fetchInventory = async () => {
@@ -51,12 +57,16 @@ const InventoryTable: React.FC = () => {
 
   const filtered = inventoryData.filter((prod) =>
     prod.name.toLowerCase().includes(search.toLowerCase()) &&
-    (activeTab === "all" || prod.category.toLowerCase() === activeTab)
+    (categoryItem === "all" || prod.category.toLowerCase() === categoryItem)
   );
 
   const handleEdit = (prod: Product) => {
     setSelectedProduct(prod);
-    setIsModalOpen(true);
+    setIsEditModalOpen(true);
+  };
+
+  const handleAddSave = (newItem: Product) => {
+    setInventoryData([...inventoryData, newItem]);
   };
 
   return (
@@ -73,14 +83,46 @@ const InventoryTable: React.FC = () => {
           <Button variant="outline" size="icon">
             <Search className="w-4 h-4" />
           </Button>
-          <AddItemBtn />
+          {/* Add Item Modal */}
+          <AddItemBtn
+            // isBtnOpen={isAddModalOpen}
+
+            onSave={handleAddSave}
+          // _id={user_id}
+
+          />
+
+
         </div>
       </CardHeader>
 
       <CardContent>
-        <Tabs defaultValue="all" onValueChange={setActiveTab} className="w-full mb-4">
-          <TabsList className="grid grid-cols-4 gap-2">
-            {["all", "pantry", "tools", "electronics"].map((tab) => (
+
+        <Select defaultValue={categoryItem} onValueChange={(value)=>(setCategoryItem(value))}>
+          <SelectTrigger className="w-[180px]">
+            <SelectValue placeholder="Select a category"/>
+          </SelectTrigger>
+          <SelectContent className="">
+            <SelectGroup className="bg-white text-slate-900">
+              <SelectLabel>Categories</SelectLabel>
+                {categories.map((item)=>{
+                  return (
+                  <SelectItem value={item} 
+                  key={item}
+                  className="hover:bg-gray-200">
+                    {item[0].toUpperCase() + item.slice(1).toLowerCase()}
+                  </SelectItem>
+                  )
+
+                })}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+        {/* <Tabs defaultValue="all" onValueChange={setActiveTab} className="w-full mb-4">
+          <div className="w-full">
+
+          <TabsList className="w-full grid grid-cols-5 gap-2 ">
+            {["all", "pantry", "tools", "electronics", "general"].map((tab) => (
               <TabsTrigger
                 key={tab}
                 value={tab}
@@ -90,7 +132,8 @@ const InventoryTable: React.FC = () => {
               </TabsTrigger>
             ))}
           </TabsList>
-        </Tabs>
+          </div>
+        </Tabs> */}
 
         <Table>
           <TableHeader>
@@ -135,16 +178,17 @@ const InventoryTable: React.FC = () => {
         </Table>
       </CardContent>
 
-      {isModalOpen && selectedProduct && (
+
+
+      {/* Edit Item Modal */}
+      {isEditModalOpen && selectedProduct && (
         <InventoryEditModal
           item={selectedProduct}
-          open={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
+          open={isEditModalOpen}
+          onClose={() => setIsEditModalOpen(false)}
           onSave={async (updatedProduct: Product) => {
-            console.log("Updated Product:", updatedProduct);
             try {
               if (updatedProduct._id) {
-                // Send only the fields you want to update
                 const updateData = {
                   name: updatedProduct.name,
                   category: updatedProduct.category,
@@ -153,7 +197,6 @@ const InventoryTable: React.FC = () => {
                   price: updatedProduct.price,
                 };
                 const response = await updateInventory(updatedProduct._id, updateData);
-                console.log("Payload to be sent:", JSON.stringify(updateData));
                 if (response.status === 200) {
                   setInventoryData(
                     inventoryData.map((prod) =>
@@ -169,7 +212,7 @@ const InventoryTable: React.FC = () => {
             } catch (error) {
               console.error("Error updating inventory:", error);
             } finally {
-              setIsModalOpen(false);
+              setIsEditModalOpen(false);
             }
           }}
         />

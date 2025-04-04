@@ -37,4 +37,11 @@ export const updateInventory = async (_id: string, updateData: any) => {
       }
     });
   };
-  
+
+export const addInventory = async(user_id : string, addedData: any) => {
+  return await axios.post(`${API_URL}/inventory/add/${user_id}`, addedData, {
+    headers: {
+      "Content-Type": "application/json"
+    }
+  })
+}

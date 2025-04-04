@@ -12,7 +12,7 @@ import {
 } from "../ui/dialog";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import { Product } from "../Pages/InventoryTable"; // Adjust the path accordingly
+import { Product } from "../Hooks/useInventory";
 
 interface InventoryEditModalProps {
     item: Product;

@@ -21,8 +21,8 @@ const InventoryGauge: React.FC<InventoryGaugeProps> = ({inventoryData}) => {
   return (
     <div className="bg-white rounded-lg shadow-md p-2 flex flex-col w-80 h-80 max-w-md">
       <div className="text-center mb-4">
-        <h2 className="text-xl font-semibold text-gray-800">Total Inventory</h2>
-        <p className="text-sm text-gray-500">Tracked with Casa Pro</p>
+        <h2 className="text-xl font-semibold text-gray-800 mt-5">Inventory Count</h2>
+        
       </div>
 
       <div className="flex justify-center items-center mb-4">

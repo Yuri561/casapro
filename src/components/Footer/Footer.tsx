@@ -4,7 +4,7 @@ import HomeIcon from "/homeicon.png"
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-gradient-to-r from-teal-100 via-cyan-100 to-blue-100 text-white py-12">
+    <footer className="bg-gradient-to-r from-teal-100 via-cyan-100 to-blue-100 text-white py-12 h-full">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col items-center justify-between space-y-8 md:flex-row md:space-y-0">
           <div className=" flex space-x-2 text-center md:text-left">

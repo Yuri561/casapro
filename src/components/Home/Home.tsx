@@ -11,7 +11,7 @@ import Newsletter from '../Newsletter/Newsletter'
 
 const Home:React.FC = () => {
   return (
-    <div>
+    <div className='min-h-screen'>
         {/* <Header/> */}
          <Hero/>
          <WhyChooseCasaPro/>

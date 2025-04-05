@@ -11,7 +11,7 @@ import {
 import { Button } from "../ui/button";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
-import { Plus } from "lucide-react";
+import { CameraIcon, Plus } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -60,7 +60,7 @@ const AddItemBtn: React.FC<AddItemBtnProps> = ({ onSave }) => {
   };
 
   return (
-    
+
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       {loading && <LoadingAnimation />}
       <DialogTrigger asChild>
@@ -146,6 +146,17 @@ const AddItemBtn: React.FC<AddItemBtnProps> = ({ onSave }) => {
               />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="location" className="text-right">Location</Label>
+              <Input
+                id="location"
+                name="location"
+                onChange={handleChange}
+                value={formData.location || ""}
+                placeholder="e.g., Pantry Shelf"
+                className="col-span-3"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="price" className="text-right">
                 Price
               </Label>
@@ -161,12 +172,15 @@ const AddItemBtn: React.FC<AddItemBtnProps> = ({ onSave }) => {
             </div>
           </div>
           <DialogFooter>
+            <Button className="bg-blue-500 cursor-pointer hover:bg-blue-700 text-white">
+              <CameraIcon /> Scan Item
+            </Button>
             <Button
               type="submit"
               disabled={loading}
               className="bg-emerald-600 cursor-pointer hover:bg-emerald-700 text-white"
             >
-              {loading ? "adding new item...":"Add Item"}
+              {loading ? "adding new item..." : "Add Item"}
             </Button>
           </DialogFooter>
         </form>

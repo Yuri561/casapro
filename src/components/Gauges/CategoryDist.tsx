@@ -16,12 +16,16 @@ import {
   CardTitle,
   CardContent,
 } from "../ui/card";
-import useInventory from "../Hooks/useInventory";
+import  { Product } from "../Hooks/useInventory";
 
 
 interface ChartDataItem {
   category: string;
   count: number;
+}
+
+interface CategoryDistProps{
+  inventoryData: Product[]
 }
 
 interface CustomTooltipProps {
@@ -45,10 +49,8 @@ const CustomTooltip: React.FC<CustomTooltipProps> = ({ active, payload }) => {
   return null;
 };
 
-const CategoryDist: React.FC = () => {
+const CategoryDist: React.FC<CategoryDistProps> = ({inventoryData}) => {
  
-  const inventoryData = useInventory();
-
 
   const chartData = inventoryData.reduce<ChartDataItem[]>((acc, item) => {
     const existingCategory = acc.find(data => data.category === item.category);

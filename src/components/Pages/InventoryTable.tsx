@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   Table,
   TableBody,
@@ -19,54 +19,58 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { Search, Pencil } from "lucide-react";
-import { userInventory, updateInventory } from "../../UserAuth/user_auth";
+import { Search, Pencil} from "lucide-react";
+import { updateInventory } from "../../UserAuth/user_auth";
 import AddItemBtn from "../AddItemModal/AddItemBtn";
 import InventoryEditModal from "../EditItemModal/EditItemModal";
 import { Product } from "../Hooks/useInventory";
 
-const InventoryTable: React.FC = () => {
-  const [inventoryData, setInventoryData] = useState<Product[]>([]);
+interface InventoryTableProps {
+  inventoryData: Product[];
+  setInventoryData: React.Dispatch<React.SetStateAction<Product[]>>;
+  onAddSave: (newItem: Product) => void;
+}
+const InventoryTable: React.FC<InventoryTableProps> = ({inventoryData, setInventoryData, onAddSave}) => {
+
   const [search, setSearch] = useState("");
   const [categoryItem, setCategoryItem] = useState<string>("all");
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
 
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const pageSize = 10;
 
-  const categories: string[] = ["all", "electronics", "pantry", "tools",
-    "toiletries", "groceries", "general"
-  ]
+  const categories: string[] = [
+    "all",
+    "electronics",
+    "pantry",
+    "tools",
+    "toiletries",
+    "groceries",
+    "general",
+  ];
 
-
-  useEffect(() => {
-    const fetchInventory = async () => {
-      const user_id = localStorage.getItem("user_id");
-      if (!user_id) return;
-      try {
-        const response = await userInventory(user_id);
-        if (response.status === 200) {
-          setInventoryData(response.data.user_inventory);
-        }
-      } catch (error) {
-        console.error("Error fetching inventory:", error);
-      }
-    };
-    fetchInventory();
-  }, []);
-
+ 
   const filtered = inventoryData.filter((prod) =>
     prod.name.toLowerCase().includes(search.toLowerCase()) &&
     (categoryItem === "all" || prod.category.toLowerCase() === categoryItem)
   );
+
+  // Pagination: calculate the current page data
+  const indexOfLastItem = currentPage * pageSize;
+  const indexOfFirstItem = indexOfLastItem - pageSize;
+  const currentItems = filtered.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(filtered.length / pageSize);
 
   const handleEdit = (prod: Product) => {
     setSelectedProduct(prod);
     setIsEditModalOpen(true);
   };
 
-  const handleAddSave = (newItem: Product) => {
-    setInventoryData([...inventoryData, newItem]);
-  };
+  // const handleAddSave = (newItem: Product) => {
+  //   setInventoryData([...inventoryData, newItem]);
+  // };
 
   return (
     <Card className="w-full bg-white">
@@ -82,38 +86,23 @@ const InventoryTable: React.FC = () => {
           <Button variant="outline" size="icon">
             <Search className="w-4 h-4" />
           </Button>
-          {/* Add Item Modal */}
-          <AddItemBtn
-            // isBtnOpen={isAddModalOpen}
-
-            onSave={handleAddSave}
-          // _id={user_id}
-
-          />
-
-
+          <AddItemBtn onSave={onAddSave} />
         </div>
       </CardHeader>
 
       <CardContent>
-
-        <Select defaultValue={categoryItem} onValueChange={(value)=>(setCategoryItem(value))}>
+        <Select defaultValue={categoryItem} onValueChange={(value) => setCategoryItem(value)}>
           <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Select a category"/>
+            <SelectValue placeholder="Select a category" />
           </SelectTrigger>
-          <SelectContent className="">
+          <SelectContent>
             <SelectGroup className="bg-white text-slate-900">
               <SelectLabel>Categories</SelectLabel>
-                {categories.map((item)=>{
-                  return (
-                  <SelectItem value={item} 
-                  key={item}
-                  className="hover:bg-gray-200">
-                    {item[0].toUpperCase() + item.slice(1).toLowerCase()}
-                  </SelectItem>
-                  )
-
-                })}
+              {categories.map((item) => (
+                <SelectItem value={item} key={item} className="hover:bg-gray-200">
+                  {item[0].toUpperCase() + item.slice(1).toLowerCase()}
+                </SelectItem>
+              ))}
             </SelectGroup>
           </SelectContent>
         </Select>
@@ -130,15 +119,12 @@ const InventoryTable: React.FC = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {filtered.map((prod) => (
+            {currentItems.map((prod) => (
               <TableRow key={prod._id}>
                 <TableCell>{prod.name}</TableCell>
                 <TableCell>
                   <div className="flex items-center gap-2">
-                    <span
-                      className="w-4 h-4 rounded-full"
-                      style={{ backgroundColor: prod.color }}
-                    ></span>
+                    <span className="w-4 h-4 rounded-full" style={{ backgroundColor: prod.color }}></span>
                     <span>{prod.color}</span>
                   </div>
                 </TableCell>
@@ -159,18 +145,36 @@ const InventoryTable: React.FC = () => {
             ))}
           </TableBody>
         </Table>
+
+        {/* Pagination Controls */}
+        <div className="flex justify-between items-center mt-4">
+          <Button
+            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+            disabled={currentPage === 1}
+            className="bg-gray-200 hover:bg-gray-300"
+          >
+            Previous
+          </Button>
+          <span>
+            Page {currentPage} of {totalPages}
+          </span>
+          <Button
+            onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+            disabled={currentPage === totalPages}
+            className="bg-gray-200 hover:bg-gray-300"
+          >
+            Next
+          </Button>
+        </div>
       </CardContent>
 
-
-
-      {/* Edit Item Modal */}
       {isEditModalOpen && selectedProduct && (
         <InventoryEditModal
           item={selectedProduct}
           open={isEditModalOpen}
           onDelete={(deletedItem: Product) => {
-            setInventoryData(inventoryData.filter(prod => prod._id !== deletedItem._id));
-            setIsEditModalOpen(false)
+            setInventoryData(inventoryData.filter((prod) => prod._id !== deletedItem._id));
+            setIsEditModalOpen(false);
           }}
           onClose={() => setIsEditModalOpen(false)}
           onSave={async (updatedProduct: Product) => {

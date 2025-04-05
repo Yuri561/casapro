@@ -1,10 +1,14 @@
 import React from "react";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
-import useInventory from "../Hooks/useInventory";
+import { Product } from "../Hooks/useInventory";
 
-const InventoryGauge: React.FC = () => {
-  const inventoryData = useInventory();
+
+interface InventoryGaugeProps{
+  inventoryData: Product[]
+}
+const InventoryGauge: React.FC<InventoryGaugeProps> = ({inventoryData}) => {
+
   const totalItems = inventoryData.reduce(
     (sum, item) => sum + Number(item.quantity || 0),
     0

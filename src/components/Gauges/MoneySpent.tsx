@@ -7,7 +7,7 @@ import {
   Tooltip,
 } from "recharts";
 import { Card, CardHeader, CardTitle, CardContent } from "../ui/card";
-import useInventory from "../Hooks/useInventory";
+import { Product } from "../Hooks/useInventory";
 
 const COLORS = [
   "#60a5fa",
@@ -18,6 +18,9 @@ const COLORS = [
   "#f97316",
 ];
 
+interface MoneySpentProps{
+  inventoryData: Product[]
+}
 interface ChartDataItem {
   category: string;
   totalSpent: number;
@@ -44,8 +47,8 @@ const CustomTooltip: React.FC<any> = ({ active, payload }) => {
   return null;
 };
 
-const MoneySpent: React.FC = () => {
-  const inventoryData = useInventory();
+const MoneySpent: React.FC<MoneySpentProps> = ({inventoryData}) => {
+
 
   // Aggregate data by category: sum (price * quantity) for each category.
   const chartData = inventoryData.reduce<ChartDataItem[]>((acc, item) => {

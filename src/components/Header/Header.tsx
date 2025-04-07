@@ -1,6 +1,6 @@
-import { useState} from "react";
+import { useState } from "react";
 import { Menu, X } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import HomeIcon from "/homeicon.png";
 import LoadingAnimation from "../LoadingAnimation/LoadingAnimation";
 import { useAuth } from "../../context/AuthContext";
@@ -9,8 +9,8 @@ const Header: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
-  // ✅ Use Auth Context
   const { isAuthenticated, setIsAuthenticated } = useAuth();
 
   const handleLogout = () => {
@@ -31,9 +31,16 @@ const Header: React.FC = () => {
     }, 1000);
   };
 
+  const navLinkClass = (path: string, isLogout = false) => {
+    const isActive = path && location.pathname === path;
+    const base = "relative cursor-pointer after:content-[''] after:block after:h-[2px] after:bg-white after:transition-all after:duration-300";
+    const active = isActive ? "after:w-full" : "after:w-0";
+    const textColor = isLogout ? "text-red-500" : "text-white";
+    return `${base} ${textColor} ${active} hover:after:w-full`;
+  };
+
   return (
     <>
-      {/* ✅ Show Loading Animation */}
       {loading && <LoadingAnimation />}
 
       <nav className="relative sticky w-full bg-teal-800 text-gray-900 p-4 flex justify-between items-center fixed top-0 left-0 right-0 shadow-md px-8 z-50">
@@ -48,53 +55,48 @@ const Header: React.FC = () => {
         </div>
 
         {/* Desktop Navigation */}
-        <ul className="hidden md:flex space-x-8 font-medium ">
-          <li
-            className="relative text-white cursor-pointer after:content-[''] after:block after:h-[2px] after:bg-white after:w-0 hover:after:w-full after:transition-all after:duration-300"
-            onClick={() => handleNavigation("/")}
-          >
+        <ul className="hidden md:flex space-x-8 font-medium">
+          <li className={navLinkClass("/")} onClick={() => handleNavigation("/")}>
             Home
           </li>
 
           {isAuthenticated ? (
             <>
               <li
-                className="relative text-white cursor-pointer after:content-[''] after:block after:h-[2px] after:bg-white after:w-0 hover:after:w-full after:transition-all after:duration-300"
+                className={navLinkClass("/dashboard")}
                 onClick={() => handleNavigation("/dashboard")}
               >
                 Dashboard
               </li>
               <li
-                className="relative text-white cursor-pointer after:content-[''] after:block after:h-[2px] after:bg-white after:w-0 hover:after:w-full after:transition-all after:duration-300"
+                className={navLinkClass("/profile")}
                 onClick={() => handleNavigation("/profile")}
               >
                 My Profile
               </li>
-              <li
-                className="relative text-red-500 cursor-pointer after:content-[''] after:block after:h-[2px] after:bg-white after:w-0 hover:after:w-full after:transition-all after:duration-300"
-                onClick={handleLogout}
-              >
+              <li className={navLinkClass("/home", true)} onClick={handleLogout}>
                 Logout
               </li>
             </>
           ) : (
             <>
               <li
-                className="relative text-white cursor-pointer after:content-[''] after:block after:h-[2px] after:bg-white after:w-0 hover:after:w-full after:transition-all after:duration-300"
+                className={navLinkClass("/login")}
                 onClick={() => handleNavigation("/login")}
               >
                 Login
               </li>
               <li
-                className="relative text-white cursor-pointer after:content-[''] after:block after:h-[2px] after:bg-white after:w-0 hover:after:w-full after:transition-all after:duration-300 bg-transparent border rounded px-3"
+                className={navLinkClass("/create-account")}
                 onClick={() => handleNavigation("/create-account")}
               >
                 Create an account
               </li>
             </>
           )}
+
           <li
-            className="relative text-white cursor-pointer after:content-[''] after:block after:h-[2px] after:bg-white after:w-0 hover:after:w-full after:transition-all after:duration-300"
+            className={navLinkClass("/contact")}
             onClick={() => handleNavigation("/contact")}
           >
             Contact
@@ -110,7 +112,7 @@ const Header: React.FC = () => {
 
         {/* Mobile Dropdown Menu */}
         {isOpen && (
-          <div className="absolute top-16 left-0 w-full bg-white shadow-md md:hidden transition-all duration-300">
+          <div className="absolute top-16 left-0 w-full bg-white shadow-md md:hidden transition-all duration-300 z-50">
             <ul className="flex flex-col space-y-4 p-6">
               <li
                 onClick={() => {

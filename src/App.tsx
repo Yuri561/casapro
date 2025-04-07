@@ -9,6 +9,8 @@ import Profile from "./components/MyProfile/MyProfile";
 
 function App() {
   return (
+    <div className="flex flex-col min-h-screen bg-gradient-to-br from-[#e8f4f8] via-[#dbeef7] to-[#c8e2f0]">
+
     <AuthProvider>
       <BrowserRouter>
         <Layout>
@@ -22,6 +24,7 @@ function App() {
         </Layout>
       </BrowserRouter>
     </AuthProvider>
+    </div>
   );
 }
 

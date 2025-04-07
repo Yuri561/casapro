@@ -6,6 +6,9 @@ import MoneySpent from '../Gauges/MoneySpent'
 import InventoryTable from './InventoryTable'
 import { Product } from "../Hooks/useInventory";
 import { userInventory } from '../../UserAuth/user_auth'
+import InventoryTips from './InventoryTips'
+import InventoryAssistant from './InventoryAssistant'
+import InventoryForecast from './InventoryForecast'
 
 
 const Dashboard: React.FC = () => {
@@ -68,6 +71,15 @@ const Dashboard: React.FC = () => {
                         <MoneySpent inventoryData={inventoryData} />
                     </div>
                 </div>
+            </section>
+            <section className='py-16 bg-gradient-to-r from-teal-100 via-cyan-100 to-blue-100 sm:py-20 lg:py-24'>
+                <InventoryTips/>
+            </section>
+            <section className='py-16 bg-gradient-to-r from-teal-200 via-cyan-100 to-blue-100 sm:py-20 lg:py-24'>
+                <InventoryAssistant inventoryData={inventoryData}/>
+            </section>
+            <section className='py-16 bg-gradient-to-br from-[#e0f7f4] via-[#c7e9f0] to-[#b0dffc] sm:py-20 lg:py-24'>
+                <InventoryForecast inventoryData={inventoryData}/>
             </section>
             <section className='py-16 bg-gradient-to-r from-emerald-200 via-teal-300 to-cyan-400 sm:py-20 lg:py-24'>
                 <div className='text-center'>

@@ -1,22 +1,29 @@
 import React from "react";
 import { Edit, LogOut, Clock, Star } from "lucide-react";
 import bannerPng from "../../../public/profile.jpg";
+interface ProfileProps {
+  username?: string;
+  email?: string;
+  totalItems?: number;
+  totalCategories?: number;
+  profileCompletion?: number;
+  lastLogin?: string;
+  onEditProfile?: () => void;
+  onViewActivity?: () => void;
+  onLogout?: () => void;
+}
 
-const Profile = ({
-  username,
-  email,
-  totalItems,
-  totalCategories,
-  profileCompletion,
-  lastLogin,
-  onEditProfile,
-  onViewActivity,
-  onLogout,
+const Profile: React.FC<ProfileProps> = ({
+  username = "John Doe",
+  email = "johndoe@example.com",
+  totalItems = 0,
+  totalCategories = 0,
+  profileCompletion = 65,
+
+  onEditProfile = () => alert("Edit Profile Clicked"),
+  onViewActivity = () => alert("View Activity Clicked"),
+  onLogout = () => alert("Logged Out"),
 }) => {
-  const formattedDate = new Date(lastLogin).toLocaleString(undefined, {
-    dateStyle: "medium",
-    timeStyle: "short",
-  });
 
   // Sample recent activity & favorites
   const recentActivity = [

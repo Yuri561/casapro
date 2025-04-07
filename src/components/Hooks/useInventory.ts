@@ -3,6 +3,8 @@ import { userInventory } from "../../UserAuth/user_auth"
 
 
 export type Product = {
+    updatedAt: any;
+    createdAt: any;
     _id?: string;
     id: number;
     name: string;

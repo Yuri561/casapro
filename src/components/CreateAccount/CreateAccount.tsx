@@ -24,7 +24,7 @@ const CreateAccount: React.FC = () => {
   const [showConfirm, setShowConfirm] = useState(false);
 
   const password = watch("password");
-  const confirmPassword = watch("confirmPassword");
+
 
   const passwordStrength = useMemo(() => {
     if (!password) return { label: "", color: "" };
@@ -105,7 +105,7 @@ const CreateAccount: React.FC = () => {
 
         <div className="relative">
           <input
-            type={showPassword ? "text" : "password"}
+            type="password"
             placeholder="Password"
             {...register("password", { required: "Password is required" })}
             className="w-full mb-2 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:outline-none"

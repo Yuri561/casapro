@@ -1,15 +1,18 @@
-import React, { useMemo } from 'react';
-import { Product } from '../Hooks/useInventory';
+import React from 'react';
+import useInventory, { Product } from '../Hooks/useInventory';
 import {
   FaLightbulb, FaBroom, FaDollarSign,
-  FaTags, FaArchive, FaDownload, FaBell, FaSnowflake, FaSeedling
+FaBell, FaSnowflake, FaSeedling
 } from 'react-icons/fa';
+
 
 interface Props {
   inventoryData: Product[];
 }
 
 const HomeOpsIntelligenceSection: React.FC<Props> = ({ inventoryData }) => {
+
+  const {formattedTotal} = useInventory()
   const now = Date.now();
   const twoMonthsAgo = now - 1000 * 60 * 60 * 24 * 60;
 
@@ -17,9 +20,6 @@ const HomeOpsIntelligenceSection: React.FC<Props> = ({ inventoryData }) => {
     new Date(item.updatedAt || item.createdAt).getTime() < twoMonthsAgo
   );
 
-  const inventoryValue = useMemo(() => {
-    return inventoryData.reduce((acc, item) => acc + (item.price || 0), 0);
-  }, [inventoryData]);
 
   const seasonal = (() => {
     const month = new Date().getMonth();
@@ -30,9 +30,9 @@ const HomeOpsIntelligenceSection: React.FC<Props> = ({ inventoryData }) => {
   })();
 
   return (
-    <section className="bg-gradient-to-tr from-white via-blue-50 to-emerald-50 py-20 px-4">
+    <section className="bg-gradient-to-tr from-white via-blue-50 to-emerald-50 py-6 px-4">
       <div className="max-w-7xl mx-auto space-y-14">
-        <h2 className="text-4xl font-bold text-center text-gray-800">🧠 HomeOps Intelligence Center</h2>
+        <h2 className="text-4xl font-bold text-center text-gray-800">HomeOps Intelligence Center</h2>
 
         {/* AI-style Suggestions */}
         <div className="bg-white rounded-xl shadow-lg p-6">
@@ -67,25 +67,10 @@ const HomeOpsIntelligenceSection: React.FC<Props> = ({ inventoryData }) => {
         {/* Value Estimator */}
         <div className="bg-white rounded-xl shadow p-6">
           <h3 className="flex items-center gap-2 text-lg font-semibold text-amber-700 mb-4"><FaDollarSign /> Total Inventory Value</h3>
-          <p className="text-2xl font-bold text-gray-800">${inventoryValue}</p>
+          <p className="text-2xl font-bold text-gray-800">{formattedTotal}</p>
           <p className="text-sm text-gray-600">Estimate based on current price values in your inventory.</p>
         </div>
 
-        {/* Bulk Actions */}
-        <div className="bg-white rounded-xl shadow p-6 space-y-4">
-          <h3 className="flex items-center gap-2 text-lg font-semibold text-cyan-700"><FaTags /> Quick Bulk Actions</h3>
-          <div className="grid md:grid-cols-3 gap-4 text-sm">
-            <button className="bg-indigo-600 text-white px-4 py-2 rounded flex items-center gap-2 justify-center">
-              <FaTags /> Apply Tags to Category
-            </button>
-            <button className="bg-gray-700 text-white px-4 py-2 rounded flex items-center gap-2 justify-center">
-              <FaArchive /> Archive Old Items
-            </button>
-            <button className="bg-green-600 text-white px-4 py-2 rounded flex items-center gap-2 justify-center">
-              <FaDownload /> Export Backup
-            </button>
-          </div>
-        </div>
 
         {/* Automation Prompts */}
         <div className="bg-white rounded-xl shadow p-6 space-y-3">

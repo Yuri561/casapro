@@ -4,7 +4,7 @@ import cards from "../../db/HowItWorksdb"
 
 const HowItWorks: React.FC = () => {
   return (
-    <section id='how-it-works' className="py-16 bg-gradient-to-r from-teal-100 via-cyan-100 to-blue-100 sm:py-20 lg:py-24">
+    <section id='how-it-works' className="py-8 bg-gradient-to-r from-teal-100 via-cyan-100 to-blue-100 sm:py-20 lg:py-24">
       <div className="px-4 mx-auto w-full sm:px-6 lg:px-8">
 
         <div className="text-center">

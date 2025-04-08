@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Edit } from "lucide-react";
 import bannerPng from "../../../public/profile.jpg";
 import InventoryAssistant from "../Pages/InventoryAssistant";
 import InventoryForecast from "../Pages/InventoryForecast";
 import HomeOpsIntelligenceSection from "../Pages/HomeOpsInteligence";
 import { userInventory } from "../../UserAuth/user_auth";
-import { Product } from "../Hooks/useInventory";
+import useInventory, { Product } from "../Hooks/useInventory";
+import EditProfile from "../EditProfile/EditProfile";
 
 interface ProfileProps {
   username?: string;
@@ -20,15 +20,15 @@ interface ProfileProps {
 }
 
 const Profile: React.FC<ProfileProps> = ({
-  email = "johndoe@example.com",
-  totalItems = 0,
-  totalCategories = 0,
+
+
   profileCompletion = 65,
-  onEditProfile = () => alert("Edit Profile Clicked"),
+
 
 }) => {
   const [username, setUsername] = useState("");
   const [inventoryData, setInventoryData] = useState<Product[]>([]);
+  const {totalItems, totalCategories} = useInventory()
 
   const name = localStorage.getItem("user_id") || "?";
   const userId = localStorage.getItem("user_id") || "";
@@ -51,10 +51,6 @@ const Profile: React.FC<ProfileProps> = ({
     fetchInventory();
   }, [userId]);
 
-
-
-  // const favorites = ["Groceries", "Tools", "Electronics"];
-
   return (
     <div className="min-h-screen w-full bg-gradient-to-br from-[#e8f4f8] via-[#dbeef7] to-[#c8e2f0] overflow-hidden">
       {/* ===== Cover Banner ===== */}
@@ -71,13 +67,9 @@ const Profile: React.FC<ProfileProps> = ({
       {/* ===== Basic Info ===== */}
       <div className="pt-20 pb-6 px-8 text-center">
         <h2 className="text-3xl font-bold text-gray-900">{username || "User"}</h2>
-        <p className="text-sm text-gray-600">{email}</p>
-        <button
-          onClick={onEditProfile}
-          className="mt-4 inline-flex items-center px-5 py-2 border border-blue-500 text-blue-500 rounded-full hover:bg-blue-500 hover:text-white transition"
-        >
-          <Edit className="w-4 h-4 mr-1" /> Edit Profile
-        </button>
+        <div className="mt-5">
+        <EditProfile/>
+        </div>
       </div>
 
       {/* ===== Stats & Completion ===== */}
@@ -117,15 +109,15 @@ const Profile: React.FC<ProfileProps> = ({
 
 
       {/* ===== Dashboard Feature Sections (Unified Background) ===== */}
-      <section className="py-16">
+      <section className="py-10">
         <InventoryAssistant inventoryData={inventoryData} />
       </section>
 
-      <section className="py-16">
+      <section className="py-10">
         <InventoryForecast inventoryData={inventoryData} />
       </section>
 
-      <section className="py-16 pb-24">
+      <section className="py-10 pb-10">
         <HomeOpsIntelligenceSection inventoryData={inventoryData} />
       </section>
     </div>

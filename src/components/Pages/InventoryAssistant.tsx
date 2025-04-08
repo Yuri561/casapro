@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { FaLightbulb, FaThList, FaThLarge, FaDownload, FaCogs } from 'react-icons/fa';
 import { Product } from '../Hooks/useInventory';
 
+
 interface Props {
   inventoryData: Product[];
 }
@@ -29,9 +30,9 @@ const InventoryAssistant: React.FC<Props> = ({ inventoryData }) => {
   });
 
   return (
-    <section className="bg-gradient-to-r from-white via-sky-50 to-blue-100 py-16 px-4">
+    <section className="bg-gradient-to-r from-white via-sky-50 to-blue-100 py-6 px-4">
       <div className="max-w-7xl mx-auto space-y-12">
-        <h2 className="text-4xl font-bold text-center text-gray-800">🤖 Inventory Assistant Hub</h2>
+        <h2 className="text-4xl font-bold text-center text-gray-800">Inventory Assistant Hub</h2>
 
         {/* Filter and view controls */}
         <div className="flex flex-wrap items-center justify-between gap-4">

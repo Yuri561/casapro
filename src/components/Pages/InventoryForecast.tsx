@@ -1,6 +1,7 @@
 // Same imports from before
 import React, { useState, useEffect } from 'react';
 import { Product } from '../Hooks/useInventory';
+import useInventory from '../Hooks/useInventory';
 import {
   FaTrash,
   FaClipboardList,
@@ -20,6 +21,7 @@ interface Props {
 const InventoryForecast: React.FC<Props> = ({ inventoryData }) => {
   const [shoppingList, setShoppingList] = useState<string[]>([]);
   const [zoneMap, setZoneMap] = useState<Record<string, string>>({});
+  const {totalItems, totalCategories} = useInventory()
 
   const toggleShoppingItem = (itemName: string) => {
     setShoppingList((prev) =>
@@ -71,15 +73,15 @@ const InventoryForecast: React.FC<Props> = ({ inventoryData }) => {
   }
 
   return (
-    <section className="py-16 px-4 bg-gradient-to-br from-emerald-50 via-cyan-100 to-blue-50">
+    <section className="py-6 px-4 bg-gradient-to-br from-emerald-50 via-cyan-100 to-blue-50">
       <div className="max-w-7xl mx-auto space-y-14">
-        <h2 className="text-4xl font-bold text-center text-gray-800">🏠 Home Management & Logistics Hub</h2>
+        <h2 className="text-4xl font-bold text-center text-gray-800">Home Management & Logistics Hub</h2>
 
         {/* Command Summary */}
         <div className="grid md:grid-cols-3 gap-6 text-sm">
           <div className="bg-white shadow rounded-xl p-6">
             <h4 className="font-bold text-gray-800 mb-2 flex items-center gap-2"><FaBoxes /> Items Tracked</h4>
-            <p className="text-2xl font-semibold text-blue-600">{inventoryData.length}</p>
+            <p className="text-2xl font-semibold text-blue-600">{totalItems}</p>
           </div>
           <div className="bg-white shadow rounded-xl p-6">
             <h4 className="font-bold text-gray-800 mb-2 flex items-center gap-2"><FaMapMarkerAlt /> Storage Zones</h4>
@@ -87,7 +89,7 @@ const InventoryForecast: React.FC<Props> = ({ inventoryData }) => {
           </div>
           <div className="bg-white shadow rounded-xl p-6">
             <h4 className="font-bold text-gray-800 mb-2 flex items-center gap-2"><FaClipboardCheck /> Active Categories</h4>
-            <p className="text-sm text-gray-600">{[...new Set(inventoryData.map(i => i.category))].length} categories</p>
+            <p className="text-sm text-gray-600">{totalCategories} categories</p>
           </div>
         </div>
 

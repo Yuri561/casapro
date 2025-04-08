@@ -9,7 +9,7 @@ interface InventoryGaugeProps{
 }
 const InventoryGauge: React.FC<InventoryGaugeProps> = ({inventoryData}) => {
 
-  const totalItems = inventoryData.reduce(
+const totalItems = inventoryData.reduce(
     (sum, item) => sum + Number(item.quantity || 0),
     0
   );
@@ -38,10 +38,6 @@ const InventoryGauge: React.FC<InventoryGaugeProps> = ({inventoryData}) => {
           />
         </div>
       </div>
-{/*       
-      <div className="text-center mt-2">
-        <p className="text-sm text-gray-500">Items Tracked</p>
-      </div> */}
     </div>
   );
 };

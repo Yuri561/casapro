@@ -4,7 +4,7 @@ const Newsletter: React.FC = () => {
     return (
         <section
             id="newsletter"
-            className="py-16 sm:py-20 lg:py-24 bg-gradient-to-r from-teal-50 via-cyan-50 to-blue-50"
+            className="py-10 sm:pt-20 lg:pt-24 pb-10 sm:pb-12 lg:pb-16 bg-gradient-to-r from-teal-50 via-cyan-50 to-blue-50"
         >
             <div className="w-full px-4 mx-auto sm:px-6 lg:px-8">
                 <div className="max-w-3xl mx-auto text-center">

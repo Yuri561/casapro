@@ -91,7 +91,7 @@ const InventoryTips: React.FC<InventoryTipsProps> = ({
     : [];
 
   return (
-    <section className="bg-gradient-to-r from-cyan-100 via-blue-100 to-white py-16 px-4">
+    <section className="bg-gradient-to-r from-cyan-100 via-blue-100 to-white py-6 px-4">
       <div className="max-w-6xl mx-auto space-y-12">
         <h2 className="text-4xl font-bold text-center text-gray-800">
           Smart Inventory Planner

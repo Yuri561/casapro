@@ -44,7 +44,7 @@ const Dashboard: React.FC = () => {
 
     return (
         <>
-            <section className='py-16 bg-gradient-to-r from-teal-100 via-cyan-100 to-blue-100 sm:py-20 lg:py-24'>
+            <section className='py-6 bg-gradient-to-r from-teal-100 via-cyan-100 to-blue-100 sm:py-20 lg:py-24'>
                 <div className='text-center'>
                     <h2 className='text-4xl font-bold text-gray-900 sm:text-5xl font-pj'>
                         Welcome {username || "back"} to your personalized dashboard
@@ -71,7 +71,7 @@ const Dashboard: React.FC = () => {
                     </div>
                 </div>
             </section>
-            <section className="bg-gradient-to-r from-teal-100 via-cyan-100 to-blue-100 sm:py-20 lg:py-24">
+            <section className=" py-6 bg-gradient-to-r from-teal-100 via-cyan-100 to-blue-100 sm:py-20 lg:py-6">
         <InventoryTips inventoryData={inventoryData || []}
    />
       </section>
@@ -82,7 +82,7 @@ const Dashboard: React.FC = () => {
                         Take better control of your inventory.
                     </p>
                 </div>
-                <div className="mt-4 flex-wrap gap-8 items-center justify-center mx-auto">
+                <div className="flex-wrap gap-8 items-center justify-center mx-auto px-6 mb-5">
                     <InventoryTable inventoryData={inventoryData}
                         setInventoryData={setInventoryData}
                         onAddSave={handleAddSave} />

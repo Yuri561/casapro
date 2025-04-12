@@ -7,12 +7,14 @@ import UserDashboard from "./components/Pages/userDashboard";
 import Profile from "./components/MyProfile/MyProfile";
 import ScrollToTop from "./components/ScrollToTop/ScrollToTop"; 
 import { AuthProvider } from "./context/AuthContext";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
         <ScrollToTop />
+          <ToastContainer position="top-center" autoClose={2500}/>
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />

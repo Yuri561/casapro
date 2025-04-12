@@ -27,7 +27,7 @@ export default function useInventoryHistory(userId: string, refresh: any) {
       .get(`${API_URL}/inventory/history/${userId}`)
       .then(res => {
         setHistory(res.data.history);
-        console.log("Fetched history:", res.data.history);
+        // console.log("Fetched history:", res.data.history); debug purpose only!!!
       })
       .catch(err => {
         console.error("Error fetching history:", err);

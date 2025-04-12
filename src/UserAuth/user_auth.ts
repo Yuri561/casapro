@@ -92,3 +92,13 @@ export const showBudget = async (user_id: string) => {
     }
   )
 }
+
+// delete budget goal by cat
+export const deleteBudget = async (userId: string, category: string) => {
+  await axios.delete(`${API_URL}/remove-goal/${userId}`, {
+    data: { category }, 
+    headers: {
+      "Content-Type": "application/json"
+    }
+  });
+};

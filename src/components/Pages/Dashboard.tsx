@@ -7,6 +7,7 @@ import InventoryTable from './InventoryTable'
 import { Product } from "../Hooks/useInventory";
 import { userInventory } from '../../UserAuth/user_auth'
 import InventoryTips from './InventoryTips'
+import LoadingAnimation from '../LoadingAnimation/LoadingAnimation'
 
 
 
@@ -14,6 +15,8 @@ const Dashboard: React.FC = () => {
     const [username, setUsername] = useState("")
     const [inventoryData, setInventoryData] = useState<Product[]>([])
     const [refreshHistory, setRefreshHistory] = useState(0);
+    const [loading, setLoading] = useState(true);
+
 
     const handleAddSave = (newItem: Product) => {
         setInventoryData([...inventoryData, newItem]);
@@ -22,26 +25,30 @@ const Dashboard: React.FC = () => {
     const userId = localStorage.getItem("user_id") || "";
 
     useEffect(() => {
-        const storedUsername = localStorage.getItem("username")
-        if (storedUsername) setUsername(storedUsername)
+        const storedUsername = localStorage.getItem("username");
+        if (storedUsername) setUsername(storedUsername);
+      
         const fetchInventory = async () => {
-            const user_id = localStorage.getItem("user_id")
-            if (!user_id) return;
-            try {
-                const response = await userInventory(user_id)
-                if (response.status === 200) {
-                    setInventoryData(response.data.user_inventory);
-
-                }
-            } catch (error) {
-                console.error("unable to retrieve inventory data:", error)
+          const user_id = localStorage.getItem("user_id");
+          if (!user_id) return;
+      
+          try {
+            const response = await userInventory(user_id);
+            if (response.status === 200) {
+              setInventoryData(response.data.user_inventory);
             }
+          } catch (error) {
+            console.error("unable to retrieve inventory data:", error);
+          } finally {
+            setLoading(false); 
+          }
         };
+      
         fetchInventory();
-    }, [])
+      }, []);
 
 
-
+    if (loading) return <LoadingAnimation />;  
     return (
         <>
             <section className='py-6 bg-gradient-to-r from-teal-100 via-cyan-100 to-blue-100 sm:py-20 lg:py-24'>
@@ -85,7 +92,7 @@ const Dashboard: React.FC = () => {
                 <div className="flex-wrap gap-8 items-center justify-center mx-auto px-6 mb-5">
                     <InventoryTable inventoryData={inventoryData}
                         setInventoryData={setInventoryData}
-                        onAddSave={handleAddSave} />
+                        onAddSave={handleAddSave}/>
                 </div>
 
             </section>

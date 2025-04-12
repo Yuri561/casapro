@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "../ui/button";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   Dialog,
   DialogContent,
@@ -62,6 +64,17 @@ const InventoryEditModal: React.FC<InventoryEditModalProps> = ({
 
   // Save edits
   const handleSave = async () => {
+    const noChangesMade =
+      edited.name === item.name &&
+      edited.category === item.category &&
+      edited.quantity === item.quantity &&
+      edited.price === item.price;
+
+    if (noChangesMade) {
+      toast.info("No changes made to save.");
+      return;
+    }
+
     setLoading(true);
     try {
       await onSave(edited);
@@ -83,25 +96,28 @@ const InventoryEditModal: React.FC<InventoryEditModalProps> = ({
       if (isChecked) {
         // Full delete
         const res = await deleteInventory(id, item);
-        if (res.status === 200) onDelete(item);
+        if (res.status === 200) {
+          onDelete(item);
+          onClose(); // CLOSE AFTER COMPLETELY DELETE CHECK
+        }
       } else {
-        // Partial delete: compute how many were removed
         const decrement = item.quantity - edited.quantity;
         if (decrement > 0) {
           const res = await updatedQuantities(id, decrement);
           if (res.status === 200) {
-            // Reflect new quantity in parent via onSave
             onSave({ ...edited });
+            onClose();
           }
         } else {
-          console.warn("No items removed for partial delete");
+          toast.info("Reduce quantity or check 'Delete Entire Item'");
+          return;
         }
       }
     } catch (err) {
       console.error(err);
+      toast.error("Error while deleting item.");
     } finally {
       setLoading(false);
-      onClose();
     }
   };
 
@@ -181,18 +197,20 @@ const InventoryEditModal: React.FC<InventoryEditModalProps> = ({
             <Label htmlFor="price" className="text-right">
               Price
             </Label>
-            <Input
-              id="price"
-              type="number"
-              value={edited.price.toString()}
-              onChange={(e) =>
-                setEdited({
-                  ...edited,
-                  price: parseFloat(e.target.value) || 0,
-                })
-              }
-              className="col-span-3"
-            />
+            <div className="col-span-3 flex items-center gap-2">
+              <span className="text-gray-600 font-semibold">$</span>
+              <Input
+                id="price"
+                type="number"
+                value={edited.price.toString()}
+                onChange={(e) =>
+                  setEdited({
+                    ...edited,
+                    price: parseFloat(e.target.value) || 0,
+                  })
+                }
+              />
+            </div>
           </div>
 
           {/* Entire Item Checkbox */}

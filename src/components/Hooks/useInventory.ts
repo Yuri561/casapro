@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { userInventory } from "../../UserAuth/user_auth";
+import { useAuth } from "../../context/AuthContext";
 
 export type Product = {
   updatedAt: any;
@@ -16,11 +17,14 @@ export type Product = {
 
 export default function useInventory() {
   const [inventoryData, setInventoryData] = useState<Product[]>([]);
+  const {isAuthenticated} = useAuth()
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchInventory = async () => {
       const user_id = localStorage.getItem("user_id");
-      if (!user_id) return;
+      if (!user_id || !isAuthenticated) return;
+
       try {
         const response = await userInventory(user_id);
         if (response.status === 200) {
@@ -28,12 +32,13 @@ export default function useInventory() {
         }
       } catch (error) {
         console.error("Error fetching inventory:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchInventory();
-  }, []);
-
+  }, [isAuthenticated]);
   const totalItems = inventoryData.reduce(
     (sum, item) => sum + Number(item.quantity || 0),
     0
@@ -46,5 +51,5 @@ export default function useInventory() {
     currency: "USD",
   }).format(totalAmount);
 
-  return { inventoryData, totalItems, totalCategories, formattedTotal };
+  return { inventoryData, totalItems, totalCategories, formattedTotal, loading };
 }

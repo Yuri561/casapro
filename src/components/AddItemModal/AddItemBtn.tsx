@@ -24,6 +24,7 @@ import {
 import { Product } from "../Hooks/useInventory";
 import { addInventory } from "../../UserAuth/user_auth";
 import LoadingAnimation from "../LoadingAnimation/LoadingAnimation";
+import { toast } from "react-toastify";
 
 interface AddItemBtnProps {
   onSave: (updatedItem: Product) => void;
@@ -39,23 +40,29 @@ const AddItemBtn: React.FC<AddItemBtnProps> = ({ onSave }) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true)
+    
     const user_id: any = localStorage.getItem("user_id");
+    const { name, category, quantity, location, price } = formData;
+  
+    // making sure the user completes all the field
+    if (!name || !category || !quantity || !location || !price) {
+      toast.info("Please complete all fields before adding the item.");
+      return;
+    }
+  
+    setLoading(true);
     try {
-      if (!user_id) {
-        console.error("No user_id detected");
-        return;
-      }
       const response = await addInventory(user_id, formData);
       if (response.status === 201) {
         onSave(formData as Product);
       }
     } catch (error) {
       console.error("Cannot add item to inventory:", error);
+      toast.error("Failed to add item. Try again.");
     } finally {
       setIsOpen(false);
-      setFormData({})
-      setLoading(false)
+      setFormData({});
+      setLoading(false);
     }
   };
 

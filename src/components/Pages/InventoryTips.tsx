@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   FaCalendarAlt,
   FaTrophy,
@@ -9,19 +9,14 @@ import {
 } from "react-icons/fa";
 import { Product } from "../Hooks/useInventory";
 import BudgetCard from "../DashboardSubComponent/BudgetCard";
-import  useBudgetGoals  from "../Hooks/useBudget";
+import  { BudgetGoal }  from "../Hooks/useBudget";
+import { showBudget } from "../../UserAuth/user_auth";
 
 
 interface InventoryTipsProps {
   inventoryData?: Product[];
   inventoryHistory?: { action: string; date: string }[];
 }
-
-interface BudgetGoal {
-  category: string;
-  limit: number;
-}
-
 
 const InventoryTips: React.FC<InventoryTipsProps> = ({
   inventoryData = [],
@@ -30,11 +25,29 @@ const InventoryTips: React.FC<InventoryTipsProps> = ({
   const hasInventory = inventoryData.length > 0;
   const userId = localStorage.getItem("user_id") 
  
-  const { budgetGoals } = useBudgetGoals(userId ?? "");
+  const [budgetGoalsRaw, setBudgetGoalsRaw] = useState<BudgetGoal[]>([]);
+
+const fetchBudgetGoals = async () => {
+  try {
+    const res = await showBudget(userId!);
+    const data = Array.isArray(res.data) ? res.data : res.data.user_budget;
+    setBudgetGoalsRaw(data || []);
+  } catch (err) {
+    console.error("Error fetching budget goals:", err);
+  }
+};
+
+ useEffect(()=> {
+  if(userId){
+    fetchBudgetGoals()
+  }
+ })
+
+
 
 
   // === Budget Goals Calculation ===
-  const budgetGoalsWithCurrentValues = budgetGoals.map((goal: BudgetGoal) => {
+  const budgetGoalsWithCurrentValues = budgetGoalsRaw.map((goal) => {
     const totalSpent = inventoryData
       .filter((item) => item.category.toLowerCase() === goal.category.toLowerCase())
       .reduce((sum, item) => sum + ((item.price || 0) * (item.quantity || 1)), 0);
@@ -44,6 +57,7 @@ const InventoryTips: React.FC<InventoryTipsProps> = ({
       current: totalSpent,
     };
   });
+
   
   
 
@@ -109,7 +123,9 @@ const InventoryTips: React.FC<InventoryTipsProps> = ({
         {hasInventory ? (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {/* Budget Goals */}
-           <BudgetCard budgetGoals={budgetGoalsWithCurrentValues} userId={userId!}/>
+           <BudgetCard budgetGoals={budgetGoalsWithCurrentValues} 
+           userId={userId!}
+           onGoalAdded={fetchBudgetGoals}/>
 
             {/* Reminders */}
             <div className="bg-white rounded-xl shadow-lg p-6 border-t-4 border-blue-500">

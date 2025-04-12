@@ -70,3 +70,25 @@ export const deleteInventory = async (item_id: string, deletedData: any) => {
     }
   );
 };
+
+// add budget goal
+export const addBudget = async  (user_id: string, budgetData: any) => {
+  return await axios.post(
+    `${API_URL}/budget-goal/add/${user_id}`,
+    budgetData,
+    {
+      headers: {"Content-Type": "application/json"}
+    }
+  )
+}
+
+//show user budget goal
+export const showBudget = async (user_id: string) => {
+  return await axios.get(`${API_URL}/budget-goal/${user_id}`,
+    {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }
+  )
+}

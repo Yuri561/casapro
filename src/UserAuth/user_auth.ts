@@ -61,7 +61,6 @@ export const updatedQuantities = async(item_id: string, decrement: number) => {
 }
 
 // delete inventory 
-// delete inventory 
 export const deleteInventory = async (item_id: string, deletedData: any) => {
   return axios.delete(
     `${API_URL}/inventory/delete/${item_id}`,

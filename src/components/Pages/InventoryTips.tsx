@@ -82,7 +82,7 @@ const InventoryTips: React.FC<InventoryTipsProps> = ({
     }
   }
 
-  // === Saved plans (optional future feature)
+  // === Saved plans 
   const savedPlans = hasInventory
     ? [
         { title: "🛒 Weekly Grocery Restock", updated: "April 5, 2025" },

@@ -8,6 +8,7 @@ import Profile from "./components/MyProfile/MyProfile";
 import ScrollToTop from "./components/ScrollToTop/ScrollToTop"; 
 import { AuthProvider } from "./context/AuthContext";
 import { ToastContainer } from "react-toastify";
+import Contact from "./components/Contact/Contact";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
             <Route path="create-account" element={<CreateAccount />} />
             <Route path="dashboard" element={<UserDashboard />} />
             <Route path="profile" element={<Profile />} />
+            <Route path="contact" element={<Contact/>} />
           </Route>
         </Routes>
       </BrowserRouter>

@@ -41,7 +41,7 @@ const AddItemBtn: React.FC<AddItemBtnProps> = ({ onSave }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    const user_id: any = localStorage.getItem("user_id");
+
     const { name, category, quantity, location, price } = formData;
   
     // making sure the user completes all the field
@@ -52,9 +52,10 @@ const AddItemBtn: React.FC<AddItemBtnProps> = ({ onSave }) => {
   
     setLoading(true);
     try {
-      const response = await addInventory(user_id, formData);
+      const response = await addInventory( formData);
       if (response.status === 201) {
         onSave(formData as Product);
+        toast.success(`${formData.name} successfully added!`)
       }
     } catch (error) {
       console.error("Cannot add item to inventory:", error);

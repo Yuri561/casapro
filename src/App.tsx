@@ -7,6 +7,7 @@ import UserDashboard from "./components/Pages/userDashboard";
 import Profile from "./components/MyProfile/MyProfile";
 import ScrollToTop from "./components/ScrollToTop/ScrollToTop"; 
 import { AuthProvider } from "./context/AuthContext";
+import PriateRoute from '../src/components/PrivateRoute'
 import { ToastContainer } from "react-toastify";
 import Contact from "./components/Contact/Contact";
 
@@ -21,8 +22,16 @@ function App() {
             <Route index element={<Home />} />
             <Route path="login" element={<Login />} />
             <Route path="create-account" element={<CreateAccount />} />
-            <Route path="dashboard" element={<UserDashboard />} />
-            <Route path="profile" element={<Profile />} />
+            <Route path="dashboard" element={
+              <PriateRoute>
+                <UserDashboard />
+              </PriateRoute>
+              } />
+            <Route path="profile" element={
+              <PriateRoute>
+                <Profile />
+              </PriateRoute>
+              } />
             <Route path="contact" element={<Contact/>} />
           </Route>
         </Routes>

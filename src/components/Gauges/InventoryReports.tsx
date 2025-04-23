@@ -25,8 +25,8 @@ const tabConfig = {
 
 type TabKey = keyof typeof tabConfig;
 
-const InventoryReports: React.FC<Props> = ({ userId, refresh }) => {
-  const data: MonthlyData[] = useInventoryHistory(userId, refresh);
+const InventoryReports: React.FC<Props> = ({  refresh }) => {
+  const data: MonthlyData[] = useInventoryHistory( refresh);
   const [activeTab, setActiveTab] = useState<TabKey>("added");
   const cfg = tabConfig[activeTab];
 

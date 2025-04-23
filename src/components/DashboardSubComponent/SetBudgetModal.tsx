@@ -41,7 +41,7 @@ const SetGoalModal: React.FC<SetGoalModalProps> = ({
   open,
   onClose,
   onSuccess,
-  userId,
+
   mode,
   budgetGoals,
 }) => {
@@ -54,7 +54,7 @@ const SetGoalModal: React.FC<SetGoalModalProps> = ({
 
     setLoading(true);
     try {
-      await addBudget(userId, { category, limit });
+      await addBudget({ category, limit });
       onSuccess();
       toast.success("your budget goal was created successfully!")
       onClose();
@@ -70,7 +70,7 @@ const SetGoalModal: React.FC<SetGoalModalProps> = ({
   
     setLoading(true);
     try {
-      await deleteBudget(userId, category); 
+      await deleteBudget(category); 
       onSuccess();
       toast.success("Your budget category was deleted successfully!") 
     } catch (err) {

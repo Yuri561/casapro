@@ -4,23 +4,29 @@ import { useNavigate, useLocation } from "react-router-dom";
 import HomeIcon from "/homeicon.png";
 import LoadingAnimation from "../LoadingAnimation/LoadingAnimation";
 import { useAuth } from "../../context/AuthContext";
+// import { userLogout } from "../../UserAuth/user_auth";
 
 const Header: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
   const location = useLocation();
-
   const { isAuthenticated, setIsAuthenticated } = useAuth();
 
-  const handleLogout = () => {
-    setLoading(true);
-    setTimeout(() => {
+  const handleLogout = async () => {
+    try {
+      setLoading(true);
+      // await userLogout();
       localStorage.removeItem("user");
+      localStorage.removeItem("user_id");
+      localStorage.removeItem("username");
       setIsAuthenticated(false);
-      setLoading(false);
       navigate("/");
-    }, 1500);
+    } catch (error) {
+      console.error("Logout failed", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleNavigation = (path: string) => {

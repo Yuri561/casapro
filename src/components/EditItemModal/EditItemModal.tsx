@@ -92,13 +92,14 @@ const InventoryEditModal: React.FC<InventoryEditModalProps> = ({
     try {
       const id = item._id;
       if (!id) throw new Error("No item selected");
-
+  
       if (isChecked) {
         // Full delete
-        const res = await deleteInventory(id, item);
+        const res = await deleteInventory(id);
         if (res.status === 200) {
           onDelete(item);
-          onClose(); // CLOSE AFTER COMPLETELY DELETE CHECK
+          toast.success("Item deleted successfully");
+          onClose(); // <- move this AFTER the toast
         }
       } else {
         const decrement = item.quantity - edited.quantity;
@@ -106,6 +107,7 @@ const InventoryEditModal: React.FC<InventoryEditModalProps> = ({
           const res = await updatedQuantities(id, decrement);
           if (res.status === 200) {
             onSave({ ...edited });
+            toast.success(`Quantity reduced by ${decrement}`);
             onClose();
           }
         } else {

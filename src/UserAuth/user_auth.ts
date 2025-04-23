@@ -1,104 +1,73 @@
 import axios from "axios";
+import { Product } from "../components/Hooks/useInventory";
 
+export const API_URL = "https://casapro-backend-o0k1.onrender.com";
 
-export const API_URL: string = "https://casapro-backend-o0k1.onrender.com";
+// Config for all auth-based requests
+const config = {
+  headers: { "Content-Type": "application/json" },
+  withCredentials: true,
+};
 
-//user register 
+// --------------------- AUTH ---------------------
+
 export const userRegister = async (userData: any) => {
-  return axios.post(`${API_URL}/register`, userData, {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+  return axios.post(`${API_URL}/register`, userData, config);
 };
 
-// user Login
 export const userLogin = async (formData: any) => {
-  return await axios.post(`${API_URL}/login`, formData, {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+  return axios.post(`${API_URL}/login`, formData, config);
 };
 
-
-// inventory request/show
-export const userInventory = async (user_id: string) => {
-    return await axios.post(`${API_URL}/inventory`, {user_id}, {
-        headers: {
-            "Content-Type": "application/json"
-        },
-    });
+export const userLogout = async () => {
+  return axios.post(`${API_URL}/logout`, null, config);
 };
 
-// inventory update 
+export const verifyUser = async () => {
+  return axios.get(`${API_URL}/verify`, { withCredentials: true });
+};
+
+// --------------------- INVENTORY ---------------------
+
+export const userInventory = async () => {
+  return axios.post(`${API_URL}/inventory`, {}, config);
+};
+
 export const updateInventory = async (_id: string, updateData: any) => {
-    return await axios.put(`${API_URL}/inventory/${_id}`, updateData, {
-      headers: {
-        "Content-Type": "application/json"
-      }
-    });
-  };
-
-  //adding data to inventory 
-  export const addInventory = async (user_id: string, addedData: any) => {
-    return await axios.post(
-      `${API_URL}/inventory/add/${user_id}`,
-      addedData,
-      {
-        data: addedData,
-        headers: { "Content-Type": "application/json" }
-      }
-    );
-  }
-  
-// update quatities 
-export const updatedQuantities = async(item_id: string, decrement: number) => {
-  return await axios.patch(`${API_URL}/inventory/update-quantity/${item_id}/${decrement}`, {
-    headers: { "Content-Type": "application/json" }
-  })
-  
-}
-
-// delete inventory 
-export const deleteInventory = async (item_id: string, deletedData: any) => {
-  return axios.delete(
-    `${API_URL}/inventory/delete/${item_id}`,
-    {
-      data: deletedData,
-      headers: { "Content-Type": "application/json" }
-    }
-  );
+  return axios.put(`${API_URL}/inventory/${_id}`, updateData, config);
 };
 
-// add budget goal
-export const addBudget = async  (user_id: string, budgetData: any) => {
-  return await axios.post(
-    `${API_URL}/budget-goal/add/${user_id}`,
-    budgetData,
-    {
-      headers: {"Content-Type": "application/json"}
-    }
-  )
-}
+export const addInventory = async (addedData: any) => {
+  return axios.post(`${API_URL}/inventory/add`, addedData, config);
+};
 
-//show user budget goal
-export const showBudget = async (user_id: string) => {
-  return await axios.get(`${API_URL}/budget-goal/${user_id}`,
-    {
-      headers: {
-        "Content-Type": "application/json"
-      }
-    }
-  )
-}
+export const updatedQuantities = async (item_id: string, decrement: number) => {
+  return axios.patch(`${API_URL}/inventory/update-quantity/${item_id}/${decrement}`, {}, config);
+};
 
-// delete budget goal by cat
-export const deleteBudget = async (userId: string, category: string) => {
-  await axios.delete(`${API_URL}/remove-goal/${userId}`, {
-    data: { category }, 
-    headers: {
-      "Content-Type": "application/json"
-    }
+export const deleteInventory = async (item_id: string, _item?: Product) => {
+  return axios.delete(`${API_URL}/inventory/delete/${item_id}`, config);
+};
+
+// --------------------- HISTORY ---------------------
+
+export const getInventoryHistory = async () => {
+  return axios.get(`${API_URL}/inventory/history`, config);
+};
+
+// --------------------- BUDGET ---------------------
+
+export const addBudget = async (budgetData: any) => {
+  return axios.post(`${API_URL}/budget-goal/add`, budgetData, config);
+};
+
+export const showBudget = async () => {
+  return axios.get(`${API_URL}/budget-goal`, config);
+};
+
+export const deleteBudget = async (category: string) => {
+  return axios.delete(`${API_URL}/remove-goal/`, {
+    ...config,
+    data: { category }, // DELETE must use `data` key
   });
 };

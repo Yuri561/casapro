@@ -17,22 +17,22 @@ export interface MonthlyData {
 
 const API_URL = "https://casapro-backend-o0k1.onrender.com";
 
-export default function useInventoryHistory(userId: string, refresh: any) {
+export default function useInventoryHistory(refresh: any) {
   const [history, setHistory] = useState<HistoryRecord[]>([]);
 
   useEffect(() => {
-    if (!userId) return;
-
     axios
-      .get(`${API_URL}/inventory/history/${userId}`)
+      .get(`${API_URL}/inventory/history`, {
+        withCredentials: true,
+        headers: { "Content-Type": "application/json" },
+      })
       .then(res => {
         setHistory(res.data.history);
-        // console.log("Fetched history:", res.data.history); debug purpose only!!!
       })
       .catch(err => {
         console.error("Error fetching history:", err);
       });
-  }, [userId, refresh]);
+  }, [refresh]);
 
   // Aggregate by month
   const buckets: Record<string, MonthlyData> = {};

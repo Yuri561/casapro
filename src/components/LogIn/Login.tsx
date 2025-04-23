@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { userLogin} from "../../UserAuth/user_auth";
+import { userLogin, verifyUser} from "../../UserAuth/user_auth";
 import LoadingAnimation from "../LoadingAnimation/LoadingAnimation";
 import { useAuth } from "../../context/AuthContext";
 import { useForm } from "react-hook-form";
@@ -21,16 +21,24 @@ const Login: React.FC = () => {
   const onSubmit = async (data: FormData) => {
     setError(""); 
     setLoading(true); 
+  
     try {
-        const response = await userLogin(data);
-        if (response.status === 200) {
-        const {username, user_id} = response.data.user;
-        localStorage.setItem("username", username);
-        localStorage.setItem("user_id", user_id)
-        localStorage.setItem("isAuthenticated", "true");
+      // Send login request
+      const response = await userLogin(data);
+  
+      if (response.status === 200) {
+        // Immediately verify token via cookie
+        const verify = await verifyUser();
+  
+        if (verify.status === 200) {
           setIsAuthenticated(true);
+          localStorage.setItem("username", data.username);
+          localStorage.setItem("user_id", verify.data.user_id);
           navigate("/dashboard");
+        } else {
+          setError("Authentication failed. Please try again.");
         }
+      }
     } catch (error: any) {
       if (error.response && error.response.data) {
         setError(error.response.data.error || "Login error. Please try again.");
@@ -42,7 +50,7 @@ const Login: React.FC = () => {
       setLoading(false); 
     }
   };
-
+  
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
 

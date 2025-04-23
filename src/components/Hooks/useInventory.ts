@@ -26,7 +26,7 @@ export default function useInventory() {
       if (!user_id || !isAuthenticated) return;
 
       try {
-        const response = await userInventory(user_id);
+        const response = await userInventory();
         if (response.status === 200) {
           setInventoryData(response.data.user_inventory);
         }

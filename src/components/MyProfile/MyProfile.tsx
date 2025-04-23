@@ -39,7 +39,7 @@ const Profile: React.FC<ProfileProps> = ({
 
     const fetchInventory = async () => {
       try {
-        const response = await userInventory(userId);
+        const response = await userInventory();
         if (response.status === 200) {
           setInventoryData(response.data.user_inventory);
         }

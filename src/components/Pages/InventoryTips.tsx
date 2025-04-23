@@ -28,7 +28,7 @@ const InventoryTips: React.FC<InventoryTipsProps> = ({
 
 const fetchBudgetGoals = async () => {
   try {
-    const res = await showBudget(userId!);
+    const res = await showBudget();
     const data = Array.isArray(res.data) ? res.data : res.data.user_budget;
     setBudgetGoalsRaw(data || []);
   } catch (err) {

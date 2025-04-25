@@ -34,6 +34,7 @@ const Login: React.FC = () => {
           setIsAuthenticated(true);
           localStorage.setItem("username", data.username);
           localStorage.setItem("user_id", verify.data.user_id);
+          localStorage.setItem("token", response.data.token);
           navigate("/dashboard");
         } else {
           setError("Authentication failed. Please try again.");

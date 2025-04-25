@@ -9,6 +9,11 @@ const config = {
   withCredentials: true,
 };
 
+const userConfig = {
+  headers: {
+    Authorization: `Bearer ${localStorage.getItem("token")}`
+  }
+}
 // --------------------- AUTH ---------------------
 
 export const userRegister = async (userData: any) => {
@@ -24,7 +29,9 @@ export const userLogout = async () => {
 };
 
 export const verifyUser = async () => {
-  return axios.get(`${API_URL}/verify`, { withCredentials: true });
+  return axios.get(`${API_URL}/verify`, 
+    
+    userConfig);
 };
 
 // --------------------- INVENTORY ---------------------

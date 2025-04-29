@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { userLogin, verifyUser} from "../../UserAuth/user_auth";
+import { userLogin} from "../../UserAuth/user_auth";
 import LoadingAnimation from "../LoadingAnimation/LoadingAnimation";
 import { useAuth } from "../../context/AuthContext";
 import { useForm } from "react-hook-form";
@@ -19,38 +19,34 @@ const Login: React.FC = () => {
   const { setIsAuthenticated } = useAuth();
 
   const onSubmit = async (data: FormData) => {
-    setError(""); 
-    setLoading(true); 
+    setError("");
+    setLoading(true);
   
     try {
-      // Send login request
       const response = await userLogin(data);
-  
       if (response.status === 200) {
-        // Immediately verify token via cookie
-        const verify = await verifyUser();
-  
-        if (verify.status === 200) {
-          setIsAuthenticated(true);
-          localStorage.setItem("username", data.username);
-          localStorage.setItem("user_id", verify.data.user_id);
-          localStorage.setItem("token", response.data.token);
-          navigate("/dashboard");
-        } else {
-          setError("Authentication failed. Please try again.");
-        }
+        const {  user } = response.data;
+        setIsAuthenticated(true);
+        localStorage.setItem("username", user.username);
+        localStorage.setItem("user_id", user.user_id);    
+        localStorage.setItem("token",  response.data.token);             
+        navigate("/dashboard");
+      } else {
+        setError("Authentication failed. Please try again.");
       }
     } catch (error: any) {
       if (error.response && error.response.data) {
         setError(error.response.data.error || "Login error. Please try again.");
+        console.log('error:', error);
       } else {
         setError("Login failed. Please check your credentials.");
       }
       console.error("Error during login:", error);
     } finally {
-      setLoading(false); 
+      setLoading(false);
     }
   };
+  
   
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">

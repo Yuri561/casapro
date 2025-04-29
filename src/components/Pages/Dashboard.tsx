@@ -35,11 +35,13 @@ const Dashboard: React.FC = () => {
           try {
             const response = await userInventory();
             if (response.status === 200) {
+                console.log(response)
               setInventoryData(response.data.user_inventory);
             }
-          } catch (error) {
-            console.error("unable to retrieve inventory data:", error);
-          } finally {
+          } catch (error: any) {
+            console.error("unable to retrieve inventory data:", error.response?.data || error.message);
+          }
+           finally {
             setLoading(false);
           }
         };

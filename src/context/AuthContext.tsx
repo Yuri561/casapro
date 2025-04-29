@@ -5,7 +5,6 @@ import React, {
   ReactNode,
   useEffect,
 } from "react";
-import { verifyUser } from "../UserAuth/user_auth";
 
 // Define types for the AuthContext
 interface AuthContextType {
@@ -27,36 +26,32 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const response = await verifyUser();
-        const { user_id, username } = response.data;
+    // const token = localStorage.getItem("token");
+    const storedUserId = localStorage.getItem("user_id");
+    const storedUsername = localStorage.getItem("username");
 
-        setIsAuthenticated(true);
-        setUserId(user_id);
-        setUsername(username);
-      } catch {
-        setIsAuthenticated(false);
-        setUserId("");
-        setUsername("");
-      } finally {
-        setLoading(false);
-      }
-    };
+    if ( storedUserId && storedUsername) {
+      setIsAuthenticated(true);
+      setUserId(storedUserId);
+      setUsername(storedUsername);
+    } else {
+      setIsAuthenticated(false);
+      setUserId("");
+      setUsername("");
+    }
 
-    checkAuth();
+    setLoading(false);
   }, []);
 
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, setIsAuthenticated, userId, username, loading }}
-    >
+      value={{ isAuthenticated, setIsAuthenticated, userId, username, loading }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
-
+// Hook to use AuthContext
 export const useAuth = (): AuthContextType => {
   const context = useContext(AuthContext);
   if (!context) {

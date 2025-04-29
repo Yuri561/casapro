@@ -9,11 +9,11 @@ const config = {
   withCredentials: true,
 };
 
-const userConfig = {
-  headers: {
-    Authorization: `Bearer ${localStorage.getItem("token")}`
-  }
-}
+// const userConfig = {
+//   headers: {
+//     Authorization: `Bearer ${localStorage.getItem("token")}`
+//   }
+// }
 // --------------------- AUTH ---------------------
 
 export const userRegister = async (userData: any) => {
@@ -21,25 +21,29 @@ export const userRegister = async (userData: any) => {
 };
 
 export const userLogin = async (formData: any) => {
-  return axios.post(`${API_URL}/login`, formData, config);
+  return axios.post(`${API_URL}/login`, formData, {
+    headers: { "Content-Type": "application/json" },
+    withCredentials: true,
+  });
 };
+
 
 export const userLogout = async () => {
   return axios.post(`${API_URL}/logout`, null, config);
 };
 
-export const verifyUser = async () => {
-  return axios.get(`${API_URL}/verify`, 
-    
-    userConfig);
-};
+// export const verifyUser = async () => {
+//   return axios.get(`${API_URL}/verify`, userConfig);
+// };
 
 // --------------------- INVENTORY ---------------------
 
 export const userInventory = async () => {
-  return axios.post(`${API_URL}/inventory`, {}, config);
+  return axios.post(`${API_URL}/inventory`, {}, {
+    headers: { "Content-Type": "application/json" },
+    withCredentials: true,  
+  });
 };
-
 export const updateInventory = async (_id: string, updateData: any) => {
   return axios.put(`${API_URL}/inventory/${_id}`, updateData, config);
 };
@@ -75,6 +79,6 @@ export const showBudget = async () => {
 export const deleteBudget = async (category: string) => {
   return axios.delete(`${API_URL}/remove-goal/`, {
     ...config,
-    data: { category }, // DELETE must use `data` key
+    data: { category }, 
   });
 };

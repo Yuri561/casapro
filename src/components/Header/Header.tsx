@@ -1,25 +1,39 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
 import HomeIcon from "/homeicon.png";
 import LoadingAnimation from "../LoadingAnimation/LoadingAnimation";
 import { useAuth } from "../../context/AuthContext";
-// import { userLogout } from "../../UserAuth/user_auth";
+import { userLogout } from "../../UserAuth/user_auth";
 
 const Header: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
   const location = useLocation();
-  const { isAuthenticated, setIsAuthenticated } = useAuth();
+  const { isAuthenticated, setIsAuthenticated,  } = useAuth();
+
+  // Close mobile menu on route change
+  useEffect(() => {
+    setIsOpen(false);
+  }, [location.pathname]);
+
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
 
   const handleLogout = async () => {
     try {
       setLoading(true);
-      // await userLogout();
+      await userLogout(); 
       localStorage.removeItem("user");
       localStorage.removeItem("user_id");
       localStorage.removeItem("username");
+      localStorage.removeItem("token");
       setIsAuthenticated(false);
       navigate("/");
     } catch (error) {
@@ -30,129 +44,163 @@ const Header: React.FC = () => {
   };
 
   const handleNavigation = (path: string) => {
+    if (location.pathname === path) return;
     setLoading(true);
     setTimeout(() => {
       navigate(path);
       setLoading(false);
-    }, 1000);
+    }, 600);
   };
 
-  const navLinkClass = (path: string, isLogout = false) => {
-    const isActive = path && location.pathname === path;
-    const base = "relative cursor-pointer after:content-[''] after:block after:h-[2px] after:bg-white after:transition-all after:duration-300";
-    const active = isActive ? "after:w-full" : "after:w-0";
-    const textColor = isLogout ? "text-red-500" : "text-white";
-    return `${base} ${textColor} ${active} hover:after:w-full`;
-  };
+  const isActive = (path: string) => location.pathname === path;
+
+  const baseLink =
+    "relative cursor-pointer px-1 py-0.5 text-sm font-medium transition";
+  const activeUnderline =
+    "after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:bg-white after:w-full";
+  const inactiveUnderline =
+    "after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:bg-white/70 after:w-0 hover:after:w-full after:transition-all after:duration-300";
+  const desktopLink = (path: string, danger = false) =>
+    [
+      baseLink,
+      danger ? "text-red-400 hover:text-red-300" : "text-white hover:opacity-90",
+      isActive(path) ? activeUnderline : inactiveUnderline,
+      "focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 rounded",
+    ].join(" ");
 
   return (
     <>
       {loading && <LoadingAnimation />}
 
-      <nav className="relative sticky w-full bg-teal-800 text-gray-900 p-4 flex justify-between items-center fixed top-0 left-0 right-0 shadow-md px-8 z-50">
-        {/* Logo */}
-        <div className="flex items-center space-x-2">
-          <img
-            src={HomeIcon}
-            alt="Home Icon"
-            className="w-6 h-6 sm:w-7 sm:h-7 p-1 mr-2"
-          />
-          <span className="text-slate-200 text-2xl font-bold">Casa Pro</span>
-        </div>
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:bg-black focus:text-white focus:px-3 focus:py-2 focus:rounded-lg"
+      >
+        Skip to content
+      </a>
 
-        {/* Desktop Navigation */}
-        <ul className="hidden md:flex space-x-8 font-medium">
-          <li className={navLinkClass("/")} onClick={() => handleNavigation("/")}>
-            Home
-          </li>
-
-          {isAuthenticated ? (
-            <>
-              <li
-                className={navLinkClass("/dashboard")}
-                onClick={() => handleNavigation("/dashboard")}
-              >
-                Dashboard
-              </li>
-              <li
-                className={navLinkClass("/profile")}
-                onClick={() => handleNavigation("/profile")}
-              >
-                My Profile
-              </li>
-              <li className={navLinkClass("/home", true)} onClick={handleLogout}>
-                Logout
-              </li>
-            </>
-          ) : (
-            <>
-              <li
-                className={navLinkClass("/login")}
-                onClick={() => handleNavigation("/login")}
-              >
-                Login
-              </li>
-              <li
-                className={navLinkClass("/create-account")}
-                onClick={() => handleNavigation("/create-account")}
-              >
-                Create an account
-              </li>
-            </>
-          )}
-
-          <li
-            className={navLinkClass("/contact")}
-            onClick={() => handleNavigation("/contact")}
+      <nav
+        className="fixed inset-x-0 top-0 z-50 bg-black/90 backdrop-blur supports-[backdrop-filter]:bg-black/70"
+        role="navigation"
+        aria-label="Primary"
+      >
+        <div className="mx-auto max-w-7xl px-4  h-16 flex items-center justify-between">
+          {/* Logo / Brand */}
+          <button
+            onClick={() => handleNavigation("/")}
+            className="flex items-center gap-2 group focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 rounded"
+            aria-label="Go to home"
           >
-            Contact
-          </li>
-        </ul>
+            <img
+              src={HomeIcon}
+              alt="CasaPro"
+              className="w-7 h-7 rounded bg-white/10 p-1 ring-1 ring-white/15"
+            />
+            <span className="text-white text-xl font-bold tracking-tight group-hover:opacity-90">
+              CasaPro
+            </span>
+          </button>
 
-        {/* Mobile Menu Button */}
-        <div className="md:hidden flex items-center">
-          <button onClick={() => setIsOpen(!isOpen)} className="text-gray-900">
-            {isOpen ? <X size={28} /> : <Menu size={28} />}
+          {/* Desktop Nav */}
+          <ul className="hidden md:flex items-center gap-8">
+            <li className={desktopLink("/")}>
+              <button onClick={() => handleNavigation("/")}>Home</button>
+            </li>
+
+            {isAuthenticated ? (
+              <>
+                <li className={desktopLink("/dashboard")}>
+                  <button onClick={() => handleNavigation("/dashboard")}>
+                    Dashboard
+                  </button>
+                </li>
+                <li className={desktopLink("/profile")}>
+                  <button onClick={() => handleNavigation("/profile")}>
+                    My Profile
+                  </button>
+                </li>
+                <li className={desktopLink("/logout", true)}>
+                  <button onClick={handleLogout}>Logout</button>
+                </li>
+              </>
+            ) : (
+              <>
+                <li className={desktopLink("/login")}>
+                  <button onClick={() => handleNavigation("/login")}>
+                    Login
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => handleNavigation("/create-account")}
+                    className="rounded-xl bg-white text-black text-sm font-medium px-4 py-2 shadow-sm hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+                  >
+                    Create account
+                  </button>
+                </li>
+              </>
+            )}
+
+            <li className={desktopLink("/contact")}>
+              <button onClick={() => handleNavigation("/contact")}>
+                Contact
+              </button>
+            </li>
+          </ul>
+
+          {/* Mobile Toggle */}
+          <button
+            onClick={() => setIsOpen((p) => !p)}
+            className="md:hidden text-white p-2 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+            aria-controls="mobile-menu"
+            aria-expanded={isOpen}
+            aria-label={isOpen ? "Close menu" : "Open menu"}
+          >
+            {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
 
-        {/* Mobile Dropdown Menu */}
-        {isOpen && (
-          <div className="absolute top-16 left-0 w-full bg-white shadow-md md:hidden transition-all duration-300 z-50">
-            <ul className="flex flex-col space-y-4 p-6">
-              <li
-                onClick={() => {
-                  handleNavigation("/");
-                  setIsOpen(false);
-                }}
-              >
-                Home
+        {/* Mobile Menu */}
+        <div
+          id="mobile-menu"
+          className={`md:hidden transition-[max-height] duration-300 overflow-hidden ${
+            isOpen ? "max-h-[80vh]" : "max-h-0"
+          }`}
+        >
+          {/* Backdrop for mobile to dim page content */}
+          <div className="bg-white text-gray-900 shadow-xl">
+            <ul className="flex flex-col divide-y divide-gray-200">
+              <li>
+                <button
+                  onClick={() => handleNavigation("/")}
+                  className="w-full text-left px-6 py-4 hover:bg-gray-50"
+                >
+                  Home
+                </button>
               </li>
+
               {isAuthenticated ? (
                 <>
-                  <li
-                    onClick={() => {
-                      handleNavigation("/dashboard");
-                      setIsOpen(false);
-                    }}
-                  >
-                    Dashboard
-                  </li>
-                  <li
-                    onClick={() => {
-                      handleNavigation("/profile");
-                      setIsOpen(false);
-                    }}
-                  >
-                    My Profile
+                  <li>
+                    <button
+                      onClick={() => handleNavigation("/dashboard")}
+                      className="w-full text-left px-6 py-4 hover:bg-gray-50"
+                    >
+                      Dashboard
+                    </button>
                   </li>
                   <li>
                     <button
-                      onClick={() => {
-                        handleLogout();
-                        setIsOpen(false);
-                      }}
-                      className="block py-2 text-lg text-red-500 hover:text-red-600"
+                      onClick={() => handleNavigation("/profile")}
+                      className="w-full text-left px-6 py-4 hover:bg-gray-50"
+                    >
+                      My Profile
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      onClick={handleLogout}
+                      className="w-full text-left px-6 py-4 text-red-600 hover:bg-gray-50"
                     >
                       Logout
                     </button>
@@ -160,36 +208,55 @@ const Header: React.FC = () => {
                 </>
               ) : (
                 <>
-                  <li
-                    onClick={() => {
-                      handleNavigation("/login");
-                      setIsOpen(false);
-                    }}
-                  >
-                    Login
+                  <li>
+                    <button
+                      onClick={() => handleNavigation("/login")}
+                      className="w-full text-left px-6 py-4 hover:bg-gray-50"
+                    >
+                      Login
+                    </button>
                   </li>
-                  <li
-                    onClick={() => {
-                      handleNavigation("/create-account");
-                      setIsOpen(false);
-                    }}
-                  >
-                    Create an account
+                  <li>
+                    <button
+                      onClick={() => handleNavigation("/create-account")}
+                      className="w-full text-left px-6 py-4 hover:bg-gray-50"
+                    >
+                      Create an account
+                    </button>
                   </li>
                 </>
               )}
-              <li
-                onClick={() => {
-                  handleNavigation("/contact");
-                  setIsOpen(false);
-                }}
-              >
-                Contact
+
+              <li>
+                <button
+                  onClick={() => handleNavigation("/contact")}
+                  className="w-full text-left px-6 py-4 hover:bg-gray-50"
+                >
+                  Contact
+                </button>
               </li>
             </ul>
+
+            {/* Mobile footer CTA */}
+            {!isAuthenticated && (
+              <div className="p-6">
+                <button
+                  onClick={() => handleNavigation("/create-account")}
+                  className="w-full rounded-xl bg-black text-white py-3 font-medium hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-black"
+                >
+                  Get started free
+                </button>
+              </div>
+            )}
           </div>
-        )}
+        </div>
       </nav>
+
+      {/* Spacer to offset fixed nav height */}
+      <div aria-hidden="true" className="h-16" />
+
+      {/* Main landmark target for skip link */}
+      <div id="main" />
     </>
   );
 };

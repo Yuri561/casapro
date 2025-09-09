@@ -34,7 +34,14 @@ interface CustomTooltipProps {
   label?: string;
 }
 
-const COLORS = ["#3b82f6", "#10b981", "#f59e0b", "#ec4899", "#6366f1", "#14b8a6"];
+const COLORS = [
+  "#2563EB", // CasaPro Blue (primary accent)
+  "#1E40AF", // Deep Indigo
+  "#16A34A", // Emerald
+  "#FACC15", // Amber highlight
+  "#F43F5E", // Rose
+  "#6B7280", // Neutral Gray
+];
 
 const CustomTooltip: React.FC<CustomTooltipProps> = ({ active, payload }) => {
   if (active && payload && payload.length) {

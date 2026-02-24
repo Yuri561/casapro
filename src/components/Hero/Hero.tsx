@@ -3,48 +3,87 @@ import AddToHomeButton from "../Hooks/AddToHome"
 import LearnMoreBtn from "./LearnMoreBtn"
 import CountUp from "react-countup"
 
-
 const Hero: React.FC = () => {
   return (
     <section
-      className="relative bg-cover bg-center bg-no-repeat h-screen flex items-center justify-center"
-      style={{ backgroundImage: "url('/house2.jpg')" }}
       id="home"
+      className="relative min-h-screen flex items-center bg-[#0f172a] text-white overflow-hidden"
     >
+      {/* Background Image */}
+      <div
+        className="absolute inset-0 bg-cover bg-center opacity-20"
+        style={{ backgroundImage: "url('/house2.jpg')" }}
+      />
 
-      <div className="absolute inset-0 bg-black/60 z-0" />
+      {/* Soft Gradient Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-r from-[#0f172a] via-[#0f172a]/90 to-transparent" />
 
+      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-center">
+        
+        {/* LEFT SIDE - CONTENT */}
+        <div>
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight">
+            Smart Home Inventory.
+            <br />
+            <span className="text-cyan-400">
+              Simplified.
+            </span>
+          </h1>
 
-      <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-3xl text-white">
-        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight font-pj">
-          Find the best home inventory solution in one tap
-        </h1>
+          <p className="mt-6 text-lg text-gray-300 max-w-xl">
+            Casa Pro helps you track, organize, and protect everything inside your home from appliances to insurance documentation  all in one secure place.
+          </p>
 
-        <p className="mt-4 text-lg sm:text-xl text-gray-200">
-          Keep track of what matters. Casa Pro simplifies how you manage your home.
-        </p>
-
-        <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <LearnMoreBtn />
-          <AddToHomeButton />
-        </div>
-
-
-        <div className="mt-10 flex flex-col sm:flex-row justify-center items-center gap-8 text-white text-center text-lg font-semibold">
-          <div className="flex flex-col items-center justify-center space-y-2">
-          
-            <CountUp start={0} end={1500} duration={10} className="text-4xl font-bold" />
-            <p className="text-sm text-gray-300">Items Managed</p>
+          {/* Buttons */}
+          <div className="mt-8 flex flex-wrap gap-4">
+            <LearnMoreBtn />
+            <AddToHomeButton />
           </div>
 
-          <div className="flex flex-col items-center justify-center space-y-2">
-          <div className="flex flex-col items-center justify-center space-y-2">
-          
-          <CountUp start={0} end={540} duration={10} className="text-4xl font-bold" />
-          <p className="text-sm text-gray-300">Happy Users</p>
-        </div>
+          {/* Stats */}
+          <div className="mt-12 flex flex-wrap gap-10">
+            
+            <div>
+              <CountUp start={0} end={1500} duration={4} className="text-3xl font-bold text-cyan-400" />
+              <p className="text-sm text-gray-400 mt-1">Items Managed</p>
+            </div>
+
+            <div>
+              <CountUp start={0} end={540} duration={4} className="text-3xl font-bold text-cyan-400" />
+              <p className="text-sm text-gray-400 mt-1">Active Users</p>
+            </div>
+
           </div>
         </div>
+
+        {/* RIGHT SIDE - VISUAL CARD */}
+        <div className="hidden lg:block">
+          <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-8 shadow-2xl">
+            
+            <h3 className="text-xl font-semibold mb-6 text-cyan-400">
+              Your Dashboard Overview
+            </h3>
+
+            <div className="space-y-4">
+              <div className="bg-white/5 rounded-xl p-4 flex justify-between">
+                <span className="text-gray-300">Appliances</span>
+                <span className="font-semibold">24 Items</span>
+              </div>
+
+              <div className="bg-white/5 rounded-xl p-4 flex justify-between">
+                <span className="text-gray-300">Electronics</span>
+                <span className="font-semibold">18 Items</span>
+              </div>
+
+              <div className="bg-white/5 rounded-xl p-4 flex justify-between">
+                <span className="text-gray-300">Furniture</span>
+                <span className="font-semibold">12 Items</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
       </div>
     </section>
   )

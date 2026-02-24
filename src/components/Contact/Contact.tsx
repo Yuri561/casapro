@@ -47,7 +47,7 @@ const Contact = () => {
     };
 
     return (
-        <section className="max-w-3xl mx-auto px-6 py-10 bg-white rounded-2xl shadow-xl mt-10">
+        <section className="max-w-3xl mx-auto px-6 py-10 bg-[#0f172a] rounded-2xl shadow-xl mt-10">
             <h2 className="text-4xl font-bold text-center text-teal-700 mb-10">
                 Contact the CasaPro Developer
             </h2>

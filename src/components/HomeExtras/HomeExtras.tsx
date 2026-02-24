@@ -1,3 +1,8 @@
+/*************************************************
+ * CASA PRO – IMMERSIVE LANDING SECTIONS (FULL)
+ * Dark Navy + Cyan Glow System
+ *************************************************/
+
 
 /***********************\
  * 1) FeaturesSection   *
@@ -6,32 +11,49 @@ export function FeaturesSection() {
   const features = [
     {
       title: "Real-time Tracking",
-      desc: "Monitor stock and budget changes the moment they happen.",
+      desc: "Monitor stock levels and budget shifts instantly across all categories. No refresh. No delay. Just clarity."
     },
     {
       title: "One-Click Actions",
-      desc: "Add, update, or reconcile items without leaving the dashboard.",
+      desc: "Add, update, or reconcile items in seconds without breaking your workflow."
     },
     {
       title: "Role-based Security",
-      desc: "Granular permissions keep your data safe and tidy.",
+      desc: "Granular access controls ensure the right people see the right data."
     },
     {
-      title: "Export & Reports",
-      desc: "Download summaries for audits, investors, or team standups.",
-    },
+      title: "Export & Smart Reports",
+      desc: "Generate professional-grade reports for audits, reviews, or leadership updates."
+    }
   ];
 
   return (
-    <section className="py-16 bg-white">
-      <div className="max-w-6xl mx-auto px-4">
-        <h2 className="text-3xl md:text-4xl font-semibold tracking-tight">Powerful features, simple workflow</h2>
-        <p className="mt-3 text-gray-600">Everything you need to run inventory and budgets without the busywork.</p>
-        <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+    <section className="relative py-36 bg-[#0f172a] text-white overflow-hidden">
+
+      <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-transparent to-blue-500/10" />
+      <div className="absolute -top-40 -left-40 w-[600px] h-[600px] bg-cyan-500/20 rounded-full blur-[160px]" />
+
+      <div className="relative max-w-7xl mx-auto px-6">
+        <div className="max-w-3xl">
+          <h2 className="text-5xl md:text-6xl font-bold leading-tight">
+            Powerful features.
+            <span className="text-cyan-400"> Zero friction.</span>
+          </h2>
+
+          <p className="mt-6 text-gray-400 text-lg">
+            CasaPro eliminates spreadsheet chaos and disconnected systems. 
+            Every feature is designed to reduce cognitive load and increase operational visibility.
+          </p>
+        </div>
+
+        <div className="mt-20 grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
           {features.map((f, i) => (
-            <div key={i} className="rounded-2xl border border-gray-200 p-6 shadow-sm hover:shadow-md transition">
-              <h3 className="text-lg font-semibold">{f.title}</h3>
-              <p className="mt-2 text-gray-600 text-sm leading-relaxed">{f.desc}</p>
+            <div
+              key={i}
+              className="rounded-3xl bg-white/5 border border-white/10 p-10 backdrop-blur-xl transition-all duration-300 hover:-translate-y-3 hover:border-cyan-400/50 hover:shadow-[0_0_40px_rgba(34,211,238,0.2)]"
+            >
+              <h3 className="text-xl font-semibold">{f.title}</h3>
+              <p className="mt-4 text-gray-400 leading-relaxed">{f.desc}</p>
             </div>
           ))}
         </div>
@@ -40,43 +62,33 @@ export function FeaturesSection() {
   );
 }
 
+
 /***********************\
- * 2) Testimonials      *
+ * 2) StatsCounter      *
 \***********************/
-export function Testimonials() {
-  const items = [
-    {
-      quote:
-        "CasaPro saved us 8 hours/week on stock checks. The alerts are clutch.",
-      author: "Maya K.",
-      role: "Ops Lead, FreshBites",
-    },
-    {
-      quote:
-        "Our budget overruns dropped to zero last quarter. It just works.",
-      author: "Olu A.",
-      role: "Founder, BlueCrate",
-    },
-    {
-      quote:
-        "Setup took minutes, and the team adopted it instantly.",
-      author: "Eric D.",
-      role: "Warehouse Manager, Lumi",
-    },
+export function StatsCounter() {
+  const stats = [
+    { label: "Active items tracked globally", value: "18k+" },
+    { label: "Budget alerts prevented", value: "2,300+" },
+    { label: "Average onboarding time", value: "7 min" }
   ];
 
   return (
-    <section className="py-16 bg-gray-50">
-      <div className="max-w-6xl mx-auto px-4">
-        <h2 className="text-3xl md:text-4xl font-semibold">What customers say</h2>
-        <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
-          {items.map((t, i) => (
-            <figure key={i} className="rounded-2xl bg-white p-6 shadow-sm border border-gray-200">
-              <blockquote className="text-gray-800">“{t.quote}”</blockquote>
-              <figcaption className="mt-4 text-sm text-gray-600">
-                <span className="font-medium text-gray-900">{t.author}</span> · {t.role}
-              </figcaption>
-            </figure>
+    <section className="relative py-32 bg-black text-white overflow-hidden">
+
+      <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-blue-500/10" />
+
+      <div className="relative max-w-7xl mx-auto px-6 text-center">
+        <h2 className="text-4xl font-bold">
+          Built for performance at scale
+        </h2>
+
+        <div className="mt-16 grid sm:grid-cols-3 gap-12">
+          {stats.map((s, i) => (
+            <div key={i}>
+              <div className="text-5xl font-bold text-cyan-400">{s.value}</div>
+              <div className="mt-4 text-gray-400">{s.label}</div>
+            </div>
           ))}
         </div>
       </div>
@@ -84,64 +96,126 @@ export function Testimonials() {
   );
 }
 
+
 /***********************\
- * 3) PricingPlans      *
+ * 3) Testimonials      *
+\***********************/
+export function Testimonials() {
+  const items = [
+    {
+      quote: "CasaPro reduced our weekly inventory workload by 40%.",
+      author: "Maya K.",
+      role: "Operations Lead"
+    },
+    {
+      quote: "We eliminated budget overruns entirely within one quarter.",
+      author: "Olu A.",
+      role: "Founder"
+    },
+    {
+      quote: "The clarity this gives our team is unreal.",
+      author: "Eric D.",
+      role: "Warehouse Manager"
+    }
+  ];
+
+  return (
+    <section className="relative py-36 bg-[#0f172a] text-white overflow-hidden">
+
+      <div className="absolute inset-0 bg-gradient-to-t from-cyan-500/10 to-transparent" />
+
+      <div className="relative max-w-7xl mx-auto px-6 text-center">
+        <h2 className="text-5xl font-bold">
+          Trusted by
+          <span className="text-cyan-400"> modern operators</span>
+        </h2>
+
+        <p className="mt-6 text-gray-400 max-w-2xl mx-auto">
+          From startups to scaling enterprises, CasaPro helps teams gain control without complexity.
+        </p>
+
+        <div className="mt-20 grid md:grid-cols-3 gap-10">
+          {items.map((t, i) => (
+            <div
+              key={i}
+              className="rounded-3xl bg-white/5 border border-white/10 p-10 backdrop-blur-xl hover:border-cyan-400/40 transition"
+            >
+              <p className="text-gray-300 text-lg leading-relaxed">“{t.quote}”</p>
+              <div className="mt-8 text-sm text-gray-400">
+                <span className="text-white font-semibold">{t.author}</span>
+                <div>{t.role}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+
+/***********************\
+ * 4) PricingPlans      *
 \***********************/
 export function PricingPlans() {
   const plans = [
     {
       name: "Starter",
       price: "$0",
-      period: "/mo",
-      features: ["100 items", "Basic analytics", "Email support"],
-      cta: "Get started",
-      highlighted: false,
+      description: "Perfect for individuals and small teams.",
+      features: ["Up to 100 items", "Basic analytics", "Email support"],
+      highlight: false
     },
     {
       name: "Pro",
       price: "$29",
-      period: "/mo",
+      description: "For growing teams that need control.",
       features: ["Unlimited items", "Advanced reports", "Priority support"],
-      cta: "Go Pro",
-      highlighted: true,
+      highlight: true
     },
     {
       name: "Enterprise",
       price: "Custom",
-      period: "",
-      features: ["SLA & SSO", "Dedicated success", "Custom integrations"],
-      cta: "Talk to sales",
-      highlighted: false,
-    },
+      description: "For large-scale operations.",
+      features: ["SSO & SLA", "Dedicated success manager", "Custom integrations"],
+      highlight: false
+    }
   ];
 
   return (
-    <section className="py-16 bg-white">
-      <div className="max-w-6xl mx-auto px-4">
-        <h2 className="text-3xl md:text-4xl font-semibold">Fair, flexible pricing</h2>
-        <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
+    <section className="relative py-36 bg-black text-white overflow-hidden">
+
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-transparent to-cyan-500/10" />
+
+      <div className="relative max-w-7xl mx-auto px-6 text-center">
+        <h2 className="text-5xl font-bold">
+          Simple pricing.
+          <span className="text-cyan-400"> No surprises.</span>
+        </h2>
+
+        <div className="mt-20 grid md:grid-cols-3 gap-10">
           {plans.map((p, i) => (
             <div
               key={i}
-              className={`rounded-2xl border p-6 shadow-sm ${
-                p.highlighted ? "border-black ring-2 ring-black" : "border-gray-200"
+              className={`rounded-3xl p-10 border backdrop-blur-xl transition-all duration-300 ${
+                p.highlight
+                  ? "bg-cyan-400/10 border-cyan-400 shadow-[0_0_50px_rgba(34,211,238,0.3)] scale-105"
+                  : "bg-white/5 border-white/10 hover:border-cyan-400/40"
               }`}
             >
-              <h3 className="text-xl font-semibold">{p.name}</h3>
-              <div className="mt-3 flex items-end gap-1">
-                <span className="text-4xl font-bold">{p.price}</span>
-                <span className="text-gray-600">{p.period}</span>
-              </div>
-              <ul className="mt-6 space-y-2 text-sm text-gray-700">
+              <h3 className="text-2xl font-semibold">{p.name}</h3>
+              <p className="mt-2 text-gray-400 text-sm">{p.description}</p>
+
+              <div className="mt-6 text-5xl font-bold">{p.price}</div>
+
+              <ul className="mt-8 space-y-3 text-gray-400">
                 {p.features.map((f, idx) => (
-                  <li key={idx} className="flex items-start gap-2">
-                    <span aria-hidden>•</span>
-                    <span>{f}</span>
-                  </li>
+                  <li key={idx}>• {f}</li>
                 ))}
               </ul>
-              <button className="mt-6 w-full rounded-xl bg-black text-white py-2.5 font-medium hover:opacity-90">
-                {p.cta}
+
+              <button className="mt-10 w-full rounded-xl bg-white text-black py-3 font-semibold">
+                Get Started
               </button>
             </div>
           ))}
@@ -151,41 +225,47 @@ export function PricingPlans() {
   );
 }
 
+
 /***********************\
- * 4) FAQSection        *
+ * 5) FAQSection        *
 \***********************/
 export function FAQSection() {
   const faqs = [
     {
-      q: "Can I import existing inventory?",
-      a: "Yes, upload CSVs or use the API to sync from your current system.",
+      q: "Can I import my existing inventory?",
+      a: "Yes. Upload CSV files or connect directly through API integrations."
     },
     {
-      q: "Do you offer a free trial?",
-      a: "The Starter plan is free forever; Pro has a 14‑day trial.",
+      q: "Is there a free version?",
+      a: "Yes. The Starter plan is free forever."
     },
     {
-      q: "How does budgeting work?",
-      a: "Set per‑category caps and receive alerts before you overspend.",
-    },
-    {
-      q: "Is my data secure?",
-      a: "We use encryption at rest and in transit, with role‑based access.",
-    },
+      q: "How secure is my data?",
+      a: "We use encryption at rest and in transit with role-based access control."
+    }
   ];
 
   return (
-    <section className="py-16 bg-gray-50">
-      <div className="max-w-4xl mx-auto px-4">
-        <h2 className="text-3xl md:text-4xl font-semibold">Frequently asked questions</h2>
-        <div className="mt-8 divide-y divide-gray-200 rounded-2xl border border-gray-200 bg-white">
+    <section className="relative py-36 bg-[#0f172a] text-white overflow-hidden">
+
+      <div className="absolute inset-0 bg-gradient-to-b from-cyan-500/10 to-transparent" />
+
+      <div className="relative max-w-4xl mx-auto px-6">
+        <h2 className="text-5xl font-bold text-center">
+          Frequently asked
+          <span className="text-cyan-400"> questions</span>
+        </h2>
+
+        <div className="mt-16 space-y-6">
           {faqs.map((f, i) => (
-            <details key={i} className="group p-6">
-              <summary className="flex cursor-pointer items-center justify-between font-medium">
+            <details
+              key={i}
+              className="rounded-2xl bg-white/5 border border-white/10 p-6 hover:border-cyan-400/40 transition"
+            >
+              <summary className="cursor-pointer font-semibold text-lg">
                 {f.q}
-                <span className="ml-4 text-gray-400 group-open:rotate-180 transition">▾</span>
               </summary>
-              <p className="mt-3 text-gray-700 text-sm leading-relaxed">{f.a}</p>
+              <p className="mt-4 text-gray-400 leading-relaxed">{f.a}</p>
             </details>
           ))}
         </div>
@@ -194,19 +274,111 @@ export function FAQSection() {
   );
 }
 
+
 /***********************\
- * 5) PartnersLogos     *
+ * 6) TrustBadges       *
+\***********************/
+export function TrustBadges() {
+  const badges = [
+    "ISO-27001 Ready",
+    "99.9% Uptime",
+    "GDPR Compliant",
+    "Role-Based Access Control"
+  ];
+
+  return (
+    <section className="py-24 bg-black text-white">
+      <div className="max-w-7xl mx-auto px-6 flex flex-wrap justify-center gap-6">
+        {badges.map((b, i) => (
+          <span
+            key={i}
+            className="rounded-full bg-white/5 border border-white/10 px-6 py-3 text-sm text-gray-300"
+          >
+            {b}
+          </span>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+
+/***********************\
+ * 7) ContactStrip      *
+\***********************/
+export function ContactStrip() {
+  return (
+    <section className="relative py-40 bg-[#0f172a] text-white overflow-hidden">
+
+      <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 via-transparent to-blue-500/20" />
+      <div className="absolute -bottom-40 -right-40 w-[600px] h-[600px] bg-cyan-500/20 rounded-full blur-[160px]" />
+
+      <div className="relative max-w-5xl mx-auto px-6 text-center">
+        <h3 className="text-5xl font-bold leading-tight">
+          Ready to simplify your operations?
+        </h3>
+
+        <p className="mt-6 text-gray-400 text-lg">
+          Join teams worldwide who rely on CasaPro to stay organized, proactive, and efficient.
+        </p>
+
+        <div className="mt-12 flex justify-center gap-6">
+          <button className="rounded-xl bg-cyan-400 text-black px-8 py-4 font-semibold shadow-lg shadow-cyan-400/30">
+            Start Free
+          </button>
+          <button className="rounded-xl border border-white/20 px-8 py-4 hover:bg-white/10 transition">
+            Contact Sales
+          </button>
+        </div>
+      </div>
+    </section>
+  );
+}
+/***********************\
+ * 6) PartnersLogos     *
 \***********************/
 export function PartnersLogos() {
-  const logos = ["Acme", "Kairo", "Nova", "Pulse", "Atlas", "Vertex"];
+  const logos = [
+    "Acme Corp",
+    "Kairo Systems",
+    "Nova Logistics",
+    "Pulse Retail",
+    "Atlas Supply",
+    "Vertex Labs"
+  ];
+
   return (
-    <section className="py-10 bg-white">
-      <div className="max-w-6xl mx-auto px-4">
-        <p className="text-gray-600 text-sm">Trusted by teams at</p>
-        <div className="mt-6 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-6">
+    <section className="relative py-32 bg-[#0f172a] text-white overflow-hidden">
+      
+      {/* Ambient glow */}
+      <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-transparent to-blue-500/10" />
+      <div className="absolute -top-40 right-0 w-[500px] h-[500px] bg-blue-500/20 rounded-full blur-[150px]" />
+
+      <div className="relative max-w-7xl mx-auto px-6 text-center">
+        
+        <p className="text-sm uppercase tracking-widest text-gray-500">
+          Trusted by teams worldwide
+        </p>
+
+        <h2 className="mt-6 text-4xl md:text-5xl font-bold">
+          Powering operations for
+          <span className="text-cyan-400"> modern companies</span>
+        </h2>
+
+        <p className="mt-6 text-gray-400 max-w-2xl mx-auto">
+          From retail operations to warehouse logistics, CasaPro helps organizations
+          gain clarity and control across their inventory ecosystems.
+        </p>
+
+        <div className="mt-16 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-8">
           {logos.map((name, i) => (
-            <div key={i} className="flex items-center justify-center h-12 rounded-xl border border-gray-200 bg-gray-50">
-              <span className="text-gray-700 text-sm font-medium">{name}</span>
+            <div
+              key={i}
+              className="flex items-center justify-center h-20 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xl transition hover:border-cyan-400/40 hover:shadow-[0_0_25px_rgba(34,211,238,0.15)]"
+            >
+              <span className="text-gray-300 text-sm font-medium tracking-wide">
+                {name}
+              </span>
             </div>
           ))}
         </div>
@@ -214,150 +386,3 @@ export function PartnersLogos() {
     </section>
   );
 }
-
-/***********************\
- * 6) CallToActionBanner*
-\***********************/
-export function CallToActionBanner() {
-  return (
-    <section className="py-16 bg-black text-white">
-      <div className="max-w-6xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-6">
-        <div>
-          <h2 className="text-3xl md:text-4xl font-semibold">Ready to streamline CasaPro workflows?</h2>
-          <p className="mt-2 text-white/80">Start free, upgrade anytime. No credit card required.</p>
-        </div>
-        <div className="flex gap-3 w-full md:w-auto">
-          <button className="flex-1 md:flex-none rounded-xl bg-white text-black py-2.5 px-5 font-medium hover:opacity-90">Create account</button>
-          <button className="flex-1 md:flex-none rounded-xl border border-white/30 py-2.5 px-5 font-medium hover:bg-white/10">Book a demo</button>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/***********************\
- * 7) StatsCounter      *
-\***********************/
-export function StatsCounter() {
-  const stats = [
-    { label: "Active items tracked", value: "18k+" },
-    { label: "Budget alerts prevented", value: "2,300+" },
-    { label: "Avg. setup time", value: "7 min" },
-  ];
-  return (
-    <section className="py-12 bg-gray-50">
-      <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-3 gap-6">
-        {stats.map((s, i) => (
-          <div key={i} className="rounded-2xl bg-white border border-gray-200 p-6 text-center">
-            <div className="text-3xl font-bold">{s.value}</div>
-            <div className="mt-1 text-gray-600 text-sm">{s.label}</div>
-          </div>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-/***********************\
- * 8) BlogPreview       *
-\***********************/
-export function BlogPreview() {
-  const posts = [
-    {
-      title: "5 mistakes to avoid in inventory ops",
-      excerpt: "From over‑counting to stale SKUs, here’s how to keep operations clean.",
-    },
-    {
-      title: "How to set category budgets that actually stick",
-      excerpt: "A simple framework for forecasting usage and avoiding surprise spend.",
-    },
-    {
-      title: "Migrating from spreadsheets in one afternoon",
-      excerpt: "You don’t need a week. Here’s the 90‑minute plan we recommend.",
-    },
-  ];
-  return (
-    <section className="py-16 bg-white">
-      <div className="max-w-6xl mx-auto px-4">
-        <h2 className="text-3xl md:text-4xl font-semibold">From the CasaPro journal</h2>
-        <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
-          {posts.map((p, i) => (
-            <article key={i} className="rounded-2xl border border-gray-200 p-6 hover:shadow-sm">
-              <h3 className="text-lg font-semibold">{p.title}</h3>
-              <p className="mt-2 text-gray-600 text-sm leading-relaxed">{p.excerpt}</p>
-              <button className="mt-4 text-sm font-medium underline">Read more</button>
-            </article>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/***********************\
- * 9) TrustBadges       *
-\***********************/
-export function TrustBadges() {
-  const badges = [
-    "ISO‑27001 Ready",
-    "99.9% Uptime",
-    "GDPR Aligned",
-    "Role‑Based Access",
-  ];
-  return (
-    <section className="py-10 bg-gray-50">
-      <div className="max-w-6xl mx-auto px-4">
-        <div className="flex flex-wrap items-center gap-3">
-          {badges.map((b, i) => (
-            <span key={i} className="rounded-full bg-white border border-gray-200 px-4 py-2 text-sm text-gray-700">
-              {b}
-            </span>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/***********************\
- * 10) DemoVideo        *
-\***********************/
-export function DemoVideo() {
-  return (
-    <section className="py-16 bg-white">
-      <div className="max-w-5xl mx-auto px-4">
-        <div className="aspect-video w-full overflow-hidden rounded-2xl border border-gray-200 bg-black">
-          {/* Replace src with your demo video URL */}
-          <iframe
-            src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-            title="CasaPro Demo"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowFullScreen
-            className="h-full w-full"
-          />
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/***********************\
- * 11) ContactStrip     *
-\***********************/
-export function ContactStrip() {
-  return (
-    <section className="py-10 bg-white">
-      <div className="max-w-6xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
-        <div>
-          <h3 className="text-xl font-semibold">Questions? We’re here to help.</h3>
-          <p className="text-gray-600 text-sm">Chat with support or email us and we’ll get back within a day.</p>
-        </div>
-        <div className="flex gap-3 w-full md:w-auto">
-          <a href="#" className="flex-1 md:flex-none rounded-xl border border-gray-300 py-2.5 px-5 text-center hover:bg-gray-50">support@casapro.app</a>
-          <a href="#" className="flex-1 md:flex-none rounded-xl bg-black text-white py-2.5 px-5 text-center hover:opacity-90">Open chat</a>
-        </div>
-      </div>
-    </section>
-  );
-}
-

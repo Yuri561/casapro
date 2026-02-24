@@ -5,48 +5,85 @@ const Newsletter: React.FC = () => {
     <section
       id="newsletter"
       aria-label="Newsletter signup"
-      className="py-16 sm:py-20 lg:py-24 bg-gradient-to-b from-neutral-50 to-white"
+      className="relative min-h-[85vh] flex items-center justify-center bg-[#0f172a] text-white overflow-hidden"
     >
-      <div className="w-full px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="max-w-3xl mx-auto text-center">
-          <p className="inline-flex items-center gap-2 rounded-full bg-black text-white px-3 py-1 text-xs font-medium">
-            <span className="h-1.5 w-1.5 rounded-full bg-white" />
-            Stay in the loop
-          </p>
-          <h2 className="mt-4 text-4xl sm:text-5xl xl:text-6xl font-extrabold tracking-tight text-gray-900">
-            Join our newsletter
-          </h2>
-          <p className="mt-4 sm:mt-6 text-lg text-gray-600">
-            Get product updates, tips, and new feature drops — straight to your inbox.
-          </p>
-        </div>
+      {/* Background Gradients */}
+      <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 via-transparent to-blue-500/20" />
+      
+      {/* Floating Glow Orbs */}
+      <div className="absolute -top-40 -left-40 w-[500px] h-[500px] bg-cyan-500/20 rounded-full blur-[140px]" />
+      <div className="absolute -bottom-40 -right-40 w-[500px] h-[500px] bg-blue-500/20 rounded-full blur-[140px]" />
 
-        {/* Signup Form */}
-        <div className="max-w-xl mx-auto mt-12 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm sm:p-8 lg:p-10">
-          <form action="#" className="flex flex-col gap-4 sm:flex-row sm:gap-3">
-            <label htmlFor="email" className="sr-only">
-              Email address
-            </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              required
-              placeholder="Enter your email"
-              className="flex-1 rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-gray-700 placeholder-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 transition"
-            />
-            <button
-              type="submit"
-              className="rounded-xl bg-black px-6 py-3 font-medium text-white shadow-sm transition hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2"
-            >
-              Subscribe
-            </button>
-          </form>
-          <p className="mt-4 text-xs text-gray-500 text-center">
-            By subscribing, you agree to receive emails from CasaPro. Unsubscribe anytime.
-          </p>
-        </div>
+      <div className="relative max-w-4xl mx-auto px-6 text-center">
+        
+        {/* Badge */}
+        <span className="inline-flex items-center rounded-full border border-cyan-400/40 bg-cyan-400/10 px-5 py-1 text-sm font-medium text-cyan-300">
+          Stay in the loop
+        </span>
+
+        {/* Heading */}
+        <h2 className="mt-8 text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight tracking-tight">
+          Get smarter inventory insights.
+          <br />
+          <span className="text-cyan-400">
+            Straight to your inbox.
+          </span>
+        </h2>
+
+        {/* Subtext */}
+        <p className="mt-8 text-lg text-gray-400 leading-relaxed max-w-2xl mx-auto">
+          Product updates, feature drops, workflow tips, and early access —
+          no spam. Just value.
+        </p>
+
+        {/* Form */}
+        <form
+          action="#"
+          className="mt-14 flex flex-col sm:flex-row items-center justify-center gap-4"
+        >
+          <input
+            type="email"
+            required
+            placeholder="Enter your email address"
+            className="
+              w-full sm:w-auto sm:min-w-[380px]
+              rounded-xl
+              bg-white/5
+              border border-white/10
+              px-6 py-4
+              text-white
+              placeholder-gray-400
+              focus:outline-none
+              focus:border-cyan-400
+              focus:ring-2
+              focus:ring-cyan-400/40
+              transition
+            "
+          />
+
+          <button
+            type="submit"
+            className="
+              w-full sm:w-auto
+              rounded-xl
+              bg-cyan-400
+              text-black
+              font-semibold
+              px-8 py-4
+              shadow-xl shadow-cyan-400/30
+              hover:scale-[1.02]
+              hover:shadow-cyan-400/40
+              transition-all duration-300
+            "
+          >
+            Subscribe
+          </button>
+        </form>
+
+        {/* Disclaimer */}
+        <p className="mt-8 text-xs text-gray-500">
+          No spam. Unsubscribe anytime.
+        </p>
       </div>
     </section>
   );

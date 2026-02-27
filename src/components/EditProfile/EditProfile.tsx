@@ -10,8 +10,8 @@ import {
 } from "../ui/dialog"
 import { Input } from "../ui/input"
 import { Label } from "../ui/label"
-import { Edit } from "lucide-react"
 import React, { useState } from "react";
+import { Edit } from "lucide-react";
 
 
 const EditProfile: React.FC = () => {
@@ -22,23 +22,23 @@ const EditProfile: React.FC = () => {
     return (
 
 
-        <Dialog open={isOpen} onOpenChange={setIsOpen}>
+        <Dialog open={isOpen} onOpenChange={setIsOpen} >
             <DialogTrigger asChild>
-                <Button variant="outline">
+                <Button variant="outline" className="bg-indigo-500 text-white border-white/10">
                     <Edit className="w-4 h-4" />
                     Edit Profile
                 </Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[425px] bg-white p-6 rounded-md shadow-lg mt-2">
+            <DialogContent className="sm:max-w-[425px] bg-indigo-500 p-6 rounded-md shadow-lg mt-2">
                 <DialogHeader>
-                    <DialogTitle>Edit profile</DialogTitle>
-                    <DialogDescription>
+                    <DialogTitle className="text-white">Edit profile</DialogTitle>
+                    <DialogDescription className="text-white">
                         Make changes to your profile here. Click save when you're done.
                     </DialogDescription>
                 </DialogHeader>
                 <div className="grid gap-4 py-4">
                     <div className="grid grid-cols-4 items-center gap-4">
-                        <Label htmlFor="name" className="text-right">
+                        <Label htmlFor="name" className="text-right text-white text-md">
                             Name
                         </Label>
                         <div className="col-span-3 text-gray-700 bg-gray-100 p-2 rounded">
@@ -46,28 +46,28 @@ const EditProfile: React.FC = () => {
                         </div>
                     </div>
                     <div className="grid grid-cols-4 items-center gap-4">
-                        <Label htmlFor="password" className="text-right">
+                        <Label htmlFor="password" className="text-right text-white text-md">
                             password
                         </Label>
-                        <Input id="password" placeholder="change password" className="col-span-3" />
+                        <Input id="password" placeholder="change password" className="col-span-3 text-gray-700 bg-gray-100" />
                     </div>
                     <div className="grid grid-cols-4 items-center gap-4">
-                        <Label htmlFor="confirm" className="text-right">
-                            confirm 
+                        <Label htmlFor="confirm" className="text-right text-white text-md">
+                            confirm
                         </Label>
-                        <Input id="password" placeholder="confirm password" className="col-span-3" />
+                        <Input id="password" placeholder="confirm password" className="col-span-3 text-gray-700 bg-gray-100" />
                     </div>
                     <div className="grid grid-cols-4 items-center gap-4">
-                        <Label htmlFor="email" className="text-right">
+                        <Label htmlFor="email" className="text-right text-white text-md">
                             email
                         </Label>
-                        <Input id="email" placeholder="edit email" className="col-span-3" />
+                        <Input id="email" placeholder="edit email" className="col-span-3 text-gray-700 bg-gray-100" />
                     </div>
                     <div className="grid grid-cols-4 items-center gap-4">
-                        <Label htmlFor="categories" className="text-right">
+                        <Label htmlFor="categories" className="text-right text-white text-md">
                             categories
                         </Label>
-                        <Input id="category" placeholder="add category" className="col-span-3" />
+                        <Input id="category" placeholder="add category" className="col-span-3 text-gray-700 bg-gray-100" />
                     </div>
                 </div>
                 <DialogFooter>

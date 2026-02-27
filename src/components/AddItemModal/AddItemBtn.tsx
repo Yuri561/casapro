@@ -74,7 +74,7 @@ const AddItemBtn: React.FC<AddItemBtnProps> = ({ onSave }) => {
       <DialogTrigger asChild>
         <Button
           variant="outline"
-          className="bg-emerald-600 hover:bg-emerald-700 
+          className="bg-[#0f172a]
           cursor-pointer hover:scale-105 text-white"
         >
           <Plus /> Add Item

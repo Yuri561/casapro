@@ -1,105 +1,139 @@
-import React, { useEffect, useState } from 'react'
-import InventoryGauge from '../Gauges/InventoryGauge'
-import CategoryDist from '../Gauges/CategoryDist'
-import InventoryReports from '../Gauges/InventoryReports'
-import MoneySpent from '../Gauges/MoneySpent'
-import InventoryTable from './InventoryTable'
+import React, { useEffect, useState } from "react";
+import InventoryGauge from "../Gauges/InventoryGauge";
+import CategoryDist from "../Gauges/CategoryDist";
+import InventoryReports from "../Gauges/InventoryReports";
+import MoneySpent from "../Gauges/MoneySpent";
+import InventoryTable from "./InventoryTable";
 import { Product } from "../Hooks/useInventory";
-import { userInventory } from '../../UserAuth/user_auth'
-import InventoryTips from './InventoryTips'
-import LoadingAnimation from '../LoadingAnimation/LoadingAnimation'
-
-
+import { userInventory } from "../../UserAuth/user_auth";
+import InventoryTips from "./InventoryTips";
+import LoadingAnimation from "../LoadingAnimation/LoadingAnimation";
 
 const Dashboard: React.FC = () => {
-    const [username, setUsername] = useState("")
-    const [inventoryData, setInventoryData] = useState<Product[]>([])
-    const [refreshHistory, setRefreshHistory] = useState(0);
-    const [loading, setLoading] = useState(true);
+  const [username, setUsername] = useState("");
+  const [inventoryData, setInventoryData] = useState<Product[]>([]);
+  const [refreshHistory, setRefreshHistory] = useState(0);
+  const [loading, setLoading] = useState(true);
 
+  const handleAddSave = (newItem: Product) => {
+    setInventoryData([...inventoryData, newItem]);
+    setRefreshHistory((r) => r + 1);
+  };
 
-    const handleAddSave = (newItem: Product) => {
-        setInventoryData([...inventoryData, newItem]);
-        setRefreshHistory(r => r + 1);
+  const userId = localStorage.getItem("user_id") || "";
+
+  useEffect(() => {
+    const storedUsername = localStorage.getItem("username");
+    if (storedUsername) setUsername(storedUsername);
+
+    const fetchInventory = async () => {
+      try {
+        const response = await userInventory();
+        if (response.status === 200) {
+          setInventoryData(response.data.user_inventory);
+        }
+      } catch (error: any) {
+        console.error(
+          "unable to retrieve inventory data:",
+          error.response?.data || error.message
+        );
+      } finally {
+        setLoading(false);
+      }
     };
-    const userId = localStorage.getItem("user_id") || "";
 
-    useEffect(() => {
-        const storedUsername = localStorage.getItem("username");
-        if (storedUsername) setUsername(storedUsername);
-      
-        const fetchInventory = async () => {
-          const user_id = localStorage.getItem("user_id");
-          if (!user_id) return;
-      
-          try {
-            const response = await userInventory();
-            if (response.status === 200) {
-                console.log(response)
-              setInventoryData(response.data.user_inventory);
-            }
-          } catch (error: any) {
-            console.error("unable to retrieve inventory data:", error.response?.data || error.message);
-          }
-           finally {
-            setLoading(false);
-          }
-        };
-      
-        fetchInventory();
-      }, []);
+    fetchInventory();
+  }, []);
 
-    if (loading) return <LoadingAnimation />;  
-    return (
-        <>
-            <section className='py-6 bg-gradient-to-r from-teal-100 via-cyan-100 to-blue-100 sm:py-20 lg:py-24'>
-                <div className='text-center'>
-                    <h2 className='text-4xl font-bold text-gray-900 sm:text-5xl font-pj'>
-                        Welcome {username || "back"} to your personalized dashboard
-                    </h2>
-                    <p className="mt-4 text-lg text-gray-700 sm:mt-6 font-pj">
-                        Ready to take control? Start adding your items and let Casa Pro do the rest to keep your home organized.
-                    </p>
-                </div>
-                <div className='mt-4 flex flex-wrap gap-8 items-center justify-center mx-auto'>
-                    <div className='w-80 h-80 bg-white  shadow-md rounded-xl'>
-                        <InventoryGauge inventoryData={inventoryData}
+  if (loading) return <LoadingAnimation />;
 
-                        />
-                    </div>
-                    <div className="w-80 h-80 bg-white shadow-md rounded-xl flex items-center justify-center">
-                        <CategoryDist inventoryData={inventoryData} />
-                    </div>
+  return (
+    <div className="relative min-h-screen bg-[#0f172a] text-white overflow-hidden">
 
-                    <div className='w-80 h-80 bg-white rounded-xl shadow-md'>
-                        <InventoryReports userId={userId} refresh={refreshHistory} />
-                    </div>
-                    <div className='w-80 h-80 bg-white rounded-xl shadow-md'>
-                        <MoneySpent inventoryData={inventoryData} />
-                    </div>
-                </div>
-            </section>
-            <section className=" py-6 bg-gradient-to-r from-teal-100 via-cyan-100 to-blue-100 sm:py-20 lg:py-6">
-        <InventoryTips inventoryData={inventoryData || []}
-   />
+      {/* Background glow layers */}
+      <div className="absolute -top-40 -left-40 w-[500px] h-[500px] bg-cyan-500/20 rounded-full blur-[160px]" />
+      <div className="absolute -bottom-40 -right-40 w-[500px] h-[500px] bg-blue-500/20 rounded-full blur-[160px]" />
+      <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-transparent to-blue-500/10 pointer-events-none" />
+
+      {/* HEADER SECTION */}
+      <section className="relative py-24 px-6 text-center">
+        <h2 className="text-5xl font-bold tracking-tight">
+          Welcome{" "}
+          <span className="text-cyan-400">
+            {username || "back"}
+          </span>
+        </h2>
+
+        <p className="mt-6 text-gray-400 max-w-2xl mx-auto text-lg">
+          Monitor, manage, and optimize your home inventory in one unified control center.
+        </p>
       </section>
-            <section className='bg-gradient-to-r from-teal-100 via-cyan-100 to-blue-100 sm:py-20 lg:py-24'>
-                <div className='text-center'>
-                    <h2 className='text-4xl font-bold text-gray-900 sm:text-5xl font-pj'>My Inventory</h2>
-                    <p className="mt-4 text-lg text-gray-700 sm:mt-6 font-pj">
-                        Take better control of your inventory.
-                    </p>
-                </div>
-                <div className="flex-wrap gap-8 items-center justify-center mx-auto px-6 mb-5">
-                    <InventoryTable inventoryData={inventoryData}
-                        setInventoryData={setInventoryData}
-                        onAddSave={handleAddSave}/>
-                </div>
 
-            </section>
+      {/* GAUGE SECTION */}
+      <section className="relative px-6 pb-24">
+        <div className="max-w-8xl mx-auto grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
 
-        </>
-    )
-}
+          {[ 
+            <InventoryGauge inventoryData={inventoryData} />,
+            <CategoryDist inventoryData={inventoryData} />,
+            <InventoryReports userId={userId} refresh={refreshHistory} />,
+            <MoneySpent inventoryData={inventoryData} />
+          ].map((Component, index) => (
+            <div
+              key={index}
+              className="
+                bg-white/5
+                border border-white/10
+                backdrop-blur-xl
+                rounded-3xl
+                p-6
+                shadow-[0_0_35px_rgba(34,211,238,0.12)]
+                hover:border-cyan-400/40
+                transition
+              "
+            >
+              {Component}
+            </div>
+          ))}
 
-export default Dashboard
+        </div>
+      </section>
+
+      {/* TIPS SECTION */}
+      <section className="relative px-6 pb-24">
+        <div className="max-w-6xl mx-auto bg-white/5 border border-white/10 backdrop-blur-xl rounded-3xl p-10 shadow-[0_0_40px_rgba(34,211,238,0.1)]">
+          <InventoryTips inventoryData={inventoryData || []} />
+        </div>
+      </section>
+
+      {/* INVENTORY TABLE SECTION */}
+      <section className="relative px-6 pb-32">
+        <div className="max-w-7xl mx-auto">
+
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold">
+              My{" "}
+              <span className="text-cyan-400">
+                Inventory
+              </span>
+            </h2>
+            <p className="mt-4 text-gray-400">
+              Take full control of your tracked items.
+            </p>
+          </div>
+
+          <div className="bg-white/5 border border-white/10 backdrop-blur-xl rounded-3xl p-8 shadow-[0_0_40px_rgba(34,211,238,0.1)]">
+            <InventoryTable
+              inventoryData={inventoryData}
+              setInventoryData={setInventoryData}
+              onAddSave={handleAddSave}
+            />
+          </div>
+
+        </div>
+      </section>
+    </div>
+  );
+};
+
+export default Dashboard;

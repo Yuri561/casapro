@@ -52,7 +52,7 @@ const Profile: React.FC<ProfileProps> = ({
   }, [userId]);
 
   return (
-    <div className="min-h-screen w-full bg-gradient-to-br from-[#e8f4f8] via-[#dbeef7] to-[#c8e2f0] overflow-hidden">
+    <div className="min-h-screen w-full bg-gradient-to-b from-cyan-500/5 via-transparent to-transparent overflow-hidden">
       {/* ===== Cover Banner ===== */}
       <div className="relative h-48">
         <img src={bannerPng} alt="Banner" className="w-full h-full object-cover" />
@@ -66,7 +66,7 @@ const Profile: React.FC<ProfileProps> = ({
 
       {/* ===== Basic Info ===== */}
       <div className="pt-20 pb-6 px-8 text-center">
-        <h2 className="text-3xl font-bold text-gray-900">{username || "User"}</h2>
+        <h2 className="text-3xl font-bold text-white/80">{username || "User"}</h2>
         <div className="mt-5">
         <EditProfile/>
         </div>
@@ -76,11 +76,11 @@ const Profile: React.FC<ProfileProps> = ({
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 px-8 pb-6">
         <div className="text-center">
           <p className="text-4xl font-semibold text-teal-600">{totalItems}</p>
-          <p className="text-sm text-gray-500">Total Items</p>
+          <p className="text-md text-white">Total Items</p>
         </div>
         <div className="text-center">
           <p className="text-4xl font-semibold text-purple-600">{totalCategories}</p>
-          <p className="text-sm text-gray-500">Categories</p>
+          <p className="text-md text-white">Categories</p>
         </div>
         <div className="text-center">
           <div className="relative w-16 h-16 mx-auto mb-1">
@@ -99,11 +99,11 @@ const Profile: React.FC<ProfileProps> = ({
                 strokeDasharray={`${profileCompletion}, 100`}
               />
             </svg>
-            <span className="absolute inset-0 flex items-center justify-center text-sm font-semibold text-gray-800">
+            <span className="absolute inset-0 flex items-center justify-center text-sm font-semibold text-white">
               {profileCompletion}%
             </span>
           </div>
-          <p className="text-sm text-gray-500">Profile Complete</p>
+          <p className="text-md text-white">Profile Complete</p>
         </div>
       </div>
 

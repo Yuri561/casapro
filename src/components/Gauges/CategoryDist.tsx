@@ -16,90 +16,141 @@ import {
   CardTitle,
   CardContent,
 } from "../ui/card";
-import  { Product } from "../Hooks/useInventory";
-
+import { Product } from "../Hooks/useInventory";
 
 interface ChartDataItem {
   category: string;
   count: number;
 }
 
-interface CategoryDistProps{
-  inventoryData: Product[]
+interface CategoryDistProps {
+  inventoryData: Product[];
 }
 
 interface CustomTooltipProps {
   active?: boolean;
   payload?: any[];
-  label?: string;
 }
 
 const COLORS = [
-  "#2563EB", // CasaPro Blue (primary accent)
-  "#1E40AF", // Deep Indigo
-  "#16A34A", // Emerald
-  "#FACC15", // Amber highlight
-  "#F43F5E", // Rose
-  "#6B7280", // Neutral Gray
+  "#22D3EE", // cyan-400
+  "#38BDF8", // sky-400
+  "#3B82F6", // blue-500
+  "#6366F1", // indigo
+  "#10B981", // emerald
+  "#F59E0B", // amber
 ];
 
-const CustomTooltip: React.FC<CustomTooltipProps> = ({ active, payload }) => {
+const CustomTooltip: React.FC<CustomTooltipProps> = ({
+  active,
+  payload,
+}) => {
   if (active && payload && payload.length) {
     const item = payload[0].payload as ChartDataItem;
+
     return (
-      <div className="bg-white text-xs rounded border border-gray-200 shadow p-2">
-        <p className="text-gray-600">{item.category}</p>
-        <p className="font-bold">{item.count} items</p>
+      <div className="bg-[#0f172a] border border-white/10 backdrop-blur-xl rounded-xl p-3 shadow-[0_0_20px_rgba(34,211,238,0.2)]">
+        <p className="text-gray-400 text-xs">
+          {item.category.toUpperCase()}
+        </p>
+        <p className="text-cyan-400 font-bold text-sm">
+          {item.count} items
+        </p>
       </div>
     );
   }
   return null;
 };
 
-const CategoryDist: React.FC<CategoryDistProps> = ({inventoryData}) => {
- 
+const CategoryDist: React.FC<CategoryDistProps> = ({
+  inventoryData,
+}) => {
+  const chartData = inventoryData.reduce<ChartDataItem[]>(
+    (acc, item) => {
+      const existingCategory = acc.find(
+        (data) => data.category === item.category
+      );
 
-  const chartData = inventoryData.reduce<ChartDataItem[]>((acc, item) => {
-    const existingCategory = acc.find(data => data.category === item.category);
-    if (existingCategory) {
-      existingCategory.count += Number(item.quantity);
+      if (existingCategory) {
+        existingCategory.count += Number(item.quantity);
+      } else {
+        acc.push({
+          category: item.category,
+          count: Number(item.quantity),
+        });
+      }
 
-    } else {
-      acc.push({ category: item.category, count: Number(item.quantity) });
-    }
-    return acc;
-  }, []);
+      return acc;
+    },
+    []
+  );
 
   return (
-    <Card className="w-80 h-80 border-none rounded-xl bg-white shadow-sm flex flex-col">
-      <CardHeader className="p-3 pb-0">
-        <CardTitle className="text-center text-sm text-muted-foreground">
+    <Card
+      className="
+        w-full
+        h-full
+        bg-white/5
+        border border-white/10
+        backdrop-blur-xl
+        rounded-3xl
+        shadow-[0_0_40px_rgba(34,211,238,0.1)]
+        flex flex-col
+      "
+    >
+      <CardHeader className="p-5 pb-0">
+        <CardTitle className="text-center text-sm text-gray-400 tracking-wide">
           Inventory Breakdown
         </CardTitle>
       </CardHeader>
-      <CardContent className="flex-1 px-2 pt-1">
+
+      <CardContent className="flex-1 px-4 pb-4">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
             data={chartData}
             layout="vertical"
-            margin={{ top: 10, right: 10, left: 10, bottom: 0 }}
+            margin={{ top: 10, right: 20, left: 10, bottom: 0 }}
           >
-            <CartesianGrid strokeDasharray="3 3" horizontal={false} />
+            <CartesianGrid
+              stroke="rgba(255,255,255,0.05)"
+              horizontal={false}
+            />
+
             <XAxis type="number" hide />
+
             <YAxis
               dataKey="category"
               type="category"
               tickLine={false}
               axisLine={false}
-              width={80}
-              tick={{ fontSize: 12, fill: "#666" }}
+              width={90}
+              tick={{
+                fontSize: 12,
+                fill: "#94A3B8", // slate-400
+              }}
             />
+
             <Tooltip content={<CustomTooltip />} />
-            <Bar dataKey="count" barSize={14} radius={[0, 6, 6, 0]}>
+
+            <Bar
+              dataKey="count"
+              barSize={14}
+              radius={[0, 8, 8, 0]}
+              animationDuration={600}
+            >
               {chartData.map((_, index) => (
-                <Cell key={index} fill={COLORS[index % COLORS.length]} />
+                <Cell
+                  key={index}
+                  fill={COLORS[index % COLORS.length]}
+                />
               ))}
-              <LabelList dataKey="count" position="right" offset={10} className="fill-gray-800 text-xs" />
+
+              <LabelList
+                dataKey="count"
+                position="right"
+                offset={8}
+                className="fill-white text-xs"
+              />
             </Bar>
           </BarChart>
         </ResponsiveContainer>

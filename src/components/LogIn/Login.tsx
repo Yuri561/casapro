@@ -1,106 +1,138 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { userLogin} from "../../UserAuth/user_auth";
+import { userLogin } from "../../UserAuth/user_auth";
 import LoadingAnimation from "../LoadingAnimation/LoadingAnimation";
 import { useAuth } from "../../context/AuthContext";
 import { useForm } from "react-hook-form";
+import { Eye, EyeOff } from "lucide-react";
 
-  interface FormData {
-    username: string;
-    password: string;
-  }
+interface FormData {
+  username: string;
+  password: string;
+}
 
 const Login: React.FC = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>();
 
   const [error, setError] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(false); 
+  const [loading, setLoading] = useState<boolean>(false);
+  const [showPassword, setShowPassword] = useState(false);
+
   const navigate = useNavigate();
   const { setIsAuthenticated } = useAuth();
 
   const onSubmit = async (data: FormData) => {
     setError("");
     setLoading(true);
-  
+
     try {
       const response = await userLogin(data);
+
       if (response.status === 200) {
-        const {  user } = response.data;
+        const { user, token } = response.data;
+
         setIsAuthenticated(true);
         localStorage.setItem("username", user.username);
-        localStorage.setItem("user_id", user.user_id);    
-        localStorage.setItem("token",  response.data.token);             
+        localStorage.setItem("user_id", user.user_id);
+        localStorage.setItem("token", token);
+
         navigate("/dashboard");
-      } else {
-        setError("Authentication failed. Please try again.");
       }
     } catch (error: any) {
-      if (error.response && error.response.data) {
-        setError(error.response.data.error || "Login error. Please try again.");
-        console.log('error:', error);
-      } else {
-        setError("Login failed. Please check your credentials.");
-      }
-      console.error("Error during login:", error);
+      setError(
+        error.response?.data?.error ||
+        "Login failed. Please check your credentials."
+      );
+      console.error("Login error:", error.response?.data || error.message);
     } finally {
       setLoading(false);
     }
   };
-  
-  
+
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+    <div className="min-h-screen flex items-center justify-center bg-[#0f172a] px-4">
 
       {loading && <LoadingAnimation />}
-      
-      <h2 className="text-3xl font-bold text-gray-900 mb-6">Login to Casa Pro</h2>
 
+      <div className="w-full max-w-md bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-8 shadow-[0_0_40px_rgba(34,211,238,0.15)]">
 
-      {error && (
-        <div className="text-red-500 mb-4 bg-red-100 px-4 py-2 rounded-lg">
-          {error}
-        </div>
-      )}
+        {/* Header */}
+        <h2 className="text-3xl font-bold text-white text-center mb-2">
+          Welcome Back
+        </h2>
+        <p className="text-gray-400 text-center mb-8 text-sm">
+          Login to access your Casa Pro dashboard
+        </p>
 
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="w-96 bg-white p-6 rounded-lg shadow-lg"
-      >
-        <input
-          type="text"
-          
-          placeholder="Username"
-          {...register("username", {
-            required: "Username is required",
-            pattern: {
-              value: /^[a-z]+$/,
-              message: "Username must contain only lowercase letters",
-            },
-          })}
-          className="w-full mb-4 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:outline-none"
-          required
-        />
-        {errors.username && (
-          <p className="text-red-500 text-sm mb-2">{errors.username.message}</p>
+        {/* Error */}
+        {error && (
+          <div className="mb-4 bg-red-500/10 border border-red-500/30 text-red-400 px-4 py-2 rounded-xl text-sm">
+            {error}
+          </div>
         )}
-        <input
-          type="password"
-          {...register("password", { required: "Password is required" })}
-          placeholder="Password"
-          className="w-full mb-4 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:outline-none"
-          required
-        />
-         {errors.password && (
-          <p className="text-red-500 text-sm mb-2">{errors.password.message}</p>
-        )}
-        <button
-          type="submit"
-          className="w-full bg-teal-500 cursor-pointer text-white px-4 py-3 rounded-lg hover:bg-teal-600 transition"
-          disabled={loading}
-        >
-          {loading ? "Logging in..." : "Login"}
-        </button>
-      </form>
+
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+
+          {/* Username */}
+          <div>
+            <input
+              type="text"
+              placeholder="Username"
+              {...register("username", {
+                required: "Username is required",
+                pattern: {
+                  value: /^[a-z]+$/,
+                  message: "Username must contain only lowercase letters",
+                },
+              })}
+              className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:border-cyan-400 focus:ring-0 outline-none"
+            />
+            {errors.username && (
+              <p className="text-red-400 text-xs mt-2">
+                {errors.username.message}
+              </p>
+            )}
+          </div>
+
+          {/* Password */}
+          <div className="relative">
+            <input
+              type={showPassword ? "text" : "password"}
+              placeholder="Password"
+              {...register("password", {
+                required: "Password is required",
+              })}
+              className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:border-cyan-400 focus:ring-0 outline-none"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute top-3 right-4 text-gray-400 hover:text-white"
+            >
+              {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+            </button>
+
+            {errors.password && (
+              <p className="text-red-400 text-xs mt-2">
+                {errors.password.message}
+              </p>
+            )}
+          </div>
+
+          {/* Submit */}
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full py-3 rounded-xl bg-cyan-400 text-black font-semibold hover:bg-cyan-300 transition shadow-[0_0_20px_rgba(34,211,238,0.4)]"
+          >
+            {loading ? "Logging in..." : "Login"}
+          </button>
+        </form>
+      </div>
     </div>
   );
 };

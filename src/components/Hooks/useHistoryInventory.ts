@@ -15,7 +15,10 @@ export interface MonthlyData {
   lowStock: number;
 }
 
-const API_URL = "https://casapro-backend-o0k1.onrender.com";
+export const API_URL =
+  import.meta.env.MODE === "production"
+    ? "https://casapro-backend-o0k1.onrender.com"
+    : "http://127.0.0.1:5000";
 
 export default function useInventoryHistory(refresh: any) {
   const [history, setHistory] = useState<HistoryRecord[]>([]);

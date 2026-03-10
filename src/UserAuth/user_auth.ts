@@ -1,6 +1,9 @@
 import axios from "axios";
 
-export const API_URL = "https://casapro-backend-o0k1.onrender.com";
+export const API_URL =
+  import.meta.env.MODE === "production"
+    ? "https://casapro-backend-o0k1.onrender.com"
+    : "http://127.0.0.1:5000";
 
 // Basic config function to automatically add token
 const getAuthConfig = () => {
@@ -74,10 +77,22 @@ export const getInventoryHistory = async () => {
   return axios.get(`${API_URL}/inventory/history`, getAuthConfig());
 };
 
+
+
+
+
+
+
+
+
+
+
+
+
 // --------------------- BUDGET ---------------------
 
 // Add a budget goal
-export const addBudget = async (budgetData: any) => {
+export const addBudget = async (budgetData: { category: string; amount: number }) => {
   return axios.post(`${API_URL}/budget-goal/add`, budgetData, getAuthConfig());
 };
 

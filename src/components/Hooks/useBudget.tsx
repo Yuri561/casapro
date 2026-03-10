@@ -21,7 +21,7 @@ useEffect(() => {
       if (Array.isArray(res.data)) {
         setBudgetGoals(res.data);
       } else if (res.data.user_budget) {
-        setBudgetGoals(res.data.user_budget); 
+        setBudgetGoals(res.data.user_budget);
       }
     } catch (err) {
       console.error("Failed to load budget goals", err);

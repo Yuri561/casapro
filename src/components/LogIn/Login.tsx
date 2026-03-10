@@ -39,7 +39,7 @@ const Login: React.FC = () => {
         localStorage.setItem("username", user.username);
         localStorage.setItem("user_id", user.user_id);
         localStorage.setItem("token", token);
-
+        console.log("user_id:", user.user_id)
         navigate("/dashboard");
       }
     } catch (error: any) {

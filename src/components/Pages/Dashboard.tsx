@@ -73,7 +73,7 @@ const Dashboard: React.FC = () => {
       <section className="relative px-6 pb-24">
         <div className="max-w-8xl mx-auto grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
 
-          {[ 
+          {[
             <InventoryGauge inventoryData={inventoryData} />,
             <CategoryDist inventoryData={inventoryData} />,
             <InventoryReports userId={userId} refresh={refreshHistory} />,
@@ -102,7 +102,7 @@ const Dashboard: React.FC = () => {
       {/* TIPS SECTION */}
       <section className="relative px-6 pb-24">
         <div className="max-w-6xl mx-auto bg-white/5 border border-white/10 backdrop-blur-xl rounded-3xl p-10 shadow-[0_0_40px_rgba(34,211,238,0.1)]">
-          <InventoryTips inventoryData={inventoryData || []} />
+          <InventoryTips inventoryData={inventoryData || []}/>
         </div>
       </section>
 

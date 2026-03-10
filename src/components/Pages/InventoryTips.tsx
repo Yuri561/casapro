@@ -39,10 +39,10 @@ const InventoryTips: React.FC<InventoryTipsProps> = ({
 
   useEffect(() => {
     if (userId) fetchBudgetGoals();
-  }, [userId]); // ✅ fixed infinite re-render
+  }, [userId]); //
 
   /* =======================
-     Budget Current Values
+    Budget Current Values
   ======================== */
   const budgetGoalsWithCurrentValues = budgetGoalsRaw.map(
     (goal) => {
